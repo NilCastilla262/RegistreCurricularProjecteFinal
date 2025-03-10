@@ -1,17 +1,12 @@
+//app.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 
 const { poolPromise } = require("./config/db");
-
-const authRoutes = require("./routes/authRoutes");
-const lightsRoutes = require("./routes/lightsRoutes");
-const groupsRoutes = require("./routes/groupsRoutes");
-const relacioGroupsLightsRoutes = require("./routes/relacioGroupsLightsRoutes");
-const colorsRoutes = require("./routes/colorsRoutes");
-const typesRoutes = require("./routes/typesRoutes");
-
+const csvRoutes = require("./routes/csvRoutes");
+// const authRoutes = require("./routes/authRoutes")
 const app = express();
 
 const limiter = rateLimit({
@@ -56,7 +51,8 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.use("/api/auth", authRoutes);
+// app.use("/api/auth", authRoutes);
+app.use('/api', csvRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: "Ruta no trobada" });
