@@ -1,4 +1,4 @@
-//competenciesModel.js
+//models/competenciesModel.js
 const sql = require('mssql');
 const config = require('../config/db');
 

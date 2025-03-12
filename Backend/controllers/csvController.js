@@ -11,8 +11,9 @@ exports.uploadCsv = (req, res) => {
   const filePath = req.file.path;
   let csvRows = [];
 
+  // Si el teu CSV no té headers, pots definir-los manualment
   fs.createReadStream(filePath)
-    .pipe(csv())
+    .pipe(csv({ headers: ['Column1', 'Column2', 'Column3'], skipLines: 0 }))
     .on('data', (row) => {
       csvRows.push(row);
     })
@@ -31,41 +32,52 @@ exports.uploadCsv = (req, res) => {
 
 function processCsvData(csvRows) {
   let result = [];
-  let currentMateria = null;
-  let currentCompetencia = null;
+  let currentSubject = null;
 
   csvRows.forEach(row => {
-    const cell1 = row['Column1'] ? row['Column1'].trim() : '';
-    const cell2 = row['Column2'] ? row['Column2'].trim() : '';
-    const cell3 = row['Column3'] ? row['Column3'].trim() : '';
+    const c1 = row['Column1'] ? row['Column1'].trim() : '';
+    const c2 = row['Column2'] ? row['Column2'].trim() : '';
+    const c3 = row['Column3'] ? row['Column3'].trim() : '';
 
-    if (cell1 && !cell2 && (!cell3 || cell3 === '')) {
-      const tipus = cell1.includes('Transversals') ? 'transversal' : 'específica';
-      currentMateria = {
-        materia: cell1,
-        tipus: tipus,
-        competències: []
-      };
-      result.push(currentMateria);
-      currentCompetencia = null;
+    // Si la fila és un header (per exemple, "COMPETÈNCIES ESPECÍFIQUES" o "COMPETÈNCIES TRANSVERSALS")
+    if (c1 && c1.toUpperCase().includes("COMPETÈNCIES")) {
+      // Podries, si cal, actualitzar algun valor global, però aquí només l'ignorarem
+      return;
     }
-    else if (cell1 && /^\d+\./.test(cell1)) {
-      currentCompetencia = {
-        titol: cell1,
-        criteris: []
+
+    // Si Column1 té text, es defineix una nova Materia
+    if (c1) {
+      currentSubject = {
+        materia: c1,
+        tipus: 'específica', // pots modificar-ho si necessites determinar el tipus
+        Competencies: []   // aquí guardarem els objectes competency
       };
-      if (cell2) currentCompetencia.criteris.push(cell2);
-      if (currentMateria) {
-        currentMateria.competències.push(currentCompetencia);
-      }
+      result.push(currentSubject);
+      return;
     }
-    else if ((!cell1 || cell1 === '') && cell2) {
-      if (currentCompetencia) {
-        currentCompetencia.criteris.push(cell2);
+
+    // Si Column1 està buit i tenim un subjecte actual, processem la informació de Competencies
+    if (currentSubject) {
+      if (c2) {
+        // Si Column2 té text, és una nova competency
+        let newCompetency = {
+          descripcio: c2,
+          Criteris: []
+        };
+        if (c3) {
+          newCompetency.Criteris.push(c3);
+        }
+        currentSubject.Competencies.push(newCompetency);
+      } else if (!c2 && c3) {
+        // Si Column2 està buit però Column3 té text, afegim aquest text com a criteri a l'última competency
+        if (currentSubject.Competencies.length > 0) {
+          let lastCompetency = currentSubject.Competencies[currentSubject.Competencies.length - 1];
+          lastCompetency.Criteris.push(c3);
+        }
       }
     }
   });
-  console.log(result);
+  console.log("JSON processat:", JSON.stringify(result, null, 2));
   //return result;
   return null;
 }
