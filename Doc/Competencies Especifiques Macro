@@ -1,0 +1,68 @@
+/** @OnlyCurrentDoc */
+function CompetenciesEspecifiques() {
+  var spreadsheet = SpreadsheetApp.getActive();
+  spreadsheet.getRange('A:A').activate();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getActiveSheet().setFrozenColumns(0);
+  spreadsheet.getRange('1:17').activate();
+  spreadsheet.getActiveSheet().deleteRows(spreadsheet.getActiveRange().getRow(), spreadsheet.getActiveRange().getNumRows());
+  spreadsheet.getRange('I:I').activate();
+  spreadsheet.getActiveSheet().setFrozenRows(0);
+  spreadsheet.getRange('I:X').activate();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getRange('D:G').activate();
+  spreadsheet.setCurrentCell(spreadsheet.getRange('B1'));
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getRange('3:3').activate();
+  spreadsheet.getRange('C:F').activate();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getActiveSheet().setFrozenRows(0);
+
+  var sheet = spreadsheet.getActiveSheet();
+  var finder = sheet.createTextFinder("#REF!");
+  var foundCells = finder.findAll();
+  var rowsToDelete = [];
+
+  for (var i = 0; i < foundCells.length; i++) {
+    rowsToDelete.push(foundCells[i].getRow());
+  }
+
+  rowsToDelete = rowsToDelete.filter(function(value, index, self) {
+    return self.indexOf(value) === index;
+  });
+
+  rowsToDelete.sort(function(a, b) {
+    return b - a;
+  });
+
+  for (var j = 0; j < rowsToDelete.length; j++) {
+    sheet.deleteRow(rowsToDelete[j]);
+  }
+
+  var maxRows = sheet.getMaxRows();
+  var limitRow = maxRows;
+  var colA = sheet.getRange("A1:A" + limitRow).getValues();
+  var rowToDelete = -1;
+  for (var i = 0; i < colA.length; i++) {
+    var cellText = colA[i][0].toString().trim();
+    if (cellText.includes("OMPETÈNCIES TRANSVERSAL")) {
+      rowToDelete = i + 1;
+      break;
+    }
+  }
+  if (rowToDelete != -1) {
+    var numRows = limitRow - rowToDelete + 1;
+    sheet.deleteRows(rowToDelete, numRows);
+  } else {
+  }
+
+  var lastRow = sheet.getLastRow();
+  var dataRange = sheet.getRange(1, 1, lastRow, 3).getValues();
+  for (var i = dataRange.length - 1; i >= 0; i--) {
+    if (dataRange[i][0].toString().trim() === "" &&
+        dataRange[i][1].toString().trim() === "" &&
+        dataRange[i][2].toString().trim() === "") {
+      sheet.deleteRow(i + 1);
+    }
+  }
+}

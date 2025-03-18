@@ -1,0 +1,75 @@
+/** @OnlyCurrentDoc */
+function CompetenciesTransversals() {
+  var spreadsheet = SpreadsheetApp.getActive();
+  spreadsheet.getRange('A:A').activate();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getActiveSheet().setFrozenColumns(0);
+  spreadsheet.getRange('1:16').activate();
+  spreadsheet.getActiveSheet().deleteRows(spreadsheet.getActiveRange().getRow(), spreadsheet.getActiveRange().getNumRows());
+  spreadsheet.getRange('I:I').activate();
+  spreadsheet.getActiveSheet().setFrozenRows(0);
+  spreadsheet.getRange('I:X').activate();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getRange('D:G').activate();
+  spreadsheet.setCurrentCell(spreadsheet.getRange('B1'));
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getRange('3:3').activate();
+  spreadsheet.getRange('C:F').activate();
+  spreadsheet.getActiveSheet().deleteColumns(spreadsheet.getActiveRange().getColumn(), spreadsheet.getActiveRange().getNumColumns());
+  spreadsheet.getActiveSheet().setFrozenRows(0);
+
+  var sheet = spreadsheet.getActiveSheet();
+  var finder = sheet.createTextFinder("#REF!");
+  var foundCells = finder.findAll();
+  var rowsToDelete = [];
+
+  for (var i = 0; i < foundCells.length; i++) {
+    rowsToDelete.push(foundCells[i].getRow());
+  }
+
+  rowsToDelete = rowsToDelete.filter(function(value, index, self) {
+    return self.indexOf(value) === index;
+  });
+
+  rowsToDelete.sort(function(a, b) {
+    return b - a;
+  });
+
+  for (var j = 0; j < rowsToDelete.length; j++) {
+    sheet.deleteRow(rowsToDelete[j]);
+  }
+  sheet.createTextFinder("(CC)").replaceAllWith("");
+  sheet.createTextFinder("CC").replaceAllWith("");
+  sheet.createTextFinder("(CE)").replaceAllWith("");
+  sheet.createTextFinder("CE").replaceAllWith("");
+  sheet.createTextFinder("(CD)").replaceAllWith("");
+  sheet.createTextFinder("CD").replaceAllWith("");
+  sheet.createTextFinder("(CPSAA)").replaceAllWith("");
+  sheet.createTextFinder("CPSAA").replaceAllWith("");
+
+  var maxRows = sheet.getMaxRows();
+  var colA = sheet.getRange("A1:A" + maxRows).getValues();
+  var searchTerm = "COMPETÈNCIES TRANSVERSALS";
+  var foundRow = -1;
+  for (var i = 0; i < colA.length; i++) {
+    var cellText = colA[i][0].toString().trim();
+    if (cellText.includes(searchTerm)) {
+      foundRow = i + 1;
+      break;
+    }
+  }
+  if (foundRow != -1) {
+    sheet.deleteRows(1, foundRow);
+  } else {
+  }
+
+  var lastRow = sheet.getLastRow();
+  var dataRange = sheet.getRange(1, 1, lastRow, 3).getValues();
+  for (var i = dataRange.length - 1; i >= 0; i--) {
+    if (dataRange[i][0].toString().trim() === "" &&
+        dataRange[i][1].toString().trim() === "" &&
+        dataRange[i][2].toString().trim() === "") {
+      sheet.deleteRow(i + 1);
+    }
+  }
+}
