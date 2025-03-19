@@ -1,54 +1,51 @@
 // models/competenciesModel.js
+
+//Nomenclatures:
+//Type: Fa referencia a el tipus de competencia de les MATERIES, pot ser Especifiques (1) o Transversals (0)
+//Competencie: Fa referencia al tipus de les COMPETENCIES, pot ser Competencia (1) o Saber (0) 
+
 const sql = require('mssql');
 const config = require('../config/db');
 
 exports.insertData = async (jsonData, templateName) => {
   try {
-    // Connectem amb la base de dades
     let pool = await sql.connect(config);
-
-    // Iterem sobre cada "subject" (materia) del JSON
+    
     for (const subject of jsonData) {
       const subjectName = subject.materia;
-
-      // Seleccionem la materia si ja existeix a la taula SubjectsTPL,
-      // comprovant que coincideixi tant el nom com el templateName.
-      const selectSubjectQuery = `
+      
+      // Comprovem si ja existeix la materia a SubjectsTPL per aquest template
+      const selectQuery = `
         SELECT UUID 
         FROM SubjectsTPL 
         WHERE Name = @Name AND TemplateName = @TemplateName
       `;
-      const subjectResult = await pool.request()
+      const selectResult = await pool.request()
         .input('Name', sql.VarChar(50), subjectName)
         .input('TemplateName', sql.VarChar(20), templateName)
-        .query(selectSubjectQuery);
-
+        .query(selectQuery);
+      
       let subjectUUID;
-      if (subjectResult.recordset.length > 0) {
-        // Si ja existeix, recollim el UUID
-        subjectUUID = subjectResult.recordset[0].UUID;
+      if (selectResult.recordset.length > 0) {
+        subjectUUID = selectResult.recordset[0].UUID;
       } else {
-        // Si no existeix, inserim una nova matèria
-        const insertSubjectQuery = `
+        const insertQuery = `
           INSERT INTO SubjectsTPL (Name, TemplateName, Type)
           OUTPUT INSERTED.UUID
           VALUES (@Name, @TemplateName, @Type)
         `;
-        const insertSubjectResult = await pool.request()
+        const insertResult = await pool.request()
           .input('Name', sql.VarChar(50), subjectName)
           .input('TemplateName', sql.VarChar(20), templateName)
           .input('Type', sql.TinyInt, numericSubjectType)
-          .query(insertSubjectQuery);
-        subjectUUID = insertSubjectResult.recordset[0].UUID;
+          .query(insertQuery);
+        subjectUUID = insertResult.recordset[0].UUID;
       }
-      console.log(`Subject "${subjectName}" té UUID: ${subjectUUID}`);
-
-      // Processar cada competency (competència) de la matèria
-      console.log("Processant competencies");
+      
+      console.log(`Materia "${subjectName}" té UUID: ${subjectUUID}`);
+      
       for (const competency of subject.Competencies) {
-        console.log("Competencia: ",competency);
-        // Processar l'string de la competency per separar el número d'ordre
-        // Ex: "1. Prendre consciència ..." → extracte "1" i la descripció sense el prefix.
+        // Extraiem l'ordre i la descripció de la competency
         let competencyOrder;
         let competencyDescription;
         let competencyMatch = competency.descripcio.match(/^(\d+)\.\s*(.+)$/);
@@ -59,46 +56,41 @@ exports.insertData = async (jsonData, templateName) => {
           competencyOrder = 0;
           competencyDescription = competency.descripcio.trim();
         }
-
-        // Comprovem si ja existeix una competency amb aquesta descripció per aquesta matèria
-        const selectCompetencyQuery = `
+        
+        // Comprovem si ja existeix una competency amb aquesta descripció per aquesta materia
+        const selectCompQuery = `
           SELECT UUID 
           FROM CompetenciesTPL 
           WHERE Description = @Description AND UUIDSubject = @UUIDSubject
         `;
-        const competencyResult = await pool.request()
+        const compResult = await pool.request()
           .input('Description', sql.VarChar(sql.MAX), competencyDescription)
           .input('UUIDSubject', sql.UniqueIdentifier, subjectUUID)
-          .query(selectCompetencyQuery);
-
+          .query(selectCompQuery);
+        
         let competencyUUID;
-        if (competencyResult.recordset.length > 0) {
-          competencyUUID = competencyResult.recordset[0].UUID;
+        if (compResult.recordset.length > 0) {
+          competencyUUID = compResult.recordset[0].UUID;
         } else {
-          // Inserim la nova competency
-          // Notar que el camp "SubjectName" pot ser el nom de la matèria, i "OrderBy" és el número d'ordre extret.
-          const insertCompetencyQuery = `
-            INSERT INTO CompetenciesTPL (SubjectName, UUIDSubject, OrderBy, Description)
+          const insertCompQuery = `
+            INSERT INTO CompetenciesTPL (UUIDSubject, OrderBy, Description, Type)
             OUTPUT INSERTED.UUID
-            VALUES (@SubjectName, @UUIDSubject, @OrderBy, @Description)
+            VALUES (@UUIDSubject, @OrderBy, @Description, @Type)
           `;
-          const insertCompetencyResult = await pool.request()
-            .input('SubjectName', sql.VarChar(20), subjectName)
+          const insertCompResult = await pool.request()
             .input('UUIDSubject', sql.UniqueIdentifier, subjectUUID)
             .input('OrderBy', sql.TinyInt, competencyOrder)
             .input('Description', sql.VarChar(sql.MAX), competencyDescription)
-            .query(insertCompetencyQuery);
-          competencyUUID = insertCompetencyResult.recordset[0].UUID;
+            .input('Type', sql.TinyInt, parseInt(competency.type, 10))
+            .query(insertCompQuery);
+          competencyUUID = insertCompResult.recordset[0].UUID;
         }
         console.log(`Competency "${competencyDescription}" té UUID: ${competencyUUID}`);
-
-        // Processar cada criteri dins de la competency
-        for (const criterion of competency.Criteris) {
-          // El criteri té un format com "1.2. Descripció del criteri"
-          // Volem extreure el segon número (per exemple, "2") i la descripció sense el prefix.
+                for (const criterion of competency.Criteris) {
+          // Extraiem l'ordre (ex: "1.2." → "2") i la descripció del criteri
           let criterionOrder;
           let criterionDescription;
-          let criterionMatch = criterion.match(/^\d+\.(\d+)\.\s*(.+)$/);
+          let criterionMatch = criterion.match(/^\s*\d+\.(\d+)\.?\s*(.+)$/);
           if (criterionMatch) {
             criterionOrder = parseInt(criterionMatch[1], 10);
             criterionDescription = criterionMatch[2].trim();
@@ -106,21 +98,20 @@ exports.insertData = async (jsonData, templateName) => {
             criterionOrder = 0;
             criterionDescription = criterion.trim();
           }
-
+          
           // Comprovem si aquest criteri ja existeix per aquesta competency
-          const selectCriterionQuery = `
+          const selectCritQuery = `
             SELECT UUID 
             FROM CriteriaTPL 
             WHERE Description = @Description AND UUIDCompetencie = @UUIDCompetencie
           `;
-          const criterionResult = await pool.request()
+          const critResult = await pool.request()
             .input('Description', sql.VarChar(sql.MAX), criterionDescription)
             .input('UUIDCompetencie', sql.UniqueIdentifier, competencyUUID)
-            .query(selectCriterionQuery);
-
-          if (criterionResult.recordset.length === 0) {
-            // Inserim el criteri
-            const insertCriterionQuery = `
+            .query(selectCritQuery);
+          
+          if (critResult.recordset.length === 0) {
+            const insertCritQuery = `
               INSERT INTO CriteriaTPL (UUIDCompetencie, Description, OrderByMain, OrderBy)
               VALUES (@UUIDCompetencie, @Description, @OrderByMain, @OrderBy)
             `;
@@ -129,8 +120,10 @@ exports.insertData = async (jsonData, templateName) => {
               .input('Description', sql.VarChar(sql.MAX), criterionDescription)
               .input('OrderByMain', sql.TinyInt, competencyOrder)
               .input('OrderBy', sql.TinyInt, criterionOrder)
-              .query(insertCriterionQuery);
+              .query(insertCritQuery);
+            console.log(`S'ha inserit el criteri "${criterionDescription}" per la competency UUID ${competencyUUID}`);
           } else {
+            console.log(`El criteri "${criterionDescription}" ja existeix per la competency UUID ${competencyUUID}`);
           }
         }
       }
