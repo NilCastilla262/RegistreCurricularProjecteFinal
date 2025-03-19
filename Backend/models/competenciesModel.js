@@ -13,7 +13,8 @@ exports.insertData = async (jsonData, templateName) => {
     
     for (const subject of jsonData) {
       const subjectName = subject.materia;
-      
+      const numericSubjectType = parseInt(subject.type, 10);
+
       // Comprovem si ja existeix la materia a SubjectsTPL per aquest template
       const selectQuery = `
         SELECT UUID 
@@ -21,7 +22,7 @@ exports.insertData = async (jsonData, templateName) => {
         WHERE Name = @Name AND TemplateName = @TemplateName
       `;
       const selectResult = await pool.request()
-        .input('Name', sql.VarChar(50), subjectName)
+        .input('Name', sql.VarChar(70), subjectName)
         .input('TemplateName', sql.VarChar(20), templateName)
         .query(selectQuery);
       
@@ -35,7 +36,7 @@ exports.insertData = async (jsonData, templateName) => {
           VALUES (@Name, @TemplateName, @Type)
         `;
         const insertResult = await pool.request()
-          .input('Name', sql.VarChar(50), subjectName)
+          .input('Name', sql.VarChar(70), subjectName)
           .input('TemplateName', sql.VarChar(20), templateName)
           .input('Type', sql.TinyInt, numericSubjectType)
           .query(insertQuery);
