@@ -84,19 +84,18 @@ exports.insertData = async (jsonData, templateName) => {
             .query(insertCompQuery);
           competencyUUID = insertCompResult.recordset[0].UUID;
         }
-                for (const criterion of competency.Criteris) {
+        for (const criterion of competency.Criteris) {
           // Extraiem l'ordre (ex: "1.2." → "2") i la descripció del criteri
           let criterionOrder;
           let criterionDescription;
-          let criterionMatch = criterion.match(/^\s*\d+\.(\d+)\.?\s*(.+)$/);
+          let cleanedCriterion = criterion.replace(/\n/g, " ").trim();
+          let criterionMatch = cleanedCriterion.match(/^\s*\d+\.(\d+)\.?\s*(.+)$/);
           if (criterionMatch) {
             criterionOrder = parseInt(criterionMatch[1], 10);
             criterionDescription = criterionMatch[2].trim();
           } else {
-            criterionOrder = 0;
-            criterionDescription = criterion.trim();
+            throw new Error(`Format incorrecte per al criteri: "${criterion}"`);
           }
-          
           // Comprovem si aquest criteri ja existeix per aquesta competency
           const selectCritQuery = `
             SELECT UUID 
