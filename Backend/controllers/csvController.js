@@ -10,6 +10,7 @@ exports.uploadCsv = (req, res) => {
 
   const subjectType = req.body.Type || 'específica';
   const competencyType = req.body.Competencie || 'competència';
+  const templateName = req.body.templateName || '';
 
   const filePath = req.file.path;
   let csvRows = [];
@@ -23,7 +24,7 @@ exports.uploadCsv = (req, res) => {
       try {
         const jsonData = processCsvData(csvRows, subjectType, competencyType);
         console.log("JSON processat:", JSON.stringify(jsonData, null, 2));
-        await CompetenciesModel.insertData(jsonData);
+        await CompetenciesModel.insertData(jsonData, templateName);
         res.status(200).json({ message: 'Dades importades correctament', data: jsonData });
       } catch (error) {
         res.status(500).json({ error: error.message });
