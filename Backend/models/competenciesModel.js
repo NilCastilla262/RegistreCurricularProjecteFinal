@@ -5,11 +5,11 @@
 //Competencie: Fa referencia al tipus de les COMPETENCIES, pot ser Competencia (1) o Saber (0) 
 
 const sql = require('mssql');
-const config = require('../config/db');
+const { poolPromise } = require('../config/db');
 
 exports.insertData = async (jsonData, templateName) => {
   try {
-    let pool = await sql.connect(config);
+    let pool = await poolPromise;
     
     for (const subject of jsonData) {
       const subjectName = subject.materia;
@@ -84,6 +84,7 @@ exports.insertData = async (jsonData, templateName) => {
             .query(insertCompQuery);
           competencyUUID = insertCompResult.recordset[0].UUID;
         }
+        
         for (const criterion of competency.Criteris) {
           // Extraiem l'ordre (ex: "1.2." → "2") i la descripció del criteri
           let criterionOrder;
@@ -118,7 +119,6 @@ exports.insertData = async (jsonData, templateName) => {
               .input('OrderByMain', sql.TinyInt, competencyOrder)
               .input('OrderBy', sql.TinyInt, criterionOrder)
               .query(insertCritQuery);
-          } else {
           }
         }
       }
