@@ -41,9 +41,7 @@ exports.insertData = async (jsonData, templateName) => {
           .query(insertQuery);
         subjectUUID = insertResult.recordset[0].UUID;
       }
-      
-      console.log(`Materia "${subjectName}" té UUID: ${subjectUUID}`);
-      
+            
       for (const competency of subject.Competencies) {
         // Extraiem l'ordre i la descripció de la competency
         let competencyOrder;
@@ -85,7 +83,6 @@ exports.insertData = async (jsonData, templateName) => {
             .query(insertCompQuery);
           competencyUUID = insertCompResult.recordset[0].UUID;
         }
-        console.log(`Competency "${competencyDescription}" té UUID: ${competencyUUID}`);
                 for (const criterion of competency.Criteris) {
           // Extraiem l'ordre (ex: "1.2." → "2") i la descripció del criteri
           let criterionOrder;
@@ -121,9 +118,7 @@ exports.insertData = async (jsonData, templateName) => {
               .input('OrderByMain', sql.TinyInt, competencyOrder)
               .input('OrderBy', sql.TinyInt, criterionOrder)
               .query(insertCritQuery);
-            console.log(`S'ha inserit el criteri "${criterionDescription}" per la competency UUID ${competencyUUID}`);
           } else {
-            console.log(`El criteri "${criterionDescription}" ja existeix per la competency UUID ${competencyUUID}`);
           }
         }
       }
