@@ -23,7 +23,6 @@ exports.uploadCsv = (req, res) => {
     .on('end', async () => {
       try {
         const jsonData = processCsvData(csvRows, subjectType, competencyType);
-        console.log("JSON processat:", JSON.stringify(jsonData, null, 2));
         await CompetenciesModel.insertData(jsonData, templateName);
         res.status(200).json({ message: 'Dades importades correctament', data: jsonData });
       } catch (error) {
