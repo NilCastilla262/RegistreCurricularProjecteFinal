@@ -42,7 +42,7 @@ app.use(async (req, res, next) => {
   }
 });
 
-app.get("/", async (req, res) => {
+app.get("/", async (_, res) => {
   try {
     const pool = await poolPromise;
     res.status(200).json({ message: "Successfully connected with database" });
@@ -52,13 +52,13 @@ app.get("/", async (req, res) => {
 });
 
 // app.use("/api/auth", authRoutes);
-app.use('/api', csvRoutes);
+app.use('/apirc/v1', csvRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: "Ruta no trobada" });
 });
 
-app.use((err, req, res, next) => {
+app.use((err, _, res, _) => {
   console.error(err.stack);
   res.status(500).json({ error: "Error intern del servidor" });
 });
