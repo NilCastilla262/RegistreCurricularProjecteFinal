@@ -35,14 +35,14 @@ export class LoginComponent implements OnInit {
 
   handleCredentialResponse(response: any): void {
     const idToken = response.credential;
-    this.authService.loginWithGoogle(idToken).subscribe(
-      (res) => {
+    this.authService.loginWithGoogle(idToken).subscribe({
+      next: (res) => {
         localStorage.setItem('token', res.token);
         this.router.navigate(['/dashboard']);
       },
-      (err) => {
-        this.errorMessage = err.error.message || 'Error durant el login amb Google';
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'Error durant el login amb Google';
       }
-    );
+    });
   }
 }

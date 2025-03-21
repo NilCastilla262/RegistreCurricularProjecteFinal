@@ -12,6 +12,6 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   loginWithGoogle(idToken: string): Observable<any> {
-      return this.http.post<any>(`${this.baseUrl}/auth/google-login`, { idToken });
+    return this.http.post<any>(`${this.baseUrl}/auth/google-login`, { idToken });
   }
 }
