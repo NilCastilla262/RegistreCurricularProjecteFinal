@@ -6,7 +6,7 @@ const rateLimit = require("express-rate-limit");
 
 const { poolPromise } = require("./config/db");
 const csvRoutes = require("./routes/csvRoutes");
-// const authRoutes = require("./routes/authRoutes")
+const authRoutes = require("./routes/authRoutes");
 const app = express();
 
 const limiter = rateLimit({
@@ -51,14 +51,14 @@ app.get("/", async (_, res) => {
   }
 });
 
-// app.use("/api/auth", authRoutes);
+app.use("/apirc/v1/auth", authRoutes);
 app.use('/apirc/v1', csvRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: "Ruta no trobada" });
 });
 
-app.use((err, _, res, _) => {
+app.use((err, _a, res, _b) => {
   console.error(err.stack);
   res.status(500).json({ error: "Error intern del servidor" });
 });
