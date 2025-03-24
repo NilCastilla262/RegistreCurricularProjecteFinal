@@ -29,7 +29,7 @@ async function createUser(name, email) {
   return insertResult.recordset[0]; 
 }
 
-const getUserById = async (UUID) => {
+const getUserByUUID = async (UUID) => {
   const pool = await poolPromise;
   const result = await pool.request()
     .input("UUID", UUID)
@@ -40,5 +40,5 @@ const getUserById = async (UUID) => {
 module.exports = {
   getUserByEmail,
   createUser,
-  getUserById
+  getUserByUUID
 };
