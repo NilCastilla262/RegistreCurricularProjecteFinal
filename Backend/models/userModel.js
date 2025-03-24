@@ -14,11 +14,10 @@ const createUser = async (name, email, role) => {
   const result = await pool.request()
     .input("name", name)
     .input("email", email)
-    .input("role", role)
     .query(`
-      INSERT INTO Users (Name, Email, Role)
+      INSERT INTO Users (Name, Email)
       OUTPUT INSERTED.*
-      VALUES (@name, @email, @role)
+      VALUES (@name, @email)
     `);
   return result.recordset[0];
 };

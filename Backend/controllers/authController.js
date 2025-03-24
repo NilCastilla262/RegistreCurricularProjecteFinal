@@ -12,7 +12,7 @@ function generateToken(user) {
     uuid: user.UUID,
     email: user.Email,
     name: user.Name,
-    role: user.Role
+    //role: user.Role
   };
   return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRATION });
 }
