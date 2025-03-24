@@ -37,11 +37,17 @@ export class LoginComponent implements OnInit {
     const idToken = response.credential;
     this.authService.loginWithGoogle(idToken).subscribe({
       next: (res) => {
-        localStorage.setItem('token', res.token);
-        this.router.navigate(['/dashboard']);
+        if (res.multipleCenters) {
+          localStorage.setItem('tempUserUUID', res.userUUID);
+          localStorage.setItem('tempCenters', JSON.stringify(res.centers));
+          this.router.navigate(['/choose-center']);
+        } else if (res.token) {
+          localStorage.setItem('token', res.token);
+          this.router.navigate(['/dashboard']);
+        }
       },
       error: (err) => {
-        this.errorMessage = err.error?.message || 'Error durant el login amb Google';
+        this.errorMessage = err.error?.error || 'Error durant el login amb Google';
       }
     });
   }

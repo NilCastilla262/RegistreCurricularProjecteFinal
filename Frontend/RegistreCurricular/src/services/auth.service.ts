@@ -14,4 +14,8 @@ export class AuthService {
   loginWithGoogle(idToken: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/auth/google-login`, { idToken });
   }
+
+  chooseCenter(uuid: string, centerName: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/auth/choose-center`, { uuid, centerName });
+  }
 }
