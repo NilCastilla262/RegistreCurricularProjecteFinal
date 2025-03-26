@@ -7,6 +7,7 @@ const rateLimit = require("express-rate-limit");
 const { poolPromise } = require("./config/db");
 const csvRoutes = require("./routes/csvRoutes");
 const authRoutes = require("./routes/authRoutes");
+const groupsRoutes = require("./routes/groupsRoutes");
 const app = express();
 
 const limiter = rateLimit({
@@ -53,6 +54,7 @@ app.get("/", async (_, res) => {
 
 app.use("/apirc/v1/auth", authRoutes);
 app.use('/apirc/v1', csvRoutes);
+app.use("/apirc/v1/groups", groupsRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: "Ruta no trobada" });
