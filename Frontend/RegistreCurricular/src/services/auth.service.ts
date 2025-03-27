@@ -8,7 +8,19 @@ import { environment } from '../environments/environment';
 })
 export class AuthService {
   private baseUrl = environment.baseUrl;
+  private tokenKey = 'token';
 
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  saveToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+  }
+
+  clearToken(): void {
+    localStorage.removeItem(this.tokenKey);
+  }
   constructor(private http: HttpClient) {}
 
   loginWithGoogle(idToken: string): Observable<any> {
