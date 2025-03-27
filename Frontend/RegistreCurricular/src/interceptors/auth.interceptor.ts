@@ -10,30 +10,35 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (req.url.includes('/login')) {
+  if (req.url.includes('/login') || 
+    req.url.includes('/choose-center') || 
+    req.url.includes('/auth/google-login') ||
+    req.url.includes('/auth/choose-center')) {
     return next(req);
   }
 
   const token = authService.getToken();
-  let clonedRequest = req;
-  if (token) {
-    clonedRequest = req.clone({
-      setHeaders: { Authorization: `Bearer ${token}` }
-    });
+  if (!token) {
+    router.navigate(['/login']);
+    return throwError(() => new Error('No token provided.'));
+  }
 
-    try {
-      const decodedToken: any = jwtDecode(token);
-      const currentTime = Date.now() / 1000;
-      if (decodedToken.exp && decodedToken.exp < currentTime) {
-        authService.clearToken();
-        router.navigate(['/login']);
-        return throwError(() => new Error('Token caducat.'));
-      }
-    } catch (error) {
+  const clonedRequest = req.clone({
+    setHeaders: { Authorization: `Bearer ${token}` }
+  });
+
+  try {
+    const decodedToken: any = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    if (decodedToken.exp && decodedToken.exp < currentTime) {
       authService.clearToken();
       router.navigate(['/login']);
-      return throwError(() => new Error('Token no vàlid.'));
+      return throwError(() => new Error('Token expired.'));
     }
+  } catch (error) {
+    authService.clearToken();
+    router.navigate(['/login']);
+    return throwError(() => new Error('Invalid token.'));
   }
 
   return next(clonedRequest).pipe(
