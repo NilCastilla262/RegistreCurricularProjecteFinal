@@ -14,9 +14,9 @@ export class GroupsService {
 
   constructor(private http: HttpClient) {}
 
-  getGroupsFromUser(userUUID: string): Observable<GroupModel[]> {
+  getGroupsFromUser(): Observable<GroupModel[]> {
     return this.http
-      .get<any[]>(`${this.baseUrl}/groups?userUUID=${userUUID}`)
+      .get<any[]>(`${this.baseUrl}/groups`)
       .pipe(
         map(apiArray => GroupDTO.fromApiArray(apiArray))
       );

@@ -20,7 +20,7 @@ export class SdaService {
     );
   }
 
-  createSda(sda: SdaModel): Observable<any> {
+  createSDA(sda: SdaModel): Observable<any> {
     const body = SdaDTO.toApi(sda);
     return this.http.post(`${this.baseUrl}/sda`, body);
   }

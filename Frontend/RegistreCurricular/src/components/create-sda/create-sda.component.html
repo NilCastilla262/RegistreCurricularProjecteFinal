@@ -1,1 +1,43 @@
-<p>create-sda works!</p>
+<h2>Crea una nova SDA</h2>
+
+<div *ngIf="errorMessage" style="color: red;">
+  {{ errorMessage }}
+</div>
+
+<form>
+  <div>
+    <label>Títol:</label>
+    <input [(ngModel)]="title" name="title" required />
+  </div>
+
+  <div>
+    <label>Descripció:</label>
+    <textarea [(ngModel)]="description" name="description" required></textarea>
+  </div>
+
+  <div>
+    <label>Grup:</label>
+    <select [(ngModel)]="selectedGroupUUID" name="selectedGroup" (change)="onGroupChange()">
+      <option [value]="''" disabled selected>-- Selecciona un grup --</option>
+      <option *ngFor="let g of groups" [value]="g.uuid">
+        {{ g.name }} ({{ g.courseName }})
+      </option>
+    </select>
+  </div>
+</form>
+
+<div *ngIf="subjects.length > 0">
+  <h3>Assignatures disponibles</h3>
+  <div *ngFor="let s of subjects">
+    <label>
+      <input
+        type="checkbox"
+        [value]="s.uuid"
+        (change)="onSubjectCheckboxChange(s.uuid, $event)"
+      />
+      {{ s.name }}
+    </label>
+  </div>
+</div>
+
+<button (click)="onCreateSDA()">Crear SDA</button>
