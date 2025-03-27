@@ -26,10 +26,20 @@ export class LoginComponent implements OnInit {
       });
       (window as any).google.accounts.id.renderButton(
         document.getElementById('google-signin-button'),
-        { theme: 'outline', size: 'large' }
+        { theme: 'outline', size: 'medium' }
       );
     } else {
-      this.errorMessage = 'No s\'ha pogut carregar el client de Google.';
+      const alreadyReloaded = (window as any).__googleReloadAttempted__;
+  
+      if (!alreadyReloaded) {
+        (window as any).__googleReloadAttempted__ = true;
+  
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      } else {
+        this.errorMessage = 'No s\'ha pogut carregar el client de Google.';
+      }
     }
   }
 
