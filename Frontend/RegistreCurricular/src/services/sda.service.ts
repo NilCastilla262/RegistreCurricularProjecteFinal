@@ -22,7 +22,6 @@ export class SdaService {
 
   createSDA(sda: SdaModel): Observable<any> {
     const body = SdaDTO.toApi(sda);
-    console.log(body);
     return this.http.post(`${this.baseUrl}/sda`, body);
   }
 
@@ -32,11 +31,11 @@ export class SdaService {
     );
   }
 
-  createSDASubjectsRelations(sdaUUID: string, subjectUUIDs: string[]): Observable<any> {
-    const payload = subjectUUIDs.map(uuid => ({
+  createSDASubjectRelation(sdaUUID: string, subjectUUID: string): Observable<any> {
+    const payload = {
       uuidSDA: sdaUUID,
-      uuidSubject: uuid
-    }));
-    return this.http.post<any>(`${this.baseUrl}/sda/subjects`, payload);
+      uuidSubject: subjectUUID
+    };
+    return this.http.post<any>(`${this.baseUrl}/sda/subject-relation`, payload);
   }
 }

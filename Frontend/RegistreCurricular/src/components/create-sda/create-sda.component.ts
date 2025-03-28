@@ -9,6 +9,7 @@ import { SubjectsService } from '../../services/subjects.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SdaModel } from '../../models/sda/sda.model';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -98,7 +99,10 @@ export class CreateSdaComponent implements OnInit {
       next: (res) => {
         const sdaUUID = res.uuid;
         if (this.selectedSubjectUUIDs && this.selectedSubjectUUIDs.length > 0) {
-          this.sdaService.createSDASubjectsRelations(sdaUUID, this.selectedSubjectUUIDs).subscribe({
+          const requests = this.selectedSubjectUUIDs.map(subjectUUID =>
+            this.sdaService.createSDASubjectRelation(sdaUUID, subjectUUID)
+          );
+          forkJoin(requests).subscribe({
             next: () => {
               this.router.navigate(['/dashboard']);
             },
