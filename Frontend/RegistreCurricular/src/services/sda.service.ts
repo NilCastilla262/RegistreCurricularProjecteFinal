@@ -22,6 +22,7 @@ export class SdaService {
 
   createSDA(sda: SdaModel): Observable<any> {
     const body = SdaDTO.toApi(sda);
+    console.log(body);
     return this.http.post(`${this.baseUrl}/sda`, body);
   }
 
@@ -29,5 +30,13 @@ export class SdaService {
     return this.http.get<any[]>(`${this.baseUrl}/sda`).pipe(
       map(apiArray => SdaDTO.fromApiArray(apiArray))
     );
+  }
+
+  createSDASubjectsRelations(sdaUUID: string, subjectUUIDs: string[]): Observable<any> {
+    const payload = subjectUUIDs.map(uuid => ({
+      uuidSDA: sdaUUID,
+      uuidSubject: uuid
+    }));
+    return this.http.post<any>(`${this.baseUrl}/sda/subjects`, payload);
   }
 }

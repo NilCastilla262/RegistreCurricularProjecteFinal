@@ -18,16 +18,14 @@ import { SdaModel } from '../../models/sda/sda.model';
   templateUrl: './create-sda.component.html',
   styleUrl: './create-sda.component.css'
 })
+
 export class CreateSdaComponent implements OnInit {
   title: string = '';
   description: string = '';
-
   groups: GroupModel[] = [];
   selectedGroupUUID: string = '';
-
   subjects: SubjectModel[] = [];
-  selectedSubjects: string[] = [];
-
+  selectedSubjectUUIDs: string[] = [];
   errorMessage: string = '';
 
   constructor(
@@ -66,7 +64,7 @@ export class CreateSdaComponent implements OnInit {
         this.subjectsService.getSubjectsByTemplate(templateName).subscribe({
           next: (subjects) => {
             this.subjects = subjects;
-            this.selectedSubjects = [];
+            this.selectedSubjectUUIDs = [];
           },
           error: (err) => {
             this.errorMessage = 'Error carregant assignatures: ' + (err.error?.message || err.message);
@@ -82,9 +80,9 @@ export class CreateSdaComponent implements OnInit {
   onSubjectCheckboxChange(subjectUUID: string, event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.checked) {
-      this.selectedSubjects.push(subjectUUID);
+      this.selectedSubjectUUIDs.push(subjectUUID);
     } else {
-      this.selectedSubjects = this.selectedSubjects.filter(uuid => uuid !== subjectUUID);
+      this.selectedSubjectUUIDs = this.selectedSubjectUUIDs.filter(uuid => uuid !== subjectUUID);
     }
   }
 
@@ -93,12 +91,24 @@ export class CreateSdaComponent implements OnInit {
       this.errorMessage = 'Falten camps obligatoris (títol, descripció o grup).';
       return;
     }
-
-    const sda = new SdaModel(this.title, this.description, this.selectedGroupUUID, this.selectedSubjects);
-
+  
+    const sda = new SdaModel(this.title, this.description, this.selectedGroupUUID);
+  
     this.sdaService.createSDA(sda).subscribe({
       next: (res) => {
-        this.router.navigate(['/dashboard']);
+        const sdaUUID = res.uuid;
+        if (this.selectedSubjectUUIDs && this.selectedSubjectUUIDs.length > 0) {
+          this.sdaService.createSDASubjectsRelations(sdaUUID, this.selectedSubjectUUIDs).subscribe({
+            next: () => {
+              this.router.navigate(['/dashboard']);
+            },
+            error: (err) => {
+              this.errorMessage = 'Error creant les relacions: ' + (err.error?.message || err.message);
+            }
+          });
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
       },
       error: (err) => {
         this.errorMessage = 'Error creant la SDA: ' + (err.error?.message || err.message);
