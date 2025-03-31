@@ -65,7 +65,7 @@ app.use("/apirc/v1/subjects", subjectsRoutes);
 app.use("/apirc/v1/sda", sdaRoutes);
 app.use('/apirc/v1/courses', coursesRoutes);
 app.use("/apirc/v1/sda/subject-relation", sdaSubjectsRelationRoutes);
-app.use('/apirc/v1/sda/competencies', competenciesSDARoutes);
+app.use('/apirc/v1/sda/fillSDA', competenciesSDARoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: "Ruta no trobada" });
