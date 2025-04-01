@@ -1,9 +1,9 @@
 // routes/sdaSubjectsRelationRoutes.js
 const express = require("express");
 const router = express.Router();
-const { createSdaSubjectRelationController } = require("../controllers/sdaSubjectsRelationController");
+const { createSdaSubjectRelationsController } = require("../controllers/sdaSubjectsRelationController");
 const { verifyToken } = require("../middlewares/authMiddleware");
 
-router.post("/", verifyToken, createSdaSubjectRelationController);
+router.post("/", verifyToken, createSdaSubjectRelationsController);
 
 module.exports = router;
