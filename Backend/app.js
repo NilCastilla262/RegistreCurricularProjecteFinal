@@ -13,6 +13,7 @@ const sdaRoutes = require("./routes/sdaRoutes");
 const coursesRoutes = require('./routes/coursesRoutes');
 const sdaSubjectsRelationRoutes = require("./routes/sdaSubjectsRelationRoutes");
 const competenciesSDARoutes = require('./routes/competenciesSDARoutes');
+const fullSdaRoutes = require('./routes/fullSdaRoutes');
 
 const app = express();
 
@@ -66,6 +67,7 @@ app.use("/apirc/v1/sda", sdaRoutes);
 app.use('/apirc/v1/courses', coursesRoutes);
 app.use("/apirc/v1/sda/subject-relation", sdaSubjectsRelationRoutes);
 app.use('/apirc/v1/sda/fillSDA', competenciesSDARoutes);
+app.use("/apirc/v1/sda/full", fullSdaRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: "Ruta no trobada" });
