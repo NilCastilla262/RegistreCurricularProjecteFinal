@@ -1,7 +1,7 @@
 // sda.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 import { SdaModel } from '../models/sda/sda.model';
 import { SdaDTO } from '../models/sda/sda.dto';
 import { environment } from '../environments/environment';
@@ -31,11 +31,24 @@ export class SdaService {
     );
   }
 
-  createSDASubjectRelation(sdaUUID: string, subjectUUID: string): Observable<any> {
+  createSDASubjectRelation(sdaUUID: string, subjectUUIDs: string[]): Observable<any> {
     const payload = {
       uuidSDA: sdaUUID,
-      uuidSubject: subjectUUID
+      subjectUUIDs: subjectUUIDs
     };
     return this.http.post<any>(`${this.baseUrl}/sda/subject-relation`, payload);
+  }
+  fillSDA(sdaUUID: string, subjectUUIDs: string[]): Observable<any> {
+    const payload = {
+      uuidSDA: sdaUUID,
+      subjectUUIDs: subjectUUIDs
+    };
+    return this.http.post<any>(`${this.baseUrl}/sda/fillSDA`, payload);
+  }
+
+  createCompleteSDA(sdaUUID: string, subjectUUIDs: string[]): Observable<any> {
+    return this.createSDASubjectRelation(sdaUUID, subjectUUIDs).pipe(
+      switchMap(() => this.fillSDA(sdaUUID, subjectUUIDs))
+    );
   }
 }

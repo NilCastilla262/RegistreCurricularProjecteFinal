@@ -99,15 +99,12 @@ export class CreateSdaComponent implements OnInit {
       next: (res) => {
         const sdaUUID = res.uuid;
         if (this.selectedSubjectUUIDs && this.selectedSubjectUUIDs.length > 0) {
-          const requests = this.selectedSubjectUUIDs.map(subjectUUID =>
-            this.sdaService.createSDASubjectRelation(sdaUUID, subjectUUID)
-          );
-          forkJoin(requests).subscribe({
+          this.sdaService.createCompleteSDA(sdaUUID, this.selectedSubjectUUIDs).subscribe({
             next: () => {
               this.router.navigate(['/dashboard']);
             },
             error: (err) => {
-              this.errorMessage = 'Error creant les relacions: ' + (err.error?.message || err.message);
+              this.errorMessage = 'Error creant la SDA completa: ' + (err.error?.message || err.message);
             }
           });
         } else {
