@@ -11,7 +11,7 @@ export class SdaDTO {
       apiData.Title,
       apiData.Description,
       new Date(apiData.CreatedAt),
-      apiData.subjects 
+      apiData.subjects
         ? apiData.subjects.map((subject: any) => this.subjectFromApi(subject))
         : []
     );
@@ -22,6 +22,7 @@ export class SdaDTO {
       apiSubject.subjectUUID,
       apiSubject.subjectName,
       apiSubject.subjectTemplate,
+      apiSubject.subjectType,
       apiSubject.competencies
         ? apiSubject.competencies.map((comp: any) => this.competencyFromApi(comp))
         : []
@@ -35,6 +36,7 @@ export class SdaDTO {
       apiCompetency.competencyDescription,
       apiCompetency.competencyOrder,
       apiCompetency.competencyWorked,
+      apiCompetency.competencyType,
       apiCompetency.criteria
         ? apiCompetency.criteria.map((crit: any) => this.criteriaFromApi(crit))
         : []
@@ -66,12 +68,14 @@ export class SdaDTO {
         subjectUUID: subject.subjectUUID,
         subjectName: subject.subjectName,
         subjectTemplate: subject.subjectTemplate,
+        subjectType: subject.subjectType,
         competencies: subject.competencies.map(comp => ({
           competencyUUID: comp.competencyUUID,
           competencyUUIDTPL: comp.competencyUUIDTPL,
           competencyDescription: comp.competencyDescription,
           competencyOrder: comp.competencyOrder,
           competencyWorked: comp.competencyWorked,
+          competencyType: comp.competencyType,
           criteria: comp.criteria.map(crit => ({
             criteriaUUID: crit.criteriaUUID,
             criteriaUUIDTPL: crit.criteriaUUIDTPL,

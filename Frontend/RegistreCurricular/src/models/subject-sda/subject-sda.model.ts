@@ -5,6 +5,7 @@ export class SubjectSdaModel {
     private _subjectUUID: string,
     private _subjectName: string,
     private _subjectTemplate: string,
+    private _subjectType: string,
     private _competencies: CompetencieSdaModel[] = []
   ) {}
 
@@ -27,6 +28,13 @@ export class SubjectSdaModel {
   }
   set subjectTemplate(value: string) {
     this._subjectTemplate = value;
+  }
+
+  get subjectType(): string {
+    return this._subjectType;
+  }
+  set subjectType(value: string) {
+    this._subjectType = value;
   }
 
   get competencies(): CompetencieSdaModel[] {

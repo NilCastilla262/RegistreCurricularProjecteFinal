@@ -18,12 +18,14 @@ async function getFullSda(uuidSDA) {
               st.UUID AS subjectUUID,
               st.Name AS subjectName,
               st.TemplateName AS subjectTemplate,
+              st.Type AS subjectType,
               (
                 SELECT 
                   csda.UUID AS competencyUUID,
                   ct.UUID AS competencyUUIDTPL,
                   ct.Description AS competencyDescription,
                   ct.OrderBy AS competencyOrder,
+                  ct.Type AS competencyType,
                   csda.Worked AS competencyWorked,
                   (
                     SELECT 
