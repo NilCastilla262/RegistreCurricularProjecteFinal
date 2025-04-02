@@ -22,6 +22,12 @@ export class SdaService {
     );
   }
 
+  getAllSdas(): Observable<SdaModel[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/sda`).pipe(
+      map(apiArray => SdaDTO.fromApiArray(apiArray))
+    );
+  }
+
   createSDA(sda: CreateSdaModel): Observable<any> {
     const body = CreateSdaDTO.toApi(sda);
     return this.http.post(`${this.baseUrl}/sda`, body);

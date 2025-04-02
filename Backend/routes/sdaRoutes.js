@@ -1,6 +1,6 @@
 // routes/sdaRoutes.js
 const express = require("express");
-const { createSDAController } = require("../controllers/sdaController");
+const { createSDAController, getAllSdasController } = require("../controllers/sdaController");
 const { verifyToken } = require("../middlewares/authMiddleware");
 
 const router = express.Router();

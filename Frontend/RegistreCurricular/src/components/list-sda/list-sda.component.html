@@ -1,0 +1,12 @@
+<div class="list-sda">
+    <h2>Llista de SDA</h2>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    <ul>
+      <li *ngFor="let sda of sdas">
+        <h3>{{ sda.title }}</h3>
+        <p>{{ sda.description }}</p>
+        <p>Creada: {{ sda.createdAt | date:'short' }}</p>
+        <button (click)="showSda(sda.sdaUUID)">Mostrar</button>
+      </li>
+    </ul>
+  </div>

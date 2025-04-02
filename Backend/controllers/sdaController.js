@@ -1,5 +1,5 @@
 // controllers/sdaController.js
-const { createSDA } = require("../models/sdaModel");
+const { createSDA, getAllSdas } = require("../models/sdaModel");
 
 async function createSDAController(req, res) {
   try {
