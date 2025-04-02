@@ -1,5 +1,5 @@
 // sda.model.ts
-export class SdaModel {
+export class CreateSdaModel {
   constructor(
     private _title: string = '',
     private _description: string = '',

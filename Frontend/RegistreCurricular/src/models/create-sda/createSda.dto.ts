@@ -1,21 +1,21 @@
 // sda.dto.ts
-import { SdaModel } from './sda.model';
+import { CreateSdaModel } from './createSda.model';
 
-export class SdaDTO {
+export class CreateSdaDTO {
 
-  static fromApi(apiData: any): SdaModel {
-    return new SdaModel(
+  static fromApi(apiData: any): CreateSdaModel {
+    return new CreateSdaModel(
       apiData.title,
       apiData.description,
       apiData.uuidGroup,
     );
   }
 
-  static fromApiArray(apiArray: any[]): SdaModel[] {
+  static fromApiArray(apiArray: any[]): CreateSdaModel[] {
     return apiArray.map((item) => this.fromApi(item));
   }
 
-  static toApi(sda: SdaModel): any {
+  static toApi(sda: CreateSdaModel): any {
     return {
       title: sda.title,
       description: sda.description,

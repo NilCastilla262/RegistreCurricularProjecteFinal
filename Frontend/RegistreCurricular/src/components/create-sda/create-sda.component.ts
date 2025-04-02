@@ -8,7 +8,7 @@ import { SdaService } from '../../services/sda.service';
 import { SubjectsService } from '../../services/subjects.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SdaModel } from '../../models/sda/sda.model';
+import { CreateSdaModel } from '../../models/create-sda/createSda.model';
 import { forkJoin } from 'rxjs';
 
 
@@ -93,7 +93,7 @@ export class CreateSdaComponent implements OnInit {
       return;
     }
   
-    const sda = new SdaModel(this.title, this.description, this.selectedGroupUUID);
+    const sda = new CreateSdaModel(this.title, this.description, this.selectedGroupUUID);
   
     this.sdaService.createSDA(sda).subscribe({
       next: (res) => {

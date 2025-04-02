@@ -2,8 +2,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, switchMap } from 'rxjs';
-import { SdaModel } from '../models/sda/sda.model';
-import { SdaDTO } from '../models/sda/sda.dto';
+import { CreateSdaModel } from '../models/create-sda/createSda.model';
+import { CreateSdaDTO } from '../models/create-sda/createSda.dto';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -14,20 +14,20 @@ export class SdaService {
 
   constructor(private http: HttpClient) {}
 
-  getSdaByUUID(uuid: string): Observable<SdaModel> {
+  getSdaByUUID(uuid: string): Observable<CreateSdaModel> {
     return this.http.get<any>(`${this.baseUrl}/sda/${uuid}`).pipe(
-      map(apiResponse => SdaDTO.fromApi(apiResponse))
+      map(apiResponse => CreateSdaDTO.fromApi(apiResponse))
     );
   }
 
-  createSDA(sda: SdaModel): Observable<any> {
-    const body = SdaDTO.toApi(sda);
+  createSDA(sda: CreateSdaModel): Observable<any> {
+    const body = CreateSdaDTO.toApi(sda);
     return this.http.post(`${this.baseUrl}/sda`, body);
   }
 
-  getAllSdas(): Observable<SdaModel[]> {
+  getAllSdas(): Observable<CreateSdaModel[]> {
     return this.http.get<any[]>(`${this.baseUrl}/sda`).pipe(
-      map(apiArray => SdaDTO.fromApiArray(apiArray))
+      map(apiArray => CreateSdaDTO.fromApiArray(apiArray))
     );
   }
 
