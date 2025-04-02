@@ -7,4 +7,6 @@ const router = express.Router();
 
 router.post("/", verifyToken, createSDAController);
 
+router.get("/", verifyToken, getAllSdasController);
+
 module.exports = router;

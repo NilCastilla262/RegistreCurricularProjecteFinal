@@ -20,4 +20,14 @@ async function createSDA(uuidUser, uuidGroup, title, description) {
   return newUUID;
 }
 
-module.exports = { createSDA };
+async function getAllSdas() {
+  const pool = await poolPromise;
+  const result = await pool.request()
+    .query(`
+      SELECT UUID, Title, Description, CreatedAt, UUIDGroup
+      FROM SDA
+    `);
+  return result.recordset;
+}
+
+module.exports = { createSDA, getAllSdas };

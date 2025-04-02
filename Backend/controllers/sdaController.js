@@ -19,6 +19,17 @@ async function createSDAController(req, res) {
   }
 }
 
+async function getAllSdasController(req, res) {
+  try {
+    const sdas = await getAllSdas();
+    return res.status(200).json(sdas);
+  } catch (error) {
+    console.error("Error en getAllSdasController:", error);
+    return res.status(500).json({ error: "Error intern", message: error.message });
+  }
+}
+
 module.exports = {
-  createSDAController
+  createSDAController,
+  getAllSdasController
 };
