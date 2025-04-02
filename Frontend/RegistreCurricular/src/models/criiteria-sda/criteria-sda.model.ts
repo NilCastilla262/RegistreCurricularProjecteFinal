@@ -1,4 +1,4 @@
-export class CriteriaSda {
+export class CriteriaSdaModel {
     constructor(
       private _criteriaUUID: string,
       private _criteriaUUIDTPL: string,

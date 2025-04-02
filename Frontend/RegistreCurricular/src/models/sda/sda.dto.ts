@@ -1,12 +1,12 @@
 // sda.dto.ts
-import { Sda } from './sda.model';
-import { SubjectSda } from '../subject-sda/subject-sda.model';
-import { CompetencieSda } from '../competencie-sda/competencie-sda.model';
-import { CriteriaSda } from '../criiteria-sda/criteria-sda.model';
+import { SdaModel } from './sda.model';
+import { SubjectSdaModel } from '../subject-sda/subject-sda.model';
+import { CompetencieSdaModel } from '../competencie-sda/competencie-sda.model';
+import { CriteriaSdaModel } from '../criiteria-sda/criteria-sda.model';
 
 export class SdaDTO {
-  static fromApi(apiData: any): Sda {
-    return new Sda(
+  static fromApi(apiData: any): SdaModel {
+    return new SdaModel(
       apiData.sdaUUID,
       apiData.Title,
       apiData.Description,
@@ -17,8 +17,8 @@ export class SdaDTO {
     );
   }
 
-  private static subjectFromApi(apiSubject: any): SubjectSda {
-    return new SubjectSda(
+  private static subjectFromApi(apiSubject: any): SubjectSdaModel {
+    return new SubjectSdaModel(
       apiSubject.subjectUUID,
       apiSubject.subjectName,
       apiSubject.subjectTemplate,
@@ -28,8 +28,8 @@ export class SdaDTO {
     );
   }
 
-  private static competencyFromApi(apiCompetency: any): CompetencieSda {
-    return new CompetencieSda(
+  private static competencyFromApi(apiCompetency: any): CompetencieSdaModel {
+    return new CompetencieSdaModel(
       apiCompetency.competencyUUID,
       apiCompetency.competencyUUIDTPL,
       apiCompetency.competencyDescription,
@@ -41,8 +41,8 @@ export class SdaDTO {
     );
   }
 
-  private static criteriaFromApi(apiCriteria: any): CriteriaSda {
-    return new CriteriaSda(
+  private static criteriaFromApi(apiCriteria: any): CriteriaSdaModel {
+    return new CriteriaSdaModel(
       apiCriteria.criteriaUUID,
       apiCriteria.criteriaUUIDTPL,
       apiCriteria.criteriaDescription,
@@ -52,11 +52,11 @@ export class SdaDTO {
     );
   }
 
-  static fromApiArray(apiArray: any[]): Sda[] {
+  static fromApiArray(apiArray: any[]): SdaModel[] {
     return apiArray.map(item => this.fromApi(item));
   }
 
-  static toApi(sda: Sda): any {
+  static toApi(sda: SdaModel): any {
     return {
       sdaUUID: sda.sdaUUID,
       Title: sda.title,

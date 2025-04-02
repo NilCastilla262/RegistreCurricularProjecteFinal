@@ -1,11 +1,11 @@
-import { CompetencieSda } from '../competencie-sda/competencie-sda.model';
+import { CompetencieSdaModel } from '../competencie-sda/competencie-sda.model';
 
-export class SubjectSda {
+export class SubjectSdaModel {
   constructor(
     private _subjectUUID: string,
     private _subjectName: string,
     private _subjectTemplate: string,
-    private _competencies: CompetencieSda[] = []
+    private _competencies: CompetencieSdaModel[] = []
   ) {}
 
   get subjectUUID(): string {
@@ -29,10 +29,10 @@ export class SubjectSda {
     this._subjectTemplate = value;
   }
 
-  get competencies(): CompetencieSda[] {
+  get competencies(): CompetencieSdaModel[] {
     return this._competencies;
   }
-  set competencies(value: CompetencieSda[]) {
+  set competencies(value: CompetencieSdaModel[]) {
     this._competencies = value;
   }
 }

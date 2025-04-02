@@ -1,12 +1,12 @@
-import { SubjectSda } from '../subject-sda/subject-sda.model';
+import { SubjectSdaModel } from '../subject-sda/subject-sda.model';
 
-export class Sda {
+export class SdaModel {
   constructor(
     private _sdaUUID: string,
     private _title: string,
     private _description: string,
     private _createdAt: Date,
-    private _subjects: SubjectSda[] = []
+    private _subjects: SubjectSdaModel[] = []
   ) {}
 
   get sdaUUID(): string {
@@ -37,10 +37,10 @@ export class Sda {
     this._createdAt = value;
   }
 
-  get subjects(): SubjectSda[] {
+  get subjects(): SubjectSdaModel[] {
     return this._subjects;
   }
-  set subjects(value: SubjectSda[]) {
+  set subjects(value: SubjectSdaModel[]) {
     this._subjects = value;
   }
 }

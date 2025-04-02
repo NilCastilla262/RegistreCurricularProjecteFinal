@@ -1,13 +1,13 @@
-import { CriteriaSda } from '../criiteria-sda/criteria-sda.model';
+import { CriteriaSdaModel } from '../criiteria-sda/criteria-sda.model';
 
-export class CompetencieSda {
+export class CompetencieSdaModel {
   constructor(
     private _competencyUUID: string,
     private _competencyUUIDTPL: string,
     private _competencyDescription: string,
     private _competencyOrder: number,
     private _competencyWorked: boolean,
-    private _criteria: CriteriaSda[] = []
+    private _criteria: CriteriaSdaModel[] = []
   ) {}
 
   get competencyUUID(): string {
@@ -45,10 +45,10 @@ export class CompetencieSda {
     this._competencyWorked = value;
   }
 
-  get criteria(): CriteriaSda[] {
+  get criteria(): CriteriaSdaModel[] {
     return this._criteria;
   }
-  set criteria(value: CriteriaSda[]) {
+  set criteria(value: CriteriaSdaModel[]) {
     this._criteria = value;
   }
 }
