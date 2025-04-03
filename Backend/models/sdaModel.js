@@ -24,8 +24,16 @@ async function getAllSdas() {
   const pool = await poolPromise;
   const result = await pool.request()
     .query(`
-      SELECT UUID, Title, Description, CreatedAt, UUIDGroup
-      FROM SDA
+      SELECT 
+        sda.UUID AS sdaUUID,
+        sda.Title,
+        sda.Description,
+        sda.CreatedAt,
+        sda.UUIDGroup,
+        g.Name AS groupName
+      FROM SDA sda
+      LEFT JOIN Groups g 
+        ON sda.UUIDGroup = g.UUID
     `);
   return result.recordset;
 }
