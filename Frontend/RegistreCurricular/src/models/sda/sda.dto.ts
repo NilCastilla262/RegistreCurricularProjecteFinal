@@ -11,6 +11,8 @@ export class SdaDTO {
       apiData.Title,
       apiData.Description,
       new Date(apiData.CreatedAt),
+      apiData.UUIDGroup,
+      apiData.groupName,
       apiData.subjects
         ? apiData.subjects.map((subject: any) => this.subjectFromApi(subject))
         : []
@@ -64,6 +66,8 @@ export class SdaDTO {
       Title: sda.title,
       Description: sda.description,
       CreatedAt: sda.createdAt,
+      UUIDGroup: sda.uuidGroup,
+      groupName: sda.groupName,
       subjects: sda.subjects.map(subject => ({
         subjectUUID: subject.subjectUUID,
         subjectName: subject.subjectName,

@@ -13,6 +13,8 @@ async function getFullSda(uuidSDA) {
           sda.Title,
           sda.Description,
           sda.CreatedAt,
+          sda.UUIDGroup,
+          g.Name AS groupName,
           (
             SELECT 
               st.UUID AS subjectUUID,
@@ -56,6 +58,8 @@ async function getFullSda(uuidSDA) {
             FOR JSON PATH
           ) AS subjects
         FROM SDA sda
+        LEFT JOIN Groups g 
+          ON sda.UUIDGroup = g.UUID
         WHERE sda.UUID = @uuidSDA
         FOR JSON PATH, WITHOUT_ARRAY_WRAPPER
       ) AS fullSda;

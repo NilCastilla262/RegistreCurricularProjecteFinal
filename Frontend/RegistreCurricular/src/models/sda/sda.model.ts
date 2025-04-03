@@ -6,6 +6,8 @@ export class SdaModel {
     private _title: string,
     private _description: string,
     private _createdAt: Date,
+    private _uuidGroup: string,
+    private _groupName: string,
     private _subjects: SubjectSdaModel[] = []
   ) {}
 
@@ -35,6 +37,20 @@ export class SdaModel {
   }
   set createdAt(value: Date) {
     this._createdAt = value;
+  }
+
+  get uuidGroup(): string {
+    return this._uuidGroup;
+  }
+  set uuidGroup(value: string) {
+    this._uuidGroup = value;
+  }
+
+  get groupName(): string {
+    return this._groupName;
+  }
+  set groupName(value: string) {
+    this._groupName = value;
   }
 
   get subjects(): SubjectSdaModel[] {
