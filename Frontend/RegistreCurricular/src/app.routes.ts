@@ -4,6 +4,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ChooseCenterComponent } from './components/choose-center/choose-center.component';
 import { CreateSdaComponent } from './components/create-sda/create-sda.component';
 import { ListSdaComponent } from './components/list-sda/list-sda.component';
+import { ShowSdaComponent } from './components/show-sda/show-sda.component';
 
 export const routes: Routes = [
     {
@@ -27,6 +28,8 @@ export const routes: Routes = [
         path: 'list-sda',
         component: ListSdaComponent,
     },
+    {   path: 'show-sda/:uuid', 
+        component: ShowSdaComponent },
     {
         path: 'dashboard',
         component: DashboardComponent,

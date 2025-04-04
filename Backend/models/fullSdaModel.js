@@ -42,6 +42,7 @@ async function getFullSda(uuidSDA) {
                       ON cr.UUID = crsda.UUIDCriteria 
                          AND crsda.UUIDSDA = sda.UUID
                     WHERE cr.UUIDCompetencie = ct.UUID
+                    ORDER BY cr.OrderByMain ASC, cr.OrderBy ASC
                     FOR JSON PATH
                   ) AS criteria
                 FROM CompetenciesTPL ct
@@ -49,12 +50,14 @@ async function getFullSda(uuidSDA) {
                   ON ct.UUID = csda.UUIDCompetencies 
                      AND csda.UUIDSDA = sda.UUID
                 WHERE ct.UUIDSubject = st.UUID
+                ORDER BY ct.Type ASC, ct.OrderBy ASC
                 FOR JSON PATH
               ) AS competencies
             FROM SubjectsTPL st
             INNER JOIN SDASubjectsRelation ssr 
               ON st.UUID = ssr.UUIDSubject 
                  AND ssr.UUIDSDA = sda.UUID
+            ORDER BY st.Type ASC, st.Name ASC
             FOR JSON PATH
           ) AS subjects
         FROM SDA sda

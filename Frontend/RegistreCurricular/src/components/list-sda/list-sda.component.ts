@@ -26,7 +26,6 @@ export class ListSdaComponent implements OnInit {
     this.sdaService.getAllSdas().subscribe({
       next: (data) => {
         this.sdas = data;
-        console.log(this.sdas);
       },
       error: (err) => {
         this.errorMessage = 'Error carregant SDA: ' + (err.error?.message || err.message);

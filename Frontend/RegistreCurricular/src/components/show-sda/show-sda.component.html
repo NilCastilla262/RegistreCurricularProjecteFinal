@@ -1,0 +1,29 @@
+<div class="show-sda">
+  <h2>Detalls de la SDA</h2>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <div *ngIf="sda">
+    <h3>{{ sda.title }}</h3>
+    <p>{{ sda.description }}</p>
+    <p>Grup: {{ sda.groupName }}</p>
+    <p>Creada: {{ sda.createdAt | date:'short' }}</p>
+
+    <div *ngFor="let subject of sda.subjects" class="subject">
+      <h4>
+        Assignatura: {{ subject.subjectName }} 
+        <small>({{ subject.subjectTemplate }} - Tipus: {{ subject.subjectType }})</small>
+      </h4>
+      <div *ngFor="let competency of subject.competencies" class="competency">
+        <h5>
+          Competència: {{ competency.competencyDescription }}
+          <small>(ordre: {{ competency.competencyOrder }}, tipus: {{ competency.competencyType }}, Worked: {{ competency.competencyWorked }})</small>
+        </h5>
+        <div *ngFor="let crit of competency.criteria" class="criteria">
+          <h6>
+            Criteri: {{ crit.criteriaDescription }}
+            <small>(ordre: {{ crit.criteriaMainOrder }}.{{ crit.criteriaOrder }}, Worked: {{ crit.criteriaWorked }})</small>
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
