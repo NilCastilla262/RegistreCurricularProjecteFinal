@@ -10,17 +10,22 @@
     <div *ngFor="let subject of sda.subjects" class="subject">
       <h4>
         Assignatura: {{ subject.subjectName }} 
-        <small>({{ subject.subjectTemplate }} - Tipus: {{ subject.subjectType }})</small>
+        <small>({{ subject.subjectTemplate }})</small>
       </h4>
       <div *ngFor="let competency of subject.competencies" class="competency">
         <h5>
-          Competència: {{ competency.competencyDescription }}
-          <small>(ordre: {{ competency.competencyOrder }}, tipus: {{ competency.competencyType }}, Worked: {{ competency.competencyWorked }})</small>
+          <input type="checkbox" [value]="competency.competencyUUID" disabled />
+          {{ competency.competencyOrder }}.
+          <span *ngIf="competency.competencyType === 1">Competència:</span>
+          <span *ngIf="competency.competencyType === 0">Saber:</span>
+          {{ competency.competencyDescription }}
         </h5>
         <div *ngFor="let crit of competency.criteria" class="criteria">
           <h6>
-            Criteri: {{ crit.criteriaDescription }}
-            <small>(ordre: {{ crit.criteriaMainOrder }}.{{ crit.criteriaOrder }}, Worked: {{ crit.criteriaWorked }})</small>
+            <input type="checkbox" [value]="crit.criteriaUUID"
+              [checked]="crit.criteriaWorked"
+              (change)="onCriteriaChange($event, crit, competency)"/>
+            {{ crit.criteriaMainOrder }}.{{ crit.criteriaOrder }}. Criteri: {{ crit.criteriaDescription }}
           </h6>
         </div>
       </div>

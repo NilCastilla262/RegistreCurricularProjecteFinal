@@ -7,7 +7,7 @@ export class CompetencieSdaModel {
     private _competencyDescription: string,
     private _competencyOrder: number,
     private _competencyWorked: boolean,
-    private _competencyType: string,
+    private _competencyType: number,
     private _criteria: CriteriaSdaModel[] = []
   ) {}
 
@@ -46,10 +46,10 @@ export class CompetencieSdaModel {
     this._competencyWorked = value;
   }
 
-  get competencyType(): string {
+  get competencyType(): number {
     return this._competencyType;
   }
-  set competencyType(value: string) {
+  set competencyType(value: number) {
     this._competencyType = value;
   }
 

@@ -1,5 +1,5 @@
 // controllers/sdaController.js
-const { createSDA, getAllSdas } = require("../models/sdaModel");
+const { createSDA, getAllSdas, markCriteria } = require("../models/sdaModel");
 
 async function createSDAController(req, res) {
   try {
@@ -14,7 +14,6 @@ async function createSDAController(req, res) {
 
     return res.status(201).json({ message: "SDA creada correctament", uuid: newUUID });
   } catch (error) {
-    console.error("Error createSDAController:", error);
     return res.status(500).json({ error: "Error intern creant SDA", message: error.message });
   }
 }
@@ -24,12 +23,24 @@ async function getAllSdasController(req, res) {
     const sdas = await getAllSdas();
     return res.status(200).json(sdas);
   } catch (error) {
-    console.error("Error en getAllSdasController:", error);
     return res.status(500).json({ error: "Error intern", message: error.message });
+  }
+}
+
+async function markCriteriaController(req, res) {
+  try {
+    const { uuidSDA, uuidCriteria, worked } = req.body;
+    if (!uuidSDA || !uuidCriteria || (worked === undefined)) {
+      return res.status(400).json({ error: 'Missing required fields: uuidSDA, uuidCriteria, worked' });
+    }
+    const result = await markCriteria(uuidSDA, uuidCriteria, worked);
+    return res.status(200).json(result);
+  } catch (error) {    return res.status(500).json({ error: 'Internal error', message: error.message });
   }
 }
 
 module.exports = {
   createSDAController,
-  getAllSdasController
+  getAllSdasController,
+  markCriteriaController
 };

@@ -41,6 +41,11 @@ export class SdaService {
     return this.http.post<any>(`${this.baseUrl}/sda/subject-relation`, payload);
   }
 
+  markCriteria(sdaUUID: string, criteriaUUID: string, competencyUUID: string, worked: boolean): Observable<any> {
+    const payload = { uuidSDA: sdaUUID, uuidCriteria: criteriaUUID, uuidCompetency: competencyUUID, worked };
+    return this.http.post<any>(`${this.baseUrl}/sda/markCriteria`, payload);
+  }
+
   fillSDA(sdaUUID: string, subjectUUIDs: string[]): Observable<any> {
     const payload = {
       uuidSDA: sdaUUID,

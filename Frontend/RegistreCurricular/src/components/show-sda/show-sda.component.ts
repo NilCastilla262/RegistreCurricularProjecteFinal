@@ -33,4 +33,19 @@ export class ShowSdaComponent implements OnInit {
       this.errorMessage = 'UUID no especificada.';
     }
   }
+  onCriteriaChange(event: Event, crit: any, comp: any): void {
+    const input = event.target as HTMLInputElement;
+    const newState = input.checked;
+    if (this.sda) {
+      this.sdaService.markCriteria(this.sda.sdaUUID, crit.criteriaUUID, comp.competencyUUID, newState)
+        .subscribe({
+          next: (res) => {
+            crit.criteriaWorked = newState;
+            comp.competencyWorked = res.competencyWorked;
+          },
+          error: (err) => {
+          }
+        });
+    }
+  }  
 }
