@@ -1,10 +1,11 @@
 // routes/groupsRoutes.js
 const express = require("express");
-const { getGroupsByUser } = require("../controllers/groupsController");
+const { getGroupsByUser, getResumeController } = require("../controllers/groupsController");
 const { verifyToken } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
 router.get("/", verifyToken, getGroupsByUser);
+router.get("/resume", verifyToken, getResumeController);
 
 module.exports = router;
