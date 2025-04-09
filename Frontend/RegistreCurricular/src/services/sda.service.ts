@@ -54,6 +54,11 @@ export class SdaService {
     return this.http.post<any>(`${this.baseUrl}/sda/fillSDA`, payload);
   }
 
+  getResum(groupUUIDs: string[]): Observable<any> {
+    const groupsParam = groupUUIDs.join(',');
+    return this.http.get<any>(`${this.baseUrl}/resum?groups=${groupsParam}`);
+  }
+
   createCompleteSDA(sdaUUID: string, subjectUUIDs: string[]): Observable<CreateSdaModel> {
     return this.createSDASubjectRelation(sdaUUID, subjectUUIDs).pipe(
       switchMap(() => this.fillSDA(sdaUUID, subjectUUIDs)),
