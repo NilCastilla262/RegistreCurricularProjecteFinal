@@ -1,5 +1,5 @@
 // controllers/groupsController.js
-const { getGroupsByUserUUID } = require("../models/groupsModel");
+const { getGroupsByUserUUID, getResumeForGroups } = require("../models/groupsModel");
 
 async function getGroupsByUser(req, res) {
   try {
