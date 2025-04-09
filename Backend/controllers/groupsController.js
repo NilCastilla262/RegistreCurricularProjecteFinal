@@ -14,10 +14,20 @@ async function getGroupsByUser(req, res) {
 
 async function getResumeController(req, res) {
   try {
-    const { groups } = req.body;
-    if (!groups || !Array.isArray(groups) || groups.length === 0) {
-      return res.status(400).json({ error: "Array of group UUIDs required" });
+    let { groups } = req.query;
+    
+    if (!groups) {
+      return res.status(400).json({ error: "Es requereix un array de UUIDs de grups" });
     }
+    
+    if (typeof groups === 'string') {
+      groups = groups.split(',').map(s => s.trim());
+    }
+    
+    if (!Array.isArray(groups) || groups.length === 0) {
+      return res.status(400).json({ error: "Es requereix un array de UUIDs de grups" });
+    }
+    
     const resume = await getResumeForGroups(groups);
     return res.status(200).json(resume);
   } catch (error) {
