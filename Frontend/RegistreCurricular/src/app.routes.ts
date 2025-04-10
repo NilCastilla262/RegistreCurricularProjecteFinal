@@ -5,6 +5,7 @@ import { ChooseCenterComponent } from './components/choose-center/choose-center.
 import { CreateSdaComponent } from './components/create-sda/create-sda.component';
 import { ListSdaComponent } from './components/list-sda/list-sda.component';
 import { ShowSdaComponent } from './components/show-sda/show-sda.component';
+import { CreateResumeComponent } from './components/create-resume/create-resume.component';
 
 export const routes: Routes = [
     {
@@ -33,5 +34,9 @@ export const routes: Routes = [
     {
         path: 'dashboard',
         component: DashboardComponent,
+    },
+    {
+        path: 'create-resume',
+        component: CreateResumeComponent,
     },
 ];
