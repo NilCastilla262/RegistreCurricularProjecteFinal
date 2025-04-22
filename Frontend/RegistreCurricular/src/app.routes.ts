@@ -6,6 +6,7 @@ import { CreateSdaComponent } from './components/create-sda/create-sda.component
 import { ListSdaComponent } from './components/list-sda/list-sda.component';
 import { ShowSdaComponent } from './components/show-sda/show-sda.component';
 import { CreateResumeComponent } from './components/create-resume/create-resume.component';
+import { ShowResumeComponent } from './components/show-resume/show-resume.component';
 
 export const routes: Routes = [
     {
@@ -29,7 +30,7 @@ export const routes: Routes = [
         path: 'list-sda',
         component: ListSdaComponent,
     },
-    {   path: 'show-sda/:uuid', 
+    {   path: 'show-sda/:uuid',
         component: ShowSdaComponent },
     {
         path: 'dashboard',
@@ -39,4 +40,8 @@ export const routes: Routes = [
         path: 'create-resume',
         component: CreateResumeComponent,
     },
+    {
+      path: 'show-resume',
+      component: ShowResumeComponent,
+  },
 ];
