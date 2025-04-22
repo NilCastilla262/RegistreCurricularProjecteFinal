@@ -14,6 +14,7 @@ interface Competency {
   name: string;
   order: number;
   criteria: Criteria[];
+  expanded: boolean;
 }
 
 interface SubjectGroup {
@@ -90,7 +91,8 @@ export class ShowResumeComponent implements OnInit {
         comp = {
           name: row.CompetencyDescription,
           order: row.OrderByCompetency,
-          criteria: []
+          criteria: [],
+          expanded: true
         };
         subj.competencies.push(comp);
       }
