@@ -9,7 +9,7 @@
       <select [(ngModel)]="selectedGroupUUID" name="selectedGroup">
         <option [value]="''" disabled>-- Selecciona un grup --</option>
         <option *ngFor="let group of groups" [value]="group.uuid">
-          {{ group.name }} ({{ group.courseName }})
+          {{ group.name }} ({{ group.courseName }}) ({{ group.year }})
         </option>
       </select>
     </div>
