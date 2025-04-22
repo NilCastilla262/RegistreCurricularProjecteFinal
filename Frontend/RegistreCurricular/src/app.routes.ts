@@ -11,7 +11,7 @@ import { ShowResumeComponent } from './components/show-resume/show-resume.compon
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: 'dashboard',
         pathMatch: 'full',
     },
     {
