@@ -1,0 +1,7 @@
+.subject-header {
+  cursor: pointer;
+  user-select: none;
+}
+.subject-body {
+  padding-left: 1rem;
+}
