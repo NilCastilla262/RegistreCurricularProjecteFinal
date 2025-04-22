@@ -9,9 +9,15 @@
         <h3 (click)="comp.expanded = !comp.expanded" class="competency-header">
           {{ comp.expanded ? '▾' : '▸' }} {{ comp.order }}. {{ comp.name }}
         </h3>
-        <ul *ngIf="comp.expanded">
-          <li *ngFor="let crit of comp.criteria">
-            {{ crit.mainOrder }}.{{ crit.order }}. {{ crit.name }} — Total treballat: {{ crit.total }}
+
+        <ul *ngIf="comp.expanded" class="criteria-list">
+          <li *ngFor="let crit of comp.criteria" class="criteria-row">
+            <span class="criteria-desc">
+              {{ crit.mainOrder }}.{{ crit.order }}. {{ crit.name }}
+            </span>
+            <span class="criteria-total">
+              Treballat:{{ crit.total }}
+            </span>
           </li>
         </ul>
       </div>
