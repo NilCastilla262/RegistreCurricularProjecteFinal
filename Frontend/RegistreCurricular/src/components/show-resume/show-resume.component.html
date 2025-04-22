@@ -1,1 +1,28 @@
-<p>show-resume works!</p>
+<table *ngIf="resume.length > 0; else noData">
+  <thead>
+    <tr>
+      <th>Assumpte</th>
+      <th>Competència</th>
+      <th>Ordre Competència</th>
+      <th>Criteri</th>
+      <th>Ordre Criteri Principal</th>
+      <th>Ordre Criteri</th>
+      <th>Total Treballat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of resume">
+      <td>{{ row.Subject }}</td>
+      <td>{{ row.CompetencyDescription }}</td>
+      <td>{{ row.OrderByCompetency }}</td>
+      <td>{{ row.CriteriaDescription }}</td>
+      <td>{{ row.OrderByMainCriteria }}</td>
+      <td>{{ row.OrderByCriteria }}</td>
+      <td>{{ row.TotalWorked }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #noData>
+  <p>No s’han trobat dades per mostrar.</p>
+</ng-template>

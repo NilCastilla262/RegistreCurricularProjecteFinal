@@ -1,25 +1,19 @@
 <div class="create-resum">
-    <h2>Crea un nou Resum</h2>
-    
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-    
-    <form>
-      <div>
-        <label>Grup:</label>
-        <select [(ngModel)]="selectedGroupUUID" name="selectedGroup">
-          <option [value]="''" disabled selected>-- Selecciona un grup --</option>
-          <option *ngFor="let group of groups" [value]="group.uuid">
-            {{ group.name }} ({{ group.courseName }})
-          </option>
-        </select>
-      </div>
-  
-      <button type="button" (click)="getResum()">Obtenir Resum</button>
-    </form>
-  
-    <div *ngIf="resum">
-      <h3>Resum obtingut</h3>
-      <pre>{{ resum | json }}</pre>
+  <h2>Crea un nou Resum</h2>
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <form>
+    <div>
+      <label>Grup:</label>
+      <select [(ngModel)]="selectedGroupUUID" name="selectedGroup">
+        <option [value]="''" disabled>-- Selecciona un grup --</option>
+        <option *ngFor="let group of groups" [value]="group.uuid">
+          {{ group.name }} ({{ group.courseName }})
+        </option>
+      </select>
     </div>
-  </div>
-  
+
+    <button type="button" (click)="goToResume()">Veure Resum</button>
+  </form>
+</div>
