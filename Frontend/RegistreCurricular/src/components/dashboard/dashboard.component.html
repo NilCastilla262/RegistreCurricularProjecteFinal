@@ -1,11 +1,34 @@
-<div class="dashboard-buttons">
-  <button routerLink="/create-sda" class="btn">
-    Crear SDA
-  </button>
-  <button routerLink="/list-sda" class="btn">
-    Veure SDA
-  </button>
-  <button routerLink="/create-resume" class="btn">
-    Veure Resum
-  </button>
-</div>
+<ng-container *ngIf="centerRole === 1; else adminView">
+  <div class="dashboard-buttons">
+    <button routerLink="/create-sda" class="btn">
+      Crear SDA
+    </button>
+    <button routerLink="/list-sda" class="btn">
+      Veure SDA
+    </button>
+    <button routerLink="/create-resume" class="btn">
+      Veure Resum
+    </button>
+  </div>
+</ng-container>
+
+<ng-template #adminView>
+  <div class="dashboard-buttons">
+    <button routerLink="/create-sda" class="btn">
+      Crear SDA
+    </button>
+    <button routerLink="/list-sda" class="btn">
+      Veure SDA
+    </button>
+    <button routerLink="/create-resume" class="btn">
+      Veure Resum
+    </button>
+
+    <button routerLink="/create-groups" class="btn">
+      Crear Grups
+    </button>
+    <button routerLink="/manage-teachers" class="btn">
+      Gestionar Professors
+    </button>
+  </div>
+</ng-template>
