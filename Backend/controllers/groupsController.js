@@ -1,5 +1,5 @@
 // controllers/groupsController.js
-const { getGroupsByUserUUID, getResumeForGroups } = require("../models/groupsModel");
+const { getGroupsByUserUUID, getResumeForGroups, getByCenterAndYear } = require("../models/groupsModel");
 
 async function getGroupsByUser(req, res) {
   try {
@@ -36,7 +36,29 @@ async function getResumeController(req, res) {
   }
 }
 
+async function getByCenterAndYearController(req, res) {
+  const year = req.query.year;
+  console.log("Any: ", year);
+  if (!year) {
+    return res
+      .status(400)
+      .json({ error: "Cal indicar ?year=YYYY-YYYY" });
+  }
+
+  try {
+    const centerName = req.centerName;
+    const rows = await getByCenterAndYear(centerName, year);
+    return res.status(200).json(rows);
+  } catch (err) {
+    console.error("Error fetching groups by center/year:", err);
+    return res
+      .status(500)
+      .json({ error: "Error recuperant grups" });
+  }
+}
+
 module.exports = { 
   getGroupsByUser,
   getResumeController,
+  getByCenterAndYearController,
  };

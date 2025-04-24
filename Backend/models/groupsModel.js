@@ -43,7 +43,20 @@ async function getResumeForGroups(groupUUIDs) {
 }
 
 
+async function getByCenterAndYear(centerName, year) {
+  const pool = await poolPromise;
+  const query = `
+    SELECT *
+    FROM Groups
+    WHERE CenterName = '${centerName}'
+      AND Year       = '${year}'
+  `;
+  const result = await pool.request().query(query);
+  return result.recordset;
+}
+
 module.exports = {
   getGroupsByUserUUID,
   getResumeForGroups,
+  getByCenterAndYear,
 };
