@@ -16,13 +16,36 @@ import competenciesSDARoutes from "./routes/competenciesSDARoutes.js";
 import fullSdaRoutes from "./routes/fullSdaRoutes.js";
 import fs from "fs";
 import yaml from "js-yaml";
+import swaggerAutogen from 'swagger-autogen';
 
 const app = express();
+const outputFile = './swagger2.yaml';
 
 const swaggerDocument = yaml.load(
-  fs.readFileSync(new URL("./swagger.yaml", import.meta.url), "utf8")
+  fs.readFileSync(new URL("./swagger2.yaml", import.meta.url), "utf8")
 );
+const endpointsFiles = ['./app.js'];
+const doc = {
+  openapi: '3.0.0',
+  info: {
+    title: 'Registre Curricular API',
+    version: '1.0.0',
+    description: 'Documentació generada automàticament',
+  },
+  servers: [{ url: 'http://localhost:5000' }],
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      }
+    }
+  },
+  security: [{ bearerAuth: [] }]
+};
 
+swaggerAutogen()(outputFile, endpointsFiles, doc)
 app.use(
   "/api-docs",
   swaggerUi.serve,
