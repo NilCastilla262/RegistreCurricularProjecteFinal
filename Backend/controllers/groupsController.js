@@ -38,7 +38,6 @@ async function getResumeController(req, res) {
 
 async function getByCenterAndYearController(req, res) {
   const year = req.query.year;
-  console.log("Any: ", year);
   if (!year) {
     return res
       .status(400)
