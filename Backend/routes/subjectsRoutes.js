@@ -1,9 +1,10 @@
-// routes/subjectsRoutes.js
-const express = require("express");
-const { getSubjects } = require("../controllers/subjectsController");
+//routes/subjectsRoutes.js
+import express from "express";
+import { getSubjects } from "../controllers/subjectsController.js";
+import { verifyToken } from "../middlewares/authMiddleware.js";
+
 const router = express.Router();
-const { verifyToken } = require("../middlewares/authMiddleware");
 
 router.get("/", verifyToken, getSubjects);
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
 // controllers/competenciesSDAModel.js
-const sql = require('mssql');
-const { poolPromise } = require('../config/db');
+import sql from "mssql";
+import { poolPromise } from "../config/db.js";
 
 async function createCompetenciesAndCriteriaSDAForSubjects(uuidSDA, subjectUUIDs) {
   const pool = await poolPromise;
@@ -48,4 +48,4 @@ async function createCompetenciesAndCriteriaSDAForSubjects(uuidSDA, subjectUUIDs
   }
 }
 
-module.exports = { createCompetenciesAndCriteriaSDAForSubjects };
+export { createCompetenciesAndCriteriaSDAForSubjects };

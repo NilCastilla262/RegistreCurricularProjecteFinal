@@ -1,5 +1,5 @@
 // controllers/coursesController.js
-const { getTemplateNameByCourse } = require('../models/coursesModel');
+import { getTemplateNameByCourse } from "../models/coursesModel.js";
 
 async function getTemplateByCourseName(req, res) {
   try {
@@ -17,4 +17,4 @@ async function getTemplateByCourseName(req, res) {
   }
 }
 
-module.exports = { getTemplateByCourseName };
+export { getTemplateByCourseName };

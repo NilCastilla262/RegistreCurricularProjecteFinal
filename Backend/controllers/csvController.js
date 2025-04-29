@@ -1,7 +1,7 @@
 // controllers/csvController.js
-const fs = require('fs');
-const csv = require('csv-parser');
-const CompetenciesModel = require('../models/competenciesModel');
+import fs from "fs";
+import csv from "csv-parser";
+import CompetenciesModel from "../models/competenciesModel.js";
 
 function processCsvData(csvRows, subjectType, competencyType) {
   let result = [];
@@ -78,6 +78,8 @@ async function uploadCsv(req, res) {
     });
 }
 
-module.exports = {
+export {
   uploadCsv,
 };
+
+export default { uploadCsv };

@@ -1,6 +1,6 @@
 // models/fullSdaModel.js
-const sql = require('mssql');
-const { poolPromise } = require('../config/db');
+import sql from "mssql";
+import { poolPromise } from "../config/db.js";
 
 async function getFullSda(uuidSDA) {
   const pool = await poolPromise;
@@ -70,4 +70,4 @@ async function getFullSda(uuidSDA) {
   return result.recordset[0].fullSda;
 }
 
-module.exports = { getFullSda };
+export { getFullSda };

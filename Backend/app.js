@@ -1,21 +1,21 @@
 //app.js
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const rateLimit = require("express-rate-limit");
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import rateLimit from "express-rate-limit";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
-const { poolPromise } = require("./config/db");
-const csvRoutes = require("./routes/csvRoutes");
-const authRoutes = require("./routes/authRoutes");
-const groupsRoutes = require("./routes/groupsRoutes");
-const subjectsRoutes = require("./routes/subjectsRoutes");
-const sdaRoutes = require("./routes/sdaRoutes");
-const coursesRoutes = require('./routes/coursesRoutes');
-const sdaSubjectsRelationRoutes = require("./routes/sdaSubjectsRelationRoutes");
-const competenciesSDARoutes = require('./routes/competenciesSDARoutes');
-const fullSdaRoutes = require('./routes/fullSdaRoutes');
+import { poolPromise } from "./config/db.js";
+import csvRoutes from "./routes/csvRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import groupsRoutes from "./routes/groupsRoutes.js";
+import subjectsRoutes from "./routes/subjectsRoutes.js";
+import sdaRoutes from "./routes/sdaRoutes.js";
+import coursesRoutes from "./routes/coursesRoutes.js";
+import sdaSubjectsRelationRoutes from "./routes/sdaSubjectsRelationRoutes.js";
+import competenciesSDARoutes from "./routes/competenciesSDARoutes.js";
+import fullSdaRoutes from "./routes/fullSdaRoutes.js";
 
 const swaggerOptions = {
   definition: {
@@ -100,4 +100,4 @@ app.use((err, _a, res, _b) => {
   res.status(500).json({ error: "Error intern del servidor" });
 });
 
-module.exports = app;
+export default app;

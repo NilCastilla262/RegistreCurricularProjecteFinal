@@ -1,5 +1,5 @@
 // controllers/sdaSubjectsRelationController.js
-const { createSdaSubjectRelation } = require("../models/sdaSubjectsRelationModel");
+import { createSdaSubjectRelation } from "../models/sdaSubjectsRelationModel.js";
 
 async function createSdaSubjectRelationsController(req, res) {
   try {
@@ -24,4 +24,4 @@ async function createSdaSubjectRelationsController(req, res) {
   }
 }
 
-module.exports = { createSdaSubjectRelationsController };
+export { createSdaSubjectRelationsController };

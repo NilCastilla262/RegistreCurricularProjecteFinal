@@ -1,5 +1,5 @@
 // controllers/sdaController.js
-const { createSDA, getAllSdas, markCriteria } = require("../models/sdaModel");
+import { createSDA, getAllSdas, markCriteria } from "../models/sdaModel.js";
 
 async function createSDAController(req, res) {
   try {
@@ -39,7 +39,7 @@ async function markCriteriaController(req, res) {
   }
 }
 
-module.exports = {
+export {
   createSDAController,
   getAllSdasController,
   markCriteriaController

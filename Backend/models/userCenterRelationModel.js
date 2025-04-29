@@ -1,5 +1,5 @@
 // models/userCenterRelationModel.js
-const { poolPromise } = require('../config/db');
+import { poolPromise } from "../config/db.js";
 
 async function getCentersByUser(userUUID) {
   const pool = await poolPromise;
@@ -26,4 +26,4 @@ async function getSpecificCenterByUser(userUUID, centerName) {
       `);
     return result.recordset;
 }
-module.exports = { getCentersByUser, getSpecificCenterByUser };
+export { getCentersByUser, getSpecificCenterByUser };

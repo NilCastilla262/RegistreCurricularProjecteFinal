@@ -1,11 +1,12 @@
-//routes/csvRoutes.js
-const express = require('express');
-const router = express.Router();
-const csvController = require('../controllers/csvController');
-const multer  = require('multer');
+// routes/csvRoutes.js
+import express from "express";
+import multer from "multer";
+import csvController from "../controllers/csvController.js";
+import { verifyToken } from "../middlewares/authMiddleware.js";
+
 const upload = multer({ dest: 'uploads/' });
-const { verifyToken } = require("../middlewares/authMiddleware");
+const router = express.Router();
 
 router.post('/upload-csv', verifyToken, upload.single('csvFile'), csvController.uploadCsv);
 
-module.exports = router;
+export default router;

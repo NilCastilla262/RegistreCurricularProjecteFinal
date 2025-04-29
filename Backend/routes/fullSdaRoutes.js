@@ -1,8 +1,10 @@
-const express = require("express");
+//routes/fullSdaRoutes.js
+import express from "express";
+import { getFullSdaController } from "../controllers/fullSdaController.js";
+import { verifyToken } from "../middlewares/authMiddleware.js";
+
 const router = express.Router();
-const { getFullSdaController } = require("../controllers/fullSdaController");
-const { verifyToken } = require("../middlewares/authMiddleware");
 
 router.get("/:uuid", verifyToken, getFullSdaController);
 
-module.exports = router;
+export default router;

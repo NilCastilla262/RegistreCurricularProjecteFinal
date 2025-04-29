@@ -1,4 +1,5 @@
-const { getFullSda } = require('../models/fullSdaModel');
+// controllers/fullSdaController.js
+import { getFullSda } from "../models/fullSdaModel.js";
 
 async function getFullSdaController(req, res) {
   try {
@@ -20,4 +21,4 @@ async function getFullSdaController(req, res) {
   }
 }
 
-module.exports = { getFullSdaController };
+export { getFullSdaController };

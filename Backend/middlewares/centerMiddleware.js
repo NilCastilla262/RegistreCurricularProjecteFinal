@@ -1,6 +1,4 @@
 // backend/middlewares/centerMiddleware.js
-const jwt = require("jsonwebtoken");
-
 function extractCenterName(req, res, next) {
   if (!req.user || !req.user.centerName) {
     return res.status(400).json({ error: "No s'ha trobat centerName al token" });
@@ -9,4 +7,4 @@ function extractCenterName(req, res, next) {
   next();
 }
 
-module.exports = { extractCenterName };
+export { extractCenterName };

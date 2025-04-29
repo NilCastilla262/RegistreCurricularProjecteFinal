@@ -1,9 +1,10 @@
 // routes/coursesRoutes.js
-const express = require('express');
+import express from "express";
+import { getTemplateByCourseName } from "../controllers/coursesController.js";
+import { verifyToken } from "../middlewares/authMiddleware.js";
+
 const router = express.Router();
-const { getTemplateByCourseName } = require('../controllers/coursesController');
-const { verifyToken } = require("../middlewares/authMiddleware");
 
 router.get('/:courseName/template', verifyToken, getTemplateByCourseName);
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
 // config/db.js
-require("dotenv").config();
-const sql = require("mssql");
+import 'dotenv/config';
+import sql from 'mssql';
 
 const dbConfig = {
   server: process.env.DB_SERVER,
@@ -25,7 +25,4 @@ const poolPromise = sql
     throw error;
   });
 
-module.exports = {
-  sql,
-  poolPromise,
-};
+  export { sql, poolPromise };

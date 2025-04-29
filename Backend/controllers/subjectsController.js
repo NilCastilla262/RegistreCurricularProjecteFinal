@@ -1,5 +1,5 @@
 // controllers/subjectsController.js
-const { getSubjectsByTemplate } = require("../models/subjectsModel");
+import { getSubjectsByTemplate } from "../models/subjectsModel.js";
 
 async function getSubjects(req, res) {
   try {
@@ -16,4 +16,4 @@ async function getSubjects(req, res) {
   }
 }
 
-module.exports = { getSubjects };
+export { getSubjects };

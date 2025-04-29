@@ -1,5 +1,5 @@
 // controllers/competenciesSDAController.js
-const { createCompetenciesAndCriteriaSDAForSubjects } = require('../models/competenciesSDAModel');
+import { createCompetenciesAndCriteriaSDAForSubjects } from "../models/competenciesSDAModel.js";
 
 async function createCompetenciesSDAController(req, res) {
   try {
@@ -15,4 +15,4 @@ async function createCompetenciesSDAController(req, res) {
   }
 }
 
-module.exports = { createCompetenciesSDAController };
+export { createCompetenciesSDAController };

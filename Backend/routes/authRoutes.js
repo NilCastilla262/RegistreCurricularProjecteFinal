@@ -1,9 +1,10 @@
 // routes/authRoutes.js
-const express = require("express");
+import express from "express";
+import { googleLoginController, chooseCenterController } from "../controllers/authController.js";
+
 const router = express.Router();
-const { googleLoginController, chooseCenterController } = require("../controllers/authController");
 
 router.post("/google-login", googleLoginController);
 router.post("/choose-center", chooseCenterController);
 
-module.exports = router;
+export default router;

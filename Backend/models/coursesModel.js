@@ -1,5 +1,5 @@
 // models/coursesModel.js
-const { poolPromise } = require('../config/db');
+import { poolPromise } from "../config/db.js";
 
 async function getTemplateNameByCourse(courseName) {
   const pool = await poolPromise;
@@ -16,4 +16,4 @@ async function getTemplateNameByCourse(courseName) {
   return result.recordset[0].TemplateName;
 }
 
-module.exports = { getTemplateNameByCourse };
+export { getTemplateNameByCourse };

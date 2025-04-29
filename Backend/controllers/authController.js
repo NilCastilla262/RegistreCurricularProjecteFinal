@@ -1,8 +1,8 @@
 // controllers/authController.js
-const { OAuth2Client } = require("google-auth-library");
-const jwt = require("jsonwebtoken");
-const { getUserByEmail, createUser, getUserByUUID } = require("../models/userModel");
-const { getCentersByUser, getSpecificCenterByUser } = require("../models/userCenterRelationModel");
+import { OAuth2Client } from "google-auth-library";
+import jwt from "jsonwebtoken";
+import { getUserByEmail, createUser, getUserByUUID } from "../models/userModel.js";
+import { getCentersByUser, getSpecificCenterByUser } from "../models/userCenterRelationModel.js";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRATION = process.env.JWT_EXPIRATION;
@@ -94,7 +94,7 @@ async function chooseCenterController(req, res) {
   }
 }
 
-module.exports = {
+export {
   googleLoginController,
   chooseCenterController,
 };

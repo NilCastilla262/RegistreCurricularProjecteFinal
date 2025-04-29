@@ -1,9 +1,10 @@
 // controllers/competenciesSDARoutes.js
-const express = require("express");
+import express from "express";
+import { createCompetenciesSDAController } from "../controllers/competenciesSDAController.js";
+import { verifyToken } from "../middlewares/authMiddleware.js";
+
 const router = express.Router();
-const { createCompetenciesSDAController } = require("../controllers/competenciesSDAController");
-const { verifyToken } = require("../middlewares/authMiddleware");
 
 router.post("", verifyToken, createCompetenciesSDAController);
 
-module.exports = router;
+export default router;

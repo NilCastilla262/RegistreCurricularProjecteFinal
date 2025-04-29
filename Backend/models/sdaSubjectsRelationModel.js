@@ -1,5 +1,5 @@
 // models/sdaSubjectsRelationModel.js
-const { poolPromise } = require("../config/db");
+import { poolPromise } from "../config/db.js";
 
 async function createSdaSubjectRelation(uuidSDA, uuidSubject) {
   const pool = await poolPromise;
@@ -13,4 +13,4 @@ async function createSdaSubjectRelation(uuidSDA, uuidSubject) {
   return result;
 }
 
-module.exports = { createSdaSubjectRelation };
+export { createSdaSubjectRelation };

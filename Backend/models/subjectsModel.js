@@ -1,5 +1,5 @@
 // models/subjectsModel.js
-const { poolPromise } = require("../config/db");
+import { poolPromise } from "../config/db.js";
 
 async function getSubjectsByTemplate(templateName) {
   const pool = await poolPromise;
@@ -14,6 +14,6 @@ async function getSubjectsByTemplate(templateName) {
   return result.recordset;
 }
 
-module.exports = {
+export {
   getSubjectsByTemplate
 };

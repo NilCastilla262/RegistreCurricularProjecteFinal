@@ -1,5 +1,5 @@
 // models/userModel.js
-const { poolPromise } = require("../config/db");
+import { poolPromise } from "../config/db.js";
 
 async function getUserByEmail(email) {
   const pool = await poolPromise;
@@ -37,7 +37,7 @@ const getUserByUUID = async (UUID) => {
   return result.recordset[0];
 };
 
-module.exports = {
+export {
   getUserByEmail,
   createUser,
   getUserByUUID

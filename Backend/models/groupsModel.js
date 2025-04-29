@@ -1,5 +1,5 @@
 // models/groupsModel.js
-const { poolPromise } = require("../config/db");
+import { poolPromise } from "../config/db.js";
 
 async function getGroupsByUserUUID(userUUID) {
   const pool = await poolPromise;
@@ -55,7 +55,7 @@ async function getByCenterAndYear(centerName, year) {
   return result.recordset;
 }
 
-module.exports = {
+export {
   getGroupsByUserUUID,
   getResumeForGroups,
   getByCenterAndYear,

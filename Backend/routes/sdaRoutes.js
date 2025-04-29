@@ -1,14 +1,12 @@
-// routes/sdaRoutes.js
-const express = require("express");
-const { createSDAController, getAllSdasController, markCriteriaController } = require("../controllers/sdaController");
-const { verifyToken } = require("../middlewares/authMiddleware");
+//routes/sdaRoutes.js
+import express from "express";
+import { createSDAController, getAllSdasController, markCriteriaController } from "../controllers/sdaController.js";
+import { verifyToken } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 router.post("/", verifyToken, createSDAController);
-
 router.get("/", verifyToken, getAllSdasController);
-
 router.post('/markCriteria', verifyToken, markCriteriaController);
 
-module.exports = router;
+export default router;

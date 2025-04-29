@@ -1,7 +1,7 @@
 // models/sdaModel.js
-const { poolPromise } = require("../config/db");
-const { v4: uuidv4 } = require("uuid");
-const sql = require('mssql'); 
+import { poolPromise } from "../config/db.js";
+import { v4 as uuidv4 } from "uuid";
+import sql from "mssql";
 
 async function createSDA(uuidUser, uuidGroup, title, description) {
   const pool = await poolPromise;
@@ -63,4 +63,4 @@ async function markCriteria(uuidSDA, uuidCriteria, worked) {
   }
 }
 
-module.exports = { createSDA, getAllSdas, markCriteria };
+export { createSDA, getAllSdas, markCriteria };

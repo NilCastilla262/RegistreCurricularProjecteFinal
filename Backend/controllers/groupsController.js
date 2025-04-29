@@ -1,5 +1,5 @@
 // controllers/groupsController.js
-const { getGroupsByUserUUID, getResumeForGroups, getByCenterAndYear } = require("../models/groupsModel");
+import { getGroupsByUserUUID, getResumeForGroups, getByCenterAndYear } from "../models/groupsModel.js";
 
 async function getGroupsByUser(req, res) {
   try {
@@ -56,7 +56,7 @@ async function getByCenterAndYearController(req, res) {
   }
 }
 
-module.exports = { 
+export { 
   getGroupsByUser,
   getResumeController,
   getByCenterAndYearController,
