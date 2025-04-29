@@ -1,0 +1,271 @@
+openapi: 3.0.0
+info:
+  title: Registre Curricular API
+  version: "1.0.0"
+  description: Documentació generada a partir de la col·lecció Postman.
+
+servers:
+  - url: http://localhost:5000
+    description: Servidor local
+
+paths:
+  /api/upload-csv:
+    post:
+      tags: [CSV]
+      summary: Pujar un fitxer CSV de competències
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CsvUploadInput'
+      responses:
+        '200':
+          description: Dades importades correctament
+        '400':
+          description: No s'ha enviat cap fitxer
+        '500':
+          description: Error intern del servidor
+
+  /apirc/v1/subjects:
+    get:
+      tags: [Subjects]
+      summary: Obtenir matèries a partir d'un template
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: templateName
+          required: true
+          schema:
+            type: string
+            example: "1r2n"
+      responses:
+        '200':
+          description: Llista de matèries retornada
+        '404':
+          description: Cap matèria trobada
+
+  /apirc/v1/sda:
+    post:
+      tags: [SDA]
+      summary: Crear una nova SDA
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDAInput'
+            example:
+              uuidGroup:   "b07b61d6-c14b-4303-b329-12d12ef6956a"
+              title:       "SDA Prova POSTMAN 2"
+              description: "Una situació d’aprenentatge d’exemple"
+      responses:
+        '200':
+          description: SDA creada correctament
+
+    get:
+      tags: [SDA]
+      summary: Obtenir totes les SDA
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Llista de SDA retornada
+
+  /apirc/v1/sda/full/{uuid}:
+    get:
+      tags: [SDA]
+      summary: Obtenir dades complertes d'una SDA per UUID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "12325E63-F233-4F55-A6D9-4F49D05EE3E0"
+      responses:
+        '200':
+          description: Detall complet de la SDA retornat
+        '404':
+          description: SDA no trobada
+
+  /apirc/v1/groups:
+    get:
+      tags: [Groups]
+      summary: Obtenir grups d'un usuari
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Llista de grups retornada
+
+  /apirc/v1/groups/resume:
+    get:
+      tags: [Groups]
+      summary: Obtenir resum de grups
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: groups
+          required: true
+          schema:
+            type: string
+            example: "B07B61D6-C14B-4303-B329-12D12EF6956A"
+      responses:
+        '200':
+          description: Resum de grups retornat
+
+  /apirc/v1/groups/center:
+    get:
+      tags: [Groups]
+      summary: Obtenir grups per centre i curs
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: year
+          required: true
+          schema:
+            type: string
+            example: "2024-2025"
+      responses:
+        '200':
+          description: Grups filtrats retornats
+
+  /apirc/v1/courses/{course}/template:
+    get:
+      tags: [Courses]
+      summary: Obtenir template per codi de curs
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: course
+          required: true
+          schema:
+            type: string
+            example: "1r"
+      responses:
+        '200':
+          description: Template retornat
+
+  /apirc/v1/sda/subject-relation:
+    post:
+      tags: [SDASubjectRelation]
+      summary: Crear relació SDA-Matèria
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SDASubjectRelationInput'
+            example:
+              uuidSDA:     "85bf45ff-785e-4772-bd82-4e3abe2c5b59"
+              uuidSubject: "303bf3be-1237-48db-b7f8-171fa2457ec1"
+      responses:
+        '200':
+          description: Relació creada correctament
+
+  /apirc/v1/sda/competencies:
+    post:
+      tags: [Competencies]
+      summary: Crear competències per a una SDA
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetenciesInput'
+            example:
+              uuidSDA:        "85bf45ff-785e-4772-bd82-4e3abe2c5b59"
+              subjectUUIDs:
+                - "303bf3be-1237-48db-b7f8-171fa2457ec1"
+                - "6f588524-97a2-4db1-a32e-2d9b0c9f5324"
+      responses:
+        '200':
+          description: Competències creades correctament
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    CsvUploadInput:
+      type: object
+      required:
+        - csvFile
+        - Type
+        - Competencie
+        - templateName
+      properties:
+        csvFile:
+          type: string
+          format: binary
+        Type:
+          type: string
+          default: "0"
+        Competencie:
+          type: string
+          default: "1"
+        templateName:
+          type: string
+          default: "5e6e"
+
+    SDAInput:
+      type: object
+      required:
+        - uuidGroup
+        - title
+        - description
+      properties:
+        uuidGroup:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+
+    SDASubjectRelationInput:
+      type: object
+      required:
+        - uuidSDA
+        - uuidSubject
+      properties:
+        uuidSDA:
+          type: string
+          format: uuid
+        uuidSubject:
+          type: string
+          format: uuid
+
+    CompetenciesInput:
+      type: object
+      required:
+        - uuidSDA
+        - subjectUUIDs
+      properties:
+        uuidSDA:
+          type: string
+          format: uuid
+        subjectUUIDs:
+          type: array
+          items:
+            type: string
+            format: uuid

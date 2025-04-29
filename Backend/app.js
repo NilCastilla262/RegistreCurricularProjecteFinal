@@ -3,9 +3,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
-import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-
 import { poolPromise } from "./config/db.js";
 import csvRoutes from "./routes/csvRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -16,28 +14,36 @@ import coursesRoutes from "./routes/coursesRoutes.js";
 import sdaSubjectsRelationRoutes from "./routes/sdaSubjectsRelationRoutes.js";
 import competenciesSDARoutes from "./routes/competenciesSDARoutes.js";
 import fullSdaRoutes from "./routes/fullSdaRoutes.js";
-
-const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'APIRC',
-      version: '1.0.0',
-      description: 'API de registre curricular',
-    },
-    servers: [
-      { url: 'http://localhost:5000', description: 'Servidor local' }
-    ],
-  },
-  apis: ['./routes/*.js'], 
-};
-
-const swaggerSpec = swaggerJsdoc(swaggerOptions);
-
+import fs from "fs";
+import yaml from "js-yaml";
 
 const app = express();
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+const swaggerDocument = yaml.load(
+  fs.readFileSync(new URL("./swagger.yaml", import.meta.url), "utf8")
+);
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, {
+    swaggerOptions: {
+      authAction: {
+        bearerAuth: {
+          name: "bearerAuth",
+          schema: {
+            type: "http",
+            in: "header",
+            scheme: "bearer",
+            bearerFormat: "JWT"
+          },
+         value:
+           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo"
+        }
+      }
+    }
+  })
+);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
