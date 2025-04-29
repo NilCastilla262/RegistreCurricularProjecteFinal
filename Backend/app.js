@@ -3,6 +3,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const { poolPromise } = require("./config/db");
 const csvRoutes = require("./routes/csvRoutes");
@@ -15,7 +17,27 @@ const sdaSubjectsRelationRoutes = require("./routes/sdaSubjectsRelationRoutes");
 const competenciesSDARoutes = require('./routes/competenciesSDARoutes');
 const fullSdaRoutes = require('./routes/fullSdaRoutes');
 
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'APIRC',
+      version: '1.0.0',
+      description: 'API de registre curricular',
+    },
+    servers: [
+      { url: 'http://localhost:5000', description: 'Servidor local' }
+    ],
+  },
+  apis: ['./routes/*.js'], 
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
+
 const app = express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
