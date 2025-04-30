@@ -17,6 +17,7 @@ import fullSdaRoutes from "./routes/fullSdaRoutes.js";
 import fs from "fs";
 import yaml from "js-yaml";
 import swaggerAutogen from 'swagger-autogen';
+import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 const outputFile = './swagger2.yaml';
@@ -92,12 +93,13 @@ app.use(async (req, res, next) => {
   try {
     const pool = await poolPromise;
     if (!pool.connected) {
-      throw new Error("Database not connected");
+      const error = new Error("Database not connected");
+      error.status = 503;
+      throw error;
     }
     next();
   } catch (error) {
-    console.error("Error connecting to DB on request:", error.message);
-    res.status(500).json({ error: "Error connecting to DB", message: error.message });
+    next(error);
   }
 });
 
@@ -124,9 +126,6 @@ app.use((req, res) => {
   res.status(404).json({ error: "Ruta no trobada" });
 });
 
-app.use((err, _a, res, _b) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Error intern del servidor" });
-});
+app.use(errorHandler);
 
 export default app;

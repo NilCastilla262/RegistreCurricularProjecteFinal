@@ -1,17 +1,19 @@
 // backend/middlewares/authMiddleware.js
-
 import jwt from "jsonwebtoken";
 
 const JWT_EXPIRATION = process.env.JWT_EXPIRATION;
 const JWT_SECRET = process.env.JWT_SECRET;
+
 const verifyToken = (req, res, next) => {
-  const token = req.header("Authorization")?.replace("Bearer ", "");
-
-  if (!token) {
-    return res.status(403).json({ error: "No s'ha trobat cap token" });
-  }
-
   try {
+    const token = req.header("Authorization")?.replace("Bearer ", "");
+
+    if (!token) {
+      const err = new Error("No s'ha trobat cap token");
+      err.status = 403;
+      throw err;
+    }
+
     const decoded = jwt.verify(token, JWT_SECRET);
 
     const currentTime = Math.floor(Date.now() / 1000);
@@ -23,14 +25,15 @@ const verifyToken = (req, res, next) => {
         JWT_SECRET,
         { expiresIn: JWT_EXPIRATION }
       );
-      
+
       res.setHeader("Authorization", `Bearer ${newToken}`);
     }
 
     req.user = decoded;
     next();
+
   } catch (error) {
-    return res.status(401).json({ error: "Token invàlid o caducat" });
+    next(error);
   }
 };
 

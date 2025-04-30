@@ -6,3 +6,19 @@
 //Nomenclatures dels rols de usuari:
 //UserRole: User (1) Administratrçor (2)
 //Role "UserCenterRelation" Professor (1) AdminCenter(2)
+
+
+
+Errors:
+
+400 – Error del client (petició malformada)
+
+401 – No autoritzat
+
+403 – Prohibit
+
+404 – No trobat
+
+500 – Error intern del servidor (el que estàs fent ara)
+
+503 – Servei no disponible (ex. base de dades caiguda)

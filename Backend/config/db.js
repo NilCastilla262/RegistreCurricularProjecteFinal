@@ -21,8 +21,10 @@ const poolPromise = sql
     return pool;
   })
   .catch((error) => {
-    console.error("Database connection failed:", error.message);
-    throw error;
+    const err = new Error("No s'ha pogut connectar a la base de dades");
+    err.status = 503;
+    err.details = error.message;
+    throw err;
   });
 
-  export { sql, poolPromise };
+export { sql, poolPromise };
