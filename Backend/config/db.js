@@ -14,17 +14,22 @@ const dbConfig = {
   },
 };
 
-const poolPromise = sql
-  .connect(dbConfig)
-  .then((pool) => {
-    console.log("Connected to SQL Server");
+let cachedPool = null;
+
+const getConnection = async () => {
+  if (cachedPool) return cachedPool;
+
+  try {
+    const pool = await sql.connect(dbConfig);
+    console.log("✅ Connectat a la base de dades");
+    cachedPool = pool;
     return pool;
-  })
-  .catch((error) => {
-    const err = new Error("No s'ha pogut connectar a la base de dades");
+  } catch (error) {
+    const err = new Error("❌ No s'ha pogut connectar a la base de dades");
     err.status = 503;
     err.details = error.message;
     throw err;
-  });
+  }
+};
 
-export { sql, poolPromise };
+export { sql, getConnection };

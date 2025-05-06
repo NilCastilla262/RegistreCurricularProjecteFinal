@@ -1,10 +1,10 @@
 // models/sdaModel.js
-import { poolPromise } from "../config/db.js";
+import { getConnection } from "../config/db.js";
 import { v4 as uuidv4 } from "uuid";
 import sql from "mssql";
 
 async function createSDA(uuidUser, uuidGroup, title, description) {
-  const pool = await poolPromise;
+  const pool = await getConnection();
   const newUUID = uuidv4();
 
   await pool.request()
@@ -22,7 +22,7 @@ async function createSDA(uuidUser, uuidGroup, title, description) {
 }
 
 async function getAllSdas() {
-  const pool = await poolPromise;
+  const pool = await getConnection();
   const result = await pool.request()
     .query(`
       SELECT 
@@ -40,7 +40,7 @@ async function getAllSdas() {
 }
 
 async function markCriteria(uuidSDA, uuidCriteria, worked) {
-  const pool = await poolPromise;
+  const pool = await getConnection();
   try {
     console.log('--- Mark Criteria ---');
     console.log('uuidSDA:', uuidSDA);

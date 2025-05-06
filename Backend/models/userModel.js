@@ -1,8 +1,8 @@
 // models/userModel.js
-import { poolPromise } from "../config/db.js";
+import { getConnection } from "../config/db.js";
 
 async function getUserByEmail(email) {
-  const pool = await poolPromise;
+  const pool = await getConnection();
   const result = await pool.request()
     .input('email', email)
     .query(`
@@ -15,7 +15,7 @@ async function getUserByEmail(email) {
 
 
 async function createUser(name, email) {
-  const pool = await poolPromise;
+  const pool = await getConnection();
   const userRole = 1;
   const insertResult = await pool.request()
     .input('Name', name)
@@ -30,7 +30,7 @@ async function createUser(name, email) {
 }
 
 const getUserByUUID = async (UUID) => {
-  const pool = await poolPromise;
+  const pool = await getConnection();
   const result = await pool.request()
     .input("UUID", UUID)
     .query("SELECT * FROM Users WHERE UUID = @UUID");

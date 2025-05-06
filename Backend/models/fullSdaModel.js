@@ -1,9 +1,9 @@
 // models/fullSdaModel.js
 import sql from "mssql";
-import { poolPromise } from "../config/db.js";
+import { getConnection } from "../config/db.js";
 
 async function getFullSda(uuidSDA) {
-  const pool = await poolPromise;
+  const pool = await getConnection();
   const result = await pool.request()
     .input('uuidSDA', sql.UniqueIdentifier, uuidSDA)
     .query(`

@@ -5,11 +5,11 @@
 //Competencie: Fa referencia al tipus de les COMPETENCIES, pot ser Competencia (1) o Saber (0) 
 
 import sql from "mssql";
-import { poolPromise } from "../config/db.js";
+import { getConnection } from "../config/db.js";
 
 async function insertData(jsonData, templateName) {
   try {
-    const pool = await poolPromise;
+    const pool = await getConnection();
 
     for (const subject of jsonData) {
       const subjectName = subject.materia;

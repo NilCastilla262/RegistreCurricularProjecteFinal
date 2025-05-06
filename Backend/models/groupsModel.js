@@ -1,8 +1,8 @@
 // models/groupsModel.js
-import { poolPromise } from "../config/db.js";
+import { getConnection } from "../config/db.js";
 
 async function getGroupsByUserUUID(userUUID) {
-  const pool = await poolPromise;
+  const pool = await getConnection();
   const result = await pool.request()
     .input("UUIDUser", userUUID)
     .query(`
@@ -16,7 +16,7 @@ async function getGroupsByUserUUID(userUUID) {
 }
 
 async function getResumeForGroups(groupUUIDs) {
-  const pool = await poolPromise;
+  const pool = await getConnection();
 
   if (!groupUUIDs || !Array.isArray(groupUUIDs) || groupUUIDs.length === 0) {
     throw new Error("Es requereix un array de UUIDs de grups");
@@ -44,7 +44,7 @@ async function getResumeForGroups(groupUUIDs) {
 
 
 async function getByCenterAndYear(centerName, year) {
-  const pool = await poolPromise;
+  const pool = await getConnection();
   const query = `
     SELECT *
     FROM Groups

@@ -1,8 +1,8 @@
 // models/userCenterRelationModel.js
-import { poolPromise } from "../config/db.js";
+import { getConnection } from "../config/db.js";
 
 async function getCentersByUser(userUUID) {
-  const pool = await poolPromise;
+  const pool = await getConnection();
   const result = await pool.request()
     .input('UserUUID', userUUID)
     .query(`
@@ -14,7 +14,7 @@ async function getCentersByUser(userUUID) {
 }
 
 async function getSpecificCenterByUser(userUUID, centerName) {
-    const pool = await poolPromise;
+    const pool = await getConnection();
     const result = await pool.request()
       .input('UserUUID', userUUID)
       .input('CenterName', centerName)

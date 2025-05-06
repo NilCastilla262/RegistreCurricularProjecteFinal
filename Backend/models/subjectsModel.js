@@ -1,8 +1,8 @@
 // models/subjectsModel.js
-import { poolPromise } from "../config/db.js";
+import { getConnection } from "../config/db.js";
 
 async function getSubjectsByTemplate(templateName) {
-  const pool = await poolPromise;
+  const pool = await getConnection();
   const result = await pool.request()
     .input("TemplateName", templateName)
     .query(`
