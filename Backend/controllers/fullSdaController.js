@@ -1,11 +1,13 @@
 // controllers/fullSdaController.js
 import { getFullSda } from "../models/fullSdaModel.js";
 
-async function getFullSdaController(req, res) {
+async function getFullSdaController(req, res, next) {
   try {
     const { uuid } = req.params;
     if (!uuid) {
-      return res.status(400).json({ error: 'Falta la uuid de la SDA' });
+      const err = new Error('Falta la uuid de la SDA');
+      err.status = 400;
+      throw err;
     }
     const fullSdaJson = await getFullSda(uuid);
     let parsedSda;
@@ -17,7 +19,7 @@ async function getFullSdaController(req, res) {
     return res.status(200).json(parsedSda);
   } catch (error) {
     console.error('Error en getFullSdaController:', error);
-    return res.status(500).json({ error: 'Error intern', message: error.message });
+    next(error);
   }
 }
 

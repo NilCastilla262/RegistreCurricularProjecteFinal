@@ -103,12 +103,12 @@ app.use(async (req, res, next) => {
   }
 });
 
-app.get("/", async (_, res) => {
+app.get("/", async (_, res, next) => {
   try {
     const pool = await getConnection();
     res.status(200).json({ message: "Successfully connected with database" });
   } catch (error) {
-    res.status(500).json({ message: "Error connecting with database", error: error.message });
+    next(error);
   }
 });
 

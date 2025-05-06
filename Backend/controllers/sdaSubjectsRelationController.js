@@ -1,11 +1,13 @@
 // controllers/sdaSubjectsRelationController.js
 import { createSdaSubjectRelation } from "../models/sdaSubjectsRelationModel.js";
 
-async function createSdaSubjectRelationsController(req, res) {
+async function createSdaSubjectRelationsController(req, res, next) {
   try {
     const { uuidSDA, subjectUUIDs } = req.body;
     if (!uuidSDA || !subjectUUIDs || !Array.isArray(subjectUUIDs)) {
-      return res.status(400).json({ error: "Dades incorrectes: es requereix uuidSDA i subjectUUIDs com a array." });
+      const err = new Error("Dades incorrectes: es requereix uuidSDA i subjectUUIDs com a array.");
+      err.status = 400;
+      throw err;
     }
 
     const createdSubjects = [];
@@ -19,8 +21,7 @@ async function createSdaSubjectRelationsController(req, res) {
       subjectUUIDs: createdSubjects 
     });
   } catch (error) {
-    console.error("Error en createSdaSubjectRelationsController:", error);
-    return res.status(500).json({ error: "Error intern", message: error.message });
+    next(error);
   }
 }
 

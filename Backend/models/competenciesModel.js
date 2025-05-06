@@ -75,7 +75,7 @@ async function insertData(jsonData, templateName) {
             .input('OrderBy', sql.TinyInt, competencyOrder)
             .input('Description', sql.VarChar(sql.MAX), competencyDescription)
             .input('Type', sql.TinyInt, parseInt(competency.type, 10))
-            .query(insertCompQuery);
+            .query(insertCompResult);
           competencyUUID = insertCompResult.recordset[0].UUID;
         }
 
@@ -84,7 +84,9 @@ async function insertData(jsonData, templateName) {
           const cleaned = criterion.replace(/\n/g, " ").trim();
           const critMatch = cleaned.match(/^\s*\d+\.(\d+)\.?\s*(.+)$/);
           if (!critMatch) {
-            throw new Error(`Format incorrecte per al criteri: "${criterion}"`);
+            const err = new Error(`Format incorrecte per al criteri: "${criterion}"`);
+            err.status = 400;
+            throw err;
           }
           const criterionOrder = parseInt(critMatch[1], 10);
           const criterionDescription = critMatch[2].trim();

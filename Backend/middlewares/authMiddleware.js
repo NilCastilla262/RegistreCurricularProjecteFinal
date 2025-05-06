@@ -14,6 +14,9 @@ const verifyToken = (req, res, next) => {
       throw err;
     }
 
+    const rawDecoded = jwt.decode(token);
+    if (rawDecoded?.uuid) req.user = { uuid: rawDecoded.uuid };
+
     const decoded = jwt.verify(token, JWT_SECRET);
 
     const currentTime = Math.floor(Date.now() / 1000);

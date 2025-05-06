@@ -22,3 +22,5 @@ Errors:
 500 – Error intern del servidor (el que estàs fent ara)
 
 503 – Servei no disponible (ex. base de dades caiguda)
+
+422 – Dades invalides

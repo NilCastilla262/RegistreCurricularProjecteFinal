@@ -1,19 +1,20 @@
 // controllers/coursesController.js
 import { getTemplateNameByCourse } from "../models/coursesModel.js";
 
-async function getTemplateByCourseName(req, res) {
+async function getTemplateByCourseName(req, res, next) {
   try {
     const { courseName } = req.params;
     const templateName = await getTemplateNameByCourse(courseName);
 
     if (!templateName) {
-      return res.status(404).json({ error: 'No s\'ha trobat el curs o no té template assignat' });
+      const err = new Error('No s\'ha trobat el curs o no té template assignat');
+      err.status = 404;
+      throw err;
     }
 
     return res.status(200).json({ templateName });
   } catch (error) {
-    console.error('Error getTemplateByCourseName:', error);
-    return res.status(500).json({ error: 'Error intern', message: error.message });
+    next(error);
   }
 }
 

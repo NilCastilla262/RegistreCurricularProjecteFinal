@@ -1,18 +1,19 @@
 // controllers/subjectsController.js
 import { getSubjectsByTemplate } from "../models/subjectsModel.js";
 
-async function getSubjects(req, res) {
+async function getSubjects(req, res, next) {
   try {
     const { templateName } = req.query;
     if (!templateName) {
-      return res.status(400).json({ error: "Falta el camp templateName" });
+      const err = new Error("Falta el camp templateName");
+      err.status = 400;
+      throw err;
     }
 
     const subjects = await getSubjectsByTemplate(templateName);
     return res.status(200).json(subjects);
   } catch (error) {
-    console.error("Error getSubjects:", error);
-    return res.status(500).json({ error: "Error getSubjects", message: error.message });
+    next(error);
   }
 }
 

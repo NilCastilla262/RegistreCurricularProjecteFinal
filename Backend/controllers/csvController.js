@@ -48,9 +48,11 @@ function processCsvData(csvRows, subjectType, competencyType) {
   return result;
 }
 
-async function uploadCsv(req, res) {
+async function uploadCsv(req, res, next) {
   if (!req.file) {
-    return res.status(400).json({ message: 'No s\'ha enviat cap fitxer' });
+    const err = new Error('No s\'ha enviat cap fitxer');
+    err.status = 400;
+    return next(err);
   }
 
   const subjectType = req.body.Type || 'específica';
@@ -71,7 +73,7 @@ async function uploadCsv(req, res) {
         await CompetenciesModel.insertData(jsonData, templateName);
         res.status(200).json({ message: 'Dades importades correctament', data: jsonData });
       } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
       } finally {
         fs.unlinkSync(filePath);
       }
