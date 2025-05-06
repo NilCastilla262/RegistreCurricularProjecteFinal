@@ -6,11 +6,9 @@ const logFilePath = path.join(logDirectory, "error.log");
 
 export default (err, req, res, next) => {
   const timestamp = new Date().toISOString();
-  const uuid = req.user?.name || "anonymous";
-  const logMessage = `[${timestamp}] [${uuid}] ${req.method} ${req.originalUrl} - ${err.status || 500} - ${err.message}\n`;
-  console.log("--------------------------------");
-  console.log("Name Error handler: ", req.user.name);
-  console.log("--------------------------------");
+  const uuid = req.user?.uuid || "anonymous";
+  const name = req.user?.name || "anonymous";
+  const logMessage = `[${timestamp}] [${uuid}] [${name}] ${req.method} ${req.originalUrl} - ${err.status || 500} - ${err.message}\n`;
   if (!fs.existsSync(logDirectory)) {
     fs.mkdirSync(logDirectory, { recursive: true });
   }
@@ -19,16 +17,12 @@ export default (err, req, res, next) => {
     if (fsErr) console.error("No s'ha pogut escriure al fitxer de log:", fsErr.message);
   });
 
-  //console.error(err.stack);
-  console.log("--------------------------------");
-  console.log("Name Error handler: ", req.user.name);
-  console.log("--------------------------------");
+  console.error(err.stack);
   res.status(err.status || 500).json({
     status: err.status || 500,
     message: err.message || "Error intern del servidor",
     details: err.details || null,
     path: req.originalUrl,
     timestamp,
-    uuid,
   });
 };
