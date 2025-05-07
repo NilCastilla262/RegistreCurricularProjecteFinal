@@ -8,14 +8,16 @@
   <form>
     <div>
       <label>Títol:</label>
-      <input [(ngModel)]="title" name="title" required />
+      <input [(ngModel)]="title" name="title" required maxlength="30" />
+      <small>{{ title.length }}/30</small>
     </div>
 
     <div>
       <label>Descripció:</label>
-      <textarea [(ngModel)]="description" name="description" required></textarea>
+      <textarea [(ngModel)]="description" name="description" required rows="4" maxlength="1000"></textarea>
+      <small>{{ description.length }}/1000</small>
     </div>
-
+    
     <div>
       <label>Grup:</label>
       <select [(ngModel)]="selectedGroupUUID" name="selectedGroup" (change)="onGroupChange()">
