@@ -9,6 +9,7 @@ async function getSubjectsByTemplate(templateName) {
       SELECT UUID, Name, TemplateName, Type
       FROM SubjectsTPL
       WHERE TemplateName = @TemplateName
+      ORDER BY Name ASC
     `);
 
   return result.recordset;

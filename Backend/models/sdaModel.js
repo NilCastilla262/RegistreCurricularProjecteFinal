@@ -35,6 +35,7 @@ async function getAllSdas() {
       FROM SDA sda
       LEFT JOIN Groups g 
         ON sda.UUIDGroup = g.UUID
+      ORDER BY sda.Title ASC
     `);
   return result.recordset;
 }
@@ -42,11 +43,6 @@ async function getAllSdas() {
 async function markCriteria(uuidSDA, uuidCriteria, worked) {
   const pool = await getConnection();
   try {
-    console.log('--- Mark Criteria ---');
-    console.log('uuidSDA:', uuidSDA);
-    console.log('uuidCriteria:', uuidCriteria);
-    console.log('worked:', worked);
-
     const result = await pool.request()
       .input('uuidSDA', sql.UniqueIdentifier, uuidSDA)
       .input('uuidCriteria', sql.UniqueIdentifier, uuidCriteria)

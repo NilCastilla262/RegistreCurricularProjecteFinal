@@ -10,6 +10,7 @@ async function getGroupsByUserUUID(userUUID) {
       FROM Groups g
       INNER JOIN UserGroupRelation ugr ON g.UUID = ugr.UUIDGroup
       WHERE ugr.UUIDUser = @UUIDUser
+      ORDER BY g.Name ASC
     `);
 
   return result.recordset;
@@ -50,6 +51,7 @@ async function getByCenterAndYear(centerName, year) {
     FROM Groups
     WHERE CenterName = '${centerName}'
       AND Year       = '${year}'
+    ORDER BY Name ASC
   `;
   const result = await pool.request().query(query);
   return result.recordset;
