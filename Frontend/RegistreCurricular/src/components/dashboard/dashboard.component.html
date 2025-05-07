@@ -1,34 +1,47 @@
-<ng-container *ngIf="centerRole === 1; else adminView">
-  <div class="dashboard-buttons">
-    <button routerLink="/create-sda" class="btn">
-      Crear SDA
-    </button>
-    <button routerLink="/list-sda" class="btn">
-      Veure SDA
-    </button>
-    <button routerLink="/create-resume" class="btn">
-      Veure Resum
-    </button>
-  </div>
-</ng-container>
+<div class="dashboard">
+  <h1 class="dashboard-title">Benvingut al Panell de Control</h1>
 
-<ng-template #adminView>
-  <div class="dashboard-buttons">
-    <button routerLink="/create-sda" class="btn">
-      Crear SDA
-    </button>
-    <button routerLink="/list-sda" class="btn">
-      Veure SDA
-    </button>
-    <button routerLink="/create-resume" class="btn">
-      Veure Resum
-    </button>
-
-    <button routerLink="/create-groups" class="btn">
-      Crear Grups
-    </button>
-    <button routerLink="/manage-teachers" class="btn">
-      Gestionar Professors
-    </button>
+  <div class="dashboard-info">
+    <p>Selecciona una opció per gestionar les teves activitats educatives.</p>
   </div>
-</ng-template>
+
+  @if (centerRole === 1) {
+    <div class="dashboard-buttons">
+      <button routerLink="/create-sda" class="btn">Crear SDA</button>
+      <button routerLink="/list-sda" class="btn">Veure SDA</button>
+      <button routerLink="/create-resume" class="btn">Veure Resum</button>
+    </div>
+    <div class="dashboard-description">
+      <h3>Eines per a Professors</h3>
+      <p>Com a professor, pots crear i gestionar les Situacions d'Aprenentatge (SDA) i consultar els resums per a cada grup.</p>
+      <ul class="feature-list">
+        <li><strong>Crear SDA:</strong> Dissenyar noves activitats d'aprenentatge pels teus alumnes.</li>
+        <li><strong>Veure SDA:</strong> Consultar i modificar les activitats existents.</li>
+        <li><strong>Veure Resum:</strong> Obtenir informes de progrés per cada grup.</li>
+      </ul>
+    </div>
+  } @else {
+    <div class="dashboard-buttons">
+      <button routerLink="/create-sda" class="btn">Crear SDA</button>
+      <button routerLink="/list-sda" class="btn">Veure SDA</button>
+      <button routerLink="/create-resume" class="btn">Veure Resum</button>
+      <button routerLink="/create-groups" class="btn">Crear Grups</button>
+      <button routerLink="/manage-teachers" class="btn">Gestionar Professors</button>
+    </div>
+    <div class="dashboard-description">
+      <h3>Eines per a Administradors</h3>
+      <p>Com a administrador, tens accés complet a totes les funcions de gestió educativa:</p>
+      <ul class="feature-list">
+        <li><strong>Crear SDA:</strong> Dissenyar noves activitats d'aprenentatge pels alumnes.</li>
+        <li><strong>Veure SDA:</strong> Consultar i modificar les activitats existents.</li>
+        <li><strong>Veure Resum:</strong> Obtenir informes de progrés per cada grup.</li>
+        <li><strong>Crear Grups:</strong> Establir nous grups d'estudiants per assignatures.</li>
+        <li><strong>Gestionar Professors:</strong> Administrar els permisos i assignacions dels professors.</li>
+      </ul>
+    </div>
+  }
+
+  <footer class="dashboard-footer">
+    <p>© 2025 Sistema de Gestió d'Aprenentatge</p>
+  </footer>
+</div>

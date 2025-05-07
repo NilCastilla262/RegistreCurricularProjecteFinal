@@ -12,6 +12,8 @@ import { SdaModel } from '../../models/sda/sda.model';
   templateUrl: './show-sda.component.html',
   styleUrl: './show-sda.component.css'
 })
+
+
 export class ShowSdaComponent implements OnInit {
   sda!: SdaModel;
   errorMessage: string = '';
@@ -33,6 +35,7 @@ export class ShowSdaComponent implements OnInit {
       this.errorMessage = 'UUID no especificada.';
     }
   }
+
   onCriteriaChange(event: Event, crit: any, comp: any): void {
     const input = event.target as HTMLInputElement;
     const newState = input.checked;
@@ -47,5 +50,5 @@ export class ShowSdaComponent implements OnInit {
           }
         });
     }
-  }  
+  }
 }

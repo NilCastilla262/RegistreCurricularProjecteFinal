@@ -1,5 +1,8 @@
 <div class="login-container">
   <h2>Login amb Google</h2>
   <div id="google-signin-button"></div>
-  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
 </div>

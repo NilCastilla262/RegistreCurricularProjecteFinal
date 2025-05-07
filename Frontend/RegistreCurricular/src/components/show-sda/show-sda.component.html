@@ -1,34 +1,52 @@
 <div class="show-sda">
   <h2>Detalls de la SDA</h2>
-  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  <div *ngIf="sda">
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+
+  @if (sda) {
     <h3>{{ sda.title }}</h3>
     <p>{{ sda.description }}</p>
     <p>Grup: {{ sda.groupName }}</p>
     <p>Creada: {{ sda.createdAt | date:'short' }}</p>
 
-    <div *ngFor="let subject of sda.subjects" class="subject">
-      <h4>
-        Assignatura: {{ subject.subjectName }} 
-        <small>({{ subject.subjectTemplate }})</small>
-      </h4>
-      <div *ngFor="let competency of subject.competencies" class="competency">
-        <h5>
-          <input type="checkbox" [value]="competency.competencyUUID" disabled />
-          {{ competency.competencyOrder }}.
-          <span *ngIf="competency.competencyType === 1">Competència:</span>
-          <span *ngIf="competency.competencyType === 0">Saber:</span>
-          {{ competency.competencyDescription }}
-        </h5>
-        <div *ngFor="let crit of competency.criteria" class="criteria">
-          <h6>
-            <input type="checkbox" [value]="crit.criteriaUUID"
-              [checked]="crit.criteriaWorked"
-              (change)="onCriteriaChange($event, crit, competency)"/>
-            {{ crit.criteriaMainOrder }}.{{ crit.criteriaOrder }}. Criteri: {{ crit.criteriaDescription }}
-          </h6>
-        </div>
+    @for (subject of sda.subjects; track subject.subjectUUID) {
+      <div class="subject">
+        <h4 (click)="subject.expanded = !subject.expanded" class="subject-header">
+          {{ subject.expanded ? '▾' : '▸' }} Assignatura: {{ subject.subjectName }}
+          <small>({{ subject.subjectTemplate }})</small>
+        </h4>
+
+        @if (subject.expanded) {
+          @for (competency of subject.competencies; track competency.competencyUUID) {
+            <div class="competency">
+              <h5 (click)="competency.expanded = !competency.expanded" class="competency-header">
+                {{ competency.expanded ? '▾' : '▸' }}
+                <input type="checkbox" [value]="competency.competencyUUID" disabled />
+                {{ competency.competencyOrder }}.
+                <span *ngIf="competency.competencyType === 1">Competència:</span>
+                <span *ngIf="competency.competencyType === 0">Saber:</span>
+                {{ competency.competencyDescription }}
+              </h5>
+
+              @if (competency.expanded) {
+                @for (crit of competency.criteria; track crit.criteriaUUID) {
+                  <div class="criteria">
+                    <h6>
+                      <input type="checkbox"
+                        [value]="crit.criteriaUUID"
+                        [checked]="crit.criteriaWorked"
+                        (change)="onCriteriaChange($event, crit, competency)" />
+                      {{ crit.criteriaMainOrder }}.{{ crit.criteriaOrder }}. Criteri: {{ crit.criteriaDescription }}
+                    </h6>
+                  </div>
+                }
+              }
+            </div>
+          }
+        }
       </div>
-    </div>
-  </div>
+    }
+  }
 </div>

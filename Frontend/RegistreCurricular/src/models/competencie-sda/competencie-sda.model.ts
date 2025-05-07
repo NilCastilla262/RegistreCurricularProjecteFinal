@@ -8,7 +8,8 @@ export class CompetencieSdaModel {
     private _competencyOrder: number,
     private _competencyWorked: boolean,
     private _competencyType: number,
-    private _criteria: CriteriaSdaModel[] = []
+    private _criteria: CriteriaSdaModel[] = [],
+    public expanded: boolean = false
   ) {}
 
   get competencyUUID(): string {

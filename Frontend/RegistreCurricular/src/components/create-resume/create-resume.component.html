@@ -1,16 +1,23 @@
 <div class="create-resum">
   <h2>Crea un nou Resum</h2>
 
-  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
 
   <form>
     <div>
       <label>Grup:</label>
       <select [(ngModel)]="selectedGroupUUID" name="selectedGroup">
         <option [value]="''" disabled>-- Selecciona un grup --</option>
-        <option *ngFor="let group of groups" [value]="group.uuid">
-          {{ group.name }} ({{ group.courseName }}) ({{ group.year }})
-        </option>
+        @for (group of groups; track group.uuid) {
+          <option [value]="group.uuid">
+            {{ group.name }} ({{ group.courseName }}) ({{ group.year }})
+          </option>
+        }
+        @empty {
+          <option disabled>No hi ha grups disponibles</option>
+        }
       </select>
     </div>
 

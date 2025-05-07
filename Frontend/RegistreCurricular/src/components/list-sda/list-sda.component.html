@@ -1,6 +1,10 @@
 <div class="list-sda">
-  <h2>Llista de SDA</h2>
-  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <h2>Llistat de SDA</h2>
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+
   <table>
     <thead>
       <tr>
@@ -12,15 +16,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let sda of sdas">
-        <td>{{ sda.title }}</td>
-        <td>{{ sda.description }}</td>
-        <td>{{ sda.createdAt | date:'short' }}</td>
-        <td>{{ sda.groupName }}</td>
-        <td>
-          <button (click)="showSda(sda.sdaUUID)">Mostrar</button>
-        </td>
-      </tr>
+      @for (sda of sdas; track sda.sdaUUID) {
+        <tr>
+          <td>{{ sda.title }}</td>
+          <td>{{ sda.description }}</td>
+          <td>{{ sda.createdAt | date:'short' }}</td>
+          <td>{{ sda.groupName }}</td>
+          <td>
+            <button (click)="showSda(sda.sdaUUID)">Mostrar</button>
+          </td>
+        </tr>
+      }
     </tbody>
   </table>
 </div>

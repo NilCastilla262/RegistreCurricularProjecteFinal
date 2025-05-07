@@ -6,7 +6,8 @@ export class SubjectSdaModel {
     private _subjectName: string,
     private _subjectTemplate: string,
     private _subjectType: string,
-    private _competencies: CompetencieSdaModel[] = []
+    private _competencies: CompetencieSdaModel[] = [],
+    public expanded: boolean = true
   ) {}
 
   get subjectUUID(): string {

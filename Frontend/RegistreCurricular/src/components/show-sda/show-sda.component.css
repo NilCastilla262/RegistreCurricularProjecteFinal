@@ -1,0 +1,227 @@
+/* SDA Component Styles with Accessibility Focus */
+
+.show-sda {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #333;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+  line-height: 1.5;
+}
+
+h2 {
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+}
+
+h3 {
+  color: #2c3e50;
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.error {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 1rem;
+  border-radius: 4px;
+  border-left: 5px solid #c62828;
+  margin-bottom: 1rem;
+}
+
+/* Subject styling */
+.subject {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.subject-header {
+  cursor: pointer;
+  color: #2980b9;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0.75rem 0;
+  margin: 0;
+  user-select: none;
+}
+
+.subject-header:hover {
+  color: #1a5276;
+}
+
+.subject-header:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+.subject-header small {
+  color: #7f8c8d;
+  margin-left: 0.5rem;
+  font-weight: normal;
+}
+
+/* Competency styling */
+.competency {
+  background-color: #fff;
+  border-radius: 6px;
+  margin: 0.75rem 0;
+  padding: 0.5rem 0.75rem;
+  border-left: 3px solid #3498db;
+}
+
+.competency-header {
+  cursor: pointer;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  margin: 0;
+  user-select: none;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Add styles for the criteria text specifically */
+.criteria-text {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.4;
+}
+
+.competency-header:hover {
+  color: #1a5276;
+}
+
+.competency-header:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* Criteria styling */
+.criteria {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  margin: 0.5rem 0 0.5rem 1.25rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.criteria h6 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.25rem 0;
+  font-size: 0.95rem;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+/* Ensure consistent text sizing across all criteria and competencies */
+.criteria h6,
+.competency-header,
+.criteria,
+.competency p,
+.subject p {
+  font-size: 0.95rem;
+}
+
+/* Checkbox styling for better accessibility */
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  max-width: 16px;
+  max-height: 16px;
+  cursor: pointer;
+  accent-color: #3498db;
+  margin-right: 8px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+input[type="checkbox"]:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* Disabled styling */
+input[type="checkbox"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .show-sda {
+    padding: 0.75rem;
+  }
+
+  .subject {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .competency {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+  }
+
+  .criteria {
+    margin-left: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+/* Consistent styling for all criteria items */
+.criteria {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+/* Ensure proper spacing for collapsed/expanded indicators */
+h4:before, h5:before {
+  display: inline-block;
+  width: 1em;
+}
+
+/* Normalize text appearance */
+.subject-header,
+.competency-header,
+.criteria h6 {
+  font-weight: 500;
+}
+
+/* Consistent checkbox alignment */
+.competency input[type="checkbox"],
+.criteria input[type="checkbox"] {
+  margin-top: 3px;
+}
+
+/* Focus states for keyboard navigation */
+*:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .subject-header,
+  .competency-header {
+    border: 1px solid CanvasText;
+  }
+
+  .subject,
+  .competency,
+  .criteria {
+    border: 1px solid CanvasText;
+  }
+}

@@ -1,30 +1,36 @@
-<ng-container *ngIf="groupedResume.length > 0; else noData">
-  <div *ngFor="let subj of groupedResume">
-    <h2 (click)="subj.expanded = !subj.expanded" class="subject-header">
-      {{ subj.expanded ? '▾' : '▸' }} {{ subj.name }}
-    </h2>
+@if (groupedResume.length > 0) {
+  @for (subj of groupedResume; track subj.name) {
+    <div>
+      <h2 (click)="subj.expanded = !subj.expanded" class="subject-header">
+        {{ subj.expanded ? '▾' : '▸' }} {{ subj.name }}
+      </h2>
 
-    <div *ngIf="subj.expanded" class="subject-body">
-      <div *ngFor="let comp of subj.competencies">
-        <h3 (click)="comp.expanded = !comp.expanded" class="competency-header">
-          {{ comp.expanded ? '▾' : '▸' }} {{ comp.order }}. {{ comp.name }}
-        </h3>
+      @if (subj.expanded) {
+        <div class="subject-body">
+          @for (comp of subj.competencies; track comp.name) {
+            <h3 (click)="comp.expanded = !comp.expanded" class="competency-header">
+              {{ comp.expanded ? '▾' : '▸' }} {{ comp.order }}. {{ comp.name }}
+            </h3>
 
-        <ul *ngIf="comp.expanded" class="criteria-list">
-          <li *ngFor="let crit of comp.criteria" class="criteria-row">
-            <span class="criteria-desc">
-              {{ crit.mainOrder }}.{{ crit.order }}. {{ crit.name }}
-            </span>
-            <span class="criteria-total">
-              Treballat:{{ crit.total }}
-            </span>
-          </li>
-        </ul>
-      </div>
+            @if (comp.expanded) {
+              <ul class="criteria-list">
+                @for (crit of comp.criteria; track crit.name) {
+                  <li class="criteria-row">
+                    <span class="criteria-desc">
+                      {{ crit.mainOrder }}.{{ crit.order }}. {{ crit.name }}
+                    </span>
+                    <span class="criteria-total">
+                      Treballat:{{ crit.total }}
+                    </span>
+                  </li>
+                }
+              </ul>
+            }
+          }
+        </div>
+      }
     </div>
-  </div>
-</ng-container>
-
-<ng-template #noData>
+  }
+} @else {
   <p>No hi ha dades per mostrar.</p>
-</ng-template>
+}

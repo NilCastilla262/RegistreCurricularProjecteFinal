@@ -1,43 +1,54 @@
-<h2>Crea una nova SDA</h2>
+<div class="create-sda">
+  <h2>Crea una nova SDA</h2>
 
-<div *ngIf="errorMessage" style="color: red;">
-  {{ errorMessage }}
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+
+  <form>
+    <div>
+      <label>Títol:</label>
+      <input [(ngModel)]="title" name="title" required />
+    </div>
+
+    <div>
+      <label>Descripció:</label>
+      <textarea [(ngModel)]="description" name="description" required></textarea>
+    </div>
+
+    <div>
+      <label>Grup:</label>
+      <select [(ngModel)]="selectedGroupUUID" name="selectedGroup" (change)="onGroupChange()">
+        <option [value]="''" disabled selected>-- Selecciona un grup --</option>
+        @for (g of groups; track g.uuid) {
+          <option [value]="g.uuid">
+            {{ g.name }} ({{ g.courseName }})
+          </option>
+        }
+        @empty {
+          <option disabled>No hi ha grups disponibles</option>
+        }
+      </select>
+    </div>
+  </form>
+
+  @if (subjects.length > 0) {
+    <div class="subjects-section">
+      <h3>Assignatures disponibles</h3>
+      @for (s of subjects; track s.uuid) {
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              [value]="s.uuid"
+              (change)="onSubjectCheckboxChange(s.uuid, $event)"
+            />
+            {{ s.name }}
+          </label>
+        </div>
+      }
+    </div>
+  }
+
+  <button (click)="onCreateSDA()">Crear SDA</button>
 </div>
-
-<form>
-  <div>
-    <label>Títol:</label>
-    <input [(ngModel)]="title" name="title" required />
-  </div>
-
-  <div>
-    <label>Descripció:</label>
-    <textarea [(ngModel)]="description" name="description" required></textarea>
-  </div>
-
-  <div>
-    <label>Grup:</label>
-    <select [(ngModel)]="selectedGroupUUID" name="selectedGroup" (change)="onGroupChange()">
-      <option [value]="''" disabled selected>-- Selecciona un grup --</option>
-      <option *ngFor="let g of groups" [value]="g.uuid">
-        {{ g.name }} ({{ g.courseName }})
-      </option>
-    </select>
-  </div>
-</form>
-
-<div *ngIf="subjects.length > 0">
-  <h3>Assignatures disponibles</h3>
-  <div *ngFor="let s of subjects">
-    <label>
-      <input
-        type="checkbox"
-        [value]="s.uuid"
-        (change)="onSubjectCheckboxChange(s.uuid, $event)"
-      />
-      {{ s.name }}
-    </label>
-  </div>
-</div>
-
-<button (click)="onCreateSDA()">Crear SDA</button>

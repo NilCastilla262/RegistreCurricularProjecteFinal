@@ -1,18 +1,23 @@
-<div>
-    <h2>Selecciona el centre</h2>
-  
-    <div *ngIf="centers.length === 0">
+<div class="select-center">
+  <h2>Selecciona el centre</h2>
+
+  @if (centers.length === 0) {
+    <div>
       No hi ha centres o has arribat aquí per error.
       <button (click)="goLogin()">Torna al login</button>
     </div>
-  
-    <ul *ngIf="centers.length > 0">
-      <li *ngFor="let c of centers">
-        {{ c.centerName }} (Rol: {{ c.role }})
-        <button (click)="onSelectCenter(c.centerName)">Seleccionar</button>
-      </li>
+  } @else {
+    <ul>
+      @for (c of centers; track c.centerName) {
+        <li>
+          {{ c.centerName }}
+          <button (click)="onSelectCenter(c.centerName)">Seleccionar</button>
+        </li>
+      }
     </ul>
-  
-    <div *ngIf="errorMessage">{{ errorMessage }}</div>
-  </div>
-  
+  }
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+</div>
