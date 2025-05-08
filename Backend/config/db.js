@@ -1,6 +1,6 @@
 // config/db.js
-import 'dotenv/config';
 import sql from 'mssql';
+import './loadEnv.js';
 
 const dbConfig = {
   server: process.env.DB_SERVER,

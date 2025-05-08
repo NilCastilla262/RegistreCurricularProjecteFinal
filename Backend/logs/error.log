@@ -1,0 +1,7 @@
+[2025-05-06T17:19:40.236Z] [77AC4633-F523-456E-B697-BAAA161F173C] [Nil Castilla Galimany] GET /apirc/v1/sda/full/12325E63-F233-4F55-A6D9-4F49D05EE3E0a - 500 - Validation failed for parameter 'uuidSDA'. Invalid GUID.
+[2025-05-07T17:24:46.257Z] [77AC4633-F523-456E-B697-BAAA161F173C] [Nil Castilla Galimany] POST /apirc/v1/sda - 500 - String or binary data would be truncated in table 'RegistreCurricular.dbo.SDA', column 'Title'. Truncated value: 'asdddddddddddddddddddddddddddd'.
+[2025-05-08T14:23:57.715Z] [anonymous] [anonymous] POST /apirc/v1/auth/google-login - 403 - No tens cap centre assignat
+[2025-05-08T14:24:28.391Z] [anonymous] [anonymous] POST /apirc/v1/auth/google-login - 403 - No tens cap centre assignat
+[2025-05-08T14:24:46.308Z] [anonymous] [anonymous] POST /apirc/v1/auth/google-login - 403 - No tens cap centre assignat
+[2025-05-08T14:24:53.579Z] [anonymous] [anonymous] POST /apirc/v1/auth/google-login - 403 - No tens cap centre assignat
+[2025-05-08T14:27:02.869Z] [anonymous] [anonymous] GET /apirc/v1/sda - 503 - ❌ No s'ha pogut connectar a la base de dades

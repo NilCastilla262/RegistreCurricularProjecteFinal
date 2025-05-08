@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver2022Dev
+    ports:
+      - "1633:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Patata1234
+    volumes:
+      - sql_data:/var/opt/mssql
+    restart: always
+
+volumes:
+  sql_data:
