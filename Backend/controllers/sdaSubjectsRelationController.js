@@ -1,4 +1,4 @@
-// controllers/sdaSubjectsRelationController.js
+// controllers/sdaSubjectsRelationController.js 
 import { createSdaSubjectRelation } from "../models/sdaSubjectsRelationModel.js";
 
 async function createSdaSubjectRelationsController(req, res, next) {
