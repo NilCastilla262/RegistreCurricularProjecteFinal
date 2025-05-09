@@ -9,6 +9,7 @@ import { CreateResumeComponent } from './components/create-resume/create-resume.
 import { ShowResumeComponent } from './components/show-resume/show-resume.component';
 import { AdminCenterGuard } from './guards/admin-center.guard';
 import { TeacherGuard } from './guards/teacher.guard';
+import { ManageTeachersComponent } from './components/manage-teachers/manage-teachers.component';
 
 export const routes: Routes = [
     {
@@ -52,5 +53,10 @@ export const routes: Routes = [
         path: 'show-resume',
         component: ShowResumeComponent,
         canActivate: [TeacherGuard],
+    },
+        {
+        path: 'manage-teachers',
+        component: ManageTeachersComponent,
+        canActivate: [AdminCenterGuard],
     },
 ];
