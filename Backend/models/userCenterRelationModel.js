@@ -26,4 +26,17 @@ async function getSpecificCenterByUser(userUUID, centerName) {
       `);
     return result.recordset;
 }
-export { getCentersByUser, getSpecificCenterByUser };
+
+async function createUserCenterRelation(UUIDUser, centerName, role) {
+  const pool = await getConnection();
+  await pool.request()
+    .input("UUIDUser", UUIDUser)
+    .input("CenterName", centerName)
+    .input("Role", role)
+    .query(`
+      INSERT INTO UserCenterRelation (UUIDUser, CenterName, Role)
+      VALUES (@UUIDUser, @CenterName, @Role)
+    `);
+}
+
+export { getCentersByUser, getSpecificCenterByUser, createUserCenterRelation };

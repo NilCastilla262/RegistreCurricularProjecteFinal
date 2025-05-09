@@ -29,6 +29,21 @@ async function createUser(name, email) {
   return insertResult.recordset[0]; 
 }
 
+async function createTempUser(email) {
+  const pool = await getConnection();
+  const userRole = 1;
+  const insertResult = await pool.request()
+    .input('Email', email)
+    .input('UserRole', userRole)
+    .query(`
+      INSERT INTO Users (Email, UserRole)
+      OUTPUT INSERTED.*
+      VALUES (@Email, @UserRole)
+    `);
+  return insertResult.recordset[0]; 
+}
+
+
 const getUserByUUID = async (UUID) => {
   const pool = await getConnection();
   const result = await pool.request()
@@ -40,5 +55,6 @@ const getUserByUUID = async (UUID) => {
 export {
   getUserByEmail,
   createUser,
-  getUserByUUID
+  getUserByUUID,
+  createTempUser
 };

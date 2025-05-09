@@ -5,3 +5,5 @@
 [2025-05-08T14:24:46.308Z] [anonymous] [anonymous] POST /apirc/v1/auth/google-login - 403 - No tens cap centre assignat
 [2025-05-08T14:24:53.579Z] [anonymous] [anonymous] POST /apirc/v1/auth/google-login - 403 - No tens cap centre assignat
 [2025-05-08T14:27:02.869Z] [anonymous] [anonymous] GET /apirc/v1/sda - 503 - ❌ No s'ha pogut connectar a la base de dades
+[2025-05-09T13:59:25.122Z] [77AC4633-F523-456E-B697-BAAA161F173C] [Nil Castilla Galimany] POST /apirc/v1/user-center-relations - 400 - UUIDUser i Role són requerits
+[2025-05-09T14:28:58.590Z] [77AC4633-F523-456E-B697-BAAA161F173C] [Nil Castilla Galimany] POST /apirc/v1/user-center-relations - 400 - UserEmail i Role són requerits

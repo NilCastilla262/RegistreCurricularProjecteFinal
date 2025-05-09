@@ -18,6 +18,7 @@ import fs from "fs";
 import yaml from "js-yaml";
 import swaggerAutogen from 'swagger-autogen';
 import errorHandler from "./middlewares/errorHandler.js";
+import userCenterRelationRoutes from "./routes/userCenterRelationRoutes.js";
 
 const app = express();
 const outputFile = './swagger2.yaml';
@@ -121,6 +122,7 @@ app.use('/apirc/v1/courses', coursesRoutes);
 app.use("/apirc/v1/sda/subject-relation", sdaSubjectsRelationRoutes);
 app.use('/apirc/v1/sda/fillSDA', competenciesSDARoutes);
 app.use("/apirc/v1/sda/full", fullSdaRoutes);
+app.use("/apirc/v1/user-center-relations", userCenterRelationRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: "Ruta no trobada" });
