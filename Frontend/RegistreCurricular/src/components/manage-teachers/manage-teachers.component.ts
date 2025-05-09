@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-
-import { UsersService } from '../../services/users.service';
-import { UserModel } from '../../models/users/user.model';
+import { CommonModule }   from '@angular/common';
+import { FormsModule }    from '@angular/forms';
+import { UsersService }   from '../../services/users.service';
+import { UserModel }      from '../../models/users/user.model';
 
 @Component({
   selector: 'app-manage-teachers',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './manage-teachers.component.html',
   styleUrl: './manage-teachers.component.css'
 })
@@ -29,7 +27,7 @@ export class ManageTeachersComponent implements OnInit {
   private loadTeachers(): void {
     this.usersService.getUsersByCenter().subscribe({
       next: users => this.teachers = users,
-      error: err => console.error('Error carregant professors:', err)
+      error: err  => console.error('Error carregant professors:', err)
     });
   }
 
@@ -37,18 +35,18 @@ export class ManageTeachersComponent implements OnInit {
     this.showForm = !this.showForm;
     if (!this.showForm) {
       this.newEmail = '';
-      this.newRole = null;
+      this.newRole  = null;
     }
   }
 
   getRoleLabel(role: number): string {
-    return role === 2
-      ? 'Administrador de centre'
-      : 'Professor';
+    if (role === 2) {
+      return 'Administrador de centre';
+    }
+    return 'Professor';
   }
 
   submitNewTeacher() {
-    // validacions bàsiques
     if (!this.newEmail || this.newEmail.length > 50 || this.newRole == null) {
       return;
     }
@@ -57,8 +55,8 @@ export class ManageTeachersComponent implements OnInit {
       .addUserToCenter(this.newEmail, this.newRole)
       .subscribe({
         next: () => {
-          this.loadTeachers();   // refresca la taula
-          this.toggleForm();     // tanca el formulari
+          this.loadTeachers();
+          this.toggleForm();
         },
         error: err => console.error('Error afegint professor:', err)
       });
