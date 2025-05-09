@@ -1,19 +1,6 @@
 // models/userModel.js
 import { getConnection } from "../config/db.js";
 
-async function getUserByEmail(email) {
-  const pool = await getConnection();
-  const result = await pool.request()
-    .input('email', email)
-    .query(`
-      SELECT *
-      FROM Users
-      WHERE Email = @email
-    `);
-  return result.recordset[0];
-}
-
-
 async function createUser(name, email) {
   const pool = await getConnection();
   const userRole = 1;
@@ -43,6 +30,17 @@ async function createTempUser(email) {
   return insertResult.recordset[0]; 
 }
 
+async function getUserByEmail(email) {
+  const pool = await getConnection();
+  const result = await pool.request()
+    .input('email', email)
+    .query(`
+      SELECT *
+      FROM Users
+      WHERE Email = @email
+    `);
+  return result.recordset[0];
+}
 
 const getUserByUUID = async (UUID) => {
   const pool = await getConnection();
@@ -52,9 +50,28 @@ const getUserByUUID = async (UUID) => {
   return result.recordset[0];
 };
 
+async function getUsersByCenter(centerName) {
+  const pool = await getConnection();
+  const result = await pool.request()
+    .input("centerName", centerName)
+    .query(`
+      SELECT 
+        U.UUID,
+        U.Name,
+        U.Email,
+        R.Role
+      FROM Users AS U
+      INNER JOIN UserCenterRelation AS R
+        ON U.UUID = R.UUIDUser
+      WHERE R.CenterName = @centerName
+    `);
+  return result.recordset;
+}
+
 export {
   getUserByEmail,
   createUser,
   getUserByUUID,
-  createTempUser
+  createTempUser,
+  getUsersByCenter
 };
