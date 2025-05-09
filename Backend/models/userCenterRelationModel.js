@@ -39,4 +39,37 @@ async function createUserCenterRelation(UUIDUser, centerName, role) {
     `);
 }
 
-export { getCentersByUser, getSpecificCenterByUser, createUserCenterRelation };
+async function updateUserCenterRelation(UUIDUser, centerName, role) {
+  const pool = await getConnection();
+  await pool.request()
+    .input("UUIDUser",   UUIDUser)
+    .input("CenterName", centerName)
+    .input("Role",       role)
+    .query(`
+      UPDATE UserCenterRelation
+      SET Role = @Role
+      WHERE UUIDUser   = @UUIDUser
+        AND CenterName = @CenterName
+    `);
+}
+
+async function deleteUserCenterRelation(UUIDUser, centerName) {
+  const pool = await getConnection();
+  await pool.request()
+    .input("UUIDUser",   UUIDUser)
+    .input("CenterName", centerName)
+    .query(`
+      DELETE
+      FROM UserCenterRelation
+      WHERE UUIDUser   = @UUIDUser
+        AND CenterName = @CenterName
+    `);
+}
+
+export {
+  getCentersByUser,
+  getSpecificCenterByUser,
+  createUserCenterRelation,
+  updateUserCenterRelation,
+  deleteUserCenterRelation
+ };

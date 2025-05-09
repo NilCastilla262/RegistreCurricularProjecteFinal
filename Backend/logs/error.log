@@ -7,3 +7,5 @@
 [2025-05-08T14:27:02.869Z] [anonymous] [anonymous] GET /apirc/v1/sda - 503 - ❌ No s'ha pogut connectar a la base de dades
 [2025-05-09T13:59:25.122Z] [77AC4633-F523-456E-B697-BAAA161F173C] [Nil Castilla Galimany] POST /apirc/v1/user-center-relations - 400 - UUIDUser i Role són requerits
 [2025-05-09T14:28:58.590Z] [77AC4633-F523-456E-B697-BAAA161F173C] [Nil Castilla Galimany] POST /apirc/v1/user-center-relations - 400 - UserEmail i Role són requerits
+[2025-05-09T17:14:46.722Z] [77AC4633-F523-456E-B697-BAAA161F173C] [anonymous] PUT /apirc/v1/user-center-relations - 500 - jwt expired
+[2025-05-09T17:17:17.063Z] [77AC4633-F523-456E-B697-BAAA161F173C] [anonymous] DELETE /apirc/v1/user-center-relations/patata@gmail.com - 500 - jwt expired
