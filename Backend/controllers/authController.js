@@ -1,7 +1,7 @@
 // controllers/authController.js
 import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
-import { getUserByEmail, createUser, getUserByUUID } from "../models/userModel.js";
+import { getUserByEmail, createUser, getUserByUUID, updateUserName } from "../models/userModel.js";
 import { getCentersByUser, getSpecificCenterByUser } from "../models/userCenterRelationModel.js";
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -44,10 +44,15 @@ async function googleLoginController(req, res, next) {
     }
 
     const email = payload.email;
-    const name = payload.name || payload.given_name || "SenseNom";
+    const name  = payload.name || payload.given_name || "SenseNom";
+
     let user = await getUserByEmail(email);
+
     if (!user) {
       user = await createUser(name, email);
+    } else if (!user.Name) {
+      await updateUserName(user.UUID, name);
+      user.Name = name;
     }
 
     const centers = await getCentersByUser(user.UUID);
@@ -58,19 +63,18 @@ async function googleLoginController(req, res, next) {
     }
 
     if (centers.length === 1) {
-      const center = centers[0];
-      const token = generateToken(user, center);
+      const token = generateToken(user, centers[0]);
       return res.status(200).json({ token });
-    } else {
-      return res.status(200).json({
-        multipleCenters: true,
-        userUUID: user.UUID,
-        centers: centers.map((c) => ({
-          centerName: c.CenterName,
-          role: c.Role,
-        })),
-      });
     }
+
+    return res.status(200).json({
+      multipleCenters: true,
+      userUUID: user.UUID,
+      centers: centers.map((c) => ({
+        centerName: c.CenterName,
+        role:       c.Role,
+      })),
+    });
   } catch (error) {
     next(error);
   }

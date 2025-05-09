@@ -68,10 +68,23 @@ async function getUsersByCenter(centerName) {
   return result.recordset;
 }
 
+async function updateUserName(UUID, name) {
+  const pool = await getConnection();
+  await pool.request()
+    .input("UUID", UUID)
+    .input("Name", name)
+    .query(`
+      UPDATE Users
+      SET Name = @Name
+      WHERE UUID = @UUID
+    `);
+}
+
 export {
   getUserByEmail,
   createUser,
   getUserByUUID,
   createTempUser,
-  getUsersByCenter
+  getUsersByCenter,
+  updateUserName
 };
