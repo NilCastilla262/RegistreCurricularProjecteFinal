@@ -57,8 +57,24 @@ async function getByCenterAndYear(centerName, year) {
   return result.recordset;
 }
 
+async function createGroup(centerName, name, courseName, year) {
+  const pool = await getConnection();
+  const result = await pool.request()
+    .input("CenterName", centerName)
+    .input("Name", name)
+    .input("CourseName",  courseName)
+    .input("Year", year)
+    .query(`
+      INSERT INTO Groups (Name, CenterName, CourseName, Year)
+      OUTPUT INSERTED.UUID, INSERTED.Name, INSERTED.CenterName, INSERTED.CourseName, INSERTED.Year
+      VALUES (@Name, @CenterName, @CourseName, @Year);
+    `);
+  return result.recordset[0];
+}
+
 export {
   getGroupsByUserUUID,
   getResumeForGroups,
   getByCenterAndYear,
+  createGroup
 };

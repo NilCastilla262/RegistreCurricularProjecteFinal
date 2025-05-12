@@ -1,5 +1,6 @@
 // controllers/groupsController.js
-import { getGroupsByUserUUID, getResumeForGroups, getByCenterAndYear } from "../models/groupsModel.js";
+import { getGroupsByUserUUID, getResumeForGroups, getByCenterAndYear, createGroup } from "../models/groupsModel.js";
+import { getCurrentAcademicYear } from "../utils/date.utils.js";
 
 async function getGroupsByUser(req, res, next) {
   try {
@@ -56,8 +57,34 @@ async function getByCenterAndYearController(req, res, next) {
   }
 }
 
+async function createGroupController(req, res, next) {
+  try {
+    const { Name, CourseName } = req.body;
+
+    if (!Name || !CourseName) {
+      const err = new Error("Cal indicar Name i CourseName");
+      err.status = 400;
+      throw err;
+    }
+    if (Name.length > 30 || CourseName.length > 20) {
+      const err = new Error("Name (max 30) o CourseName (max 20) massa llargs");
+      err.status = 400;
+      throw err;
+    }
+
+    const centerName = req.user.centerName;
+    const Year = getCurrentAcademicYear();
+
+    const newGroup = await createGroup(centerName, Name, CourseName, Year);
+    return res.status(201).json(newGroup);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export { 
   getGroupsByUser,
   getResumeController,
   getByCenterAndYearController,
+  createGroupController
 };
