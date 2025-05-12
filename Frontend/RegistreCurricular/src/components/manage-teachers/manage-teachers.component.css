@@ -219,3 +219,21 @@ form button[type="button"]:hover {
   outline: 2px solid #3498db;
   outline-offset: 2px;
 }
+
+
+/* ===== Disabled state styling ===== */
+button:disabled,
+button[disabled] {
+  background-color: #bdc3c7;
+  color: #7f8c8d;
+  cursor: not-allowed;
+  box-shadow: none;            
+  transform: none;
+}
+
+/* Evitem que al passar el ratolí canviï res */
+button:disabled:hover,
+button[disabled]:hover {
+  background-color: #bdc3c7;
+  transform: none;
+}
