@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule }   from '@angular/common';
-import { FormsModule }    from '@angular/forms';
-import { UsersService }   from '../../services/users.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { UsersService } from '../../services/users.service';
 import { UserCenterRelationService } from '../../services/user-center-relation.service';
-import { UserModel }      from '../../models/users/user.model';
+import { UserModel } from '../../models/users/user.model';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -37,7 +37,19 @@ export class ManageTeachersComponent implements OnInit {
         this.originalRoles = {};
         users.forEach(u => this.originalRoles[u.email] = u.role);
       },
-      error: err  => console.error('Error carregant professors:', err)
+      error: err => {
+        console.error('Error carregant professors:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No s’han pogut carregar els professors.',
+          confirmButtonText: 'D’acord',
+          customClass: {
+            confirmButton: 'btn-swal-confirm'
+          },
+          buttonsStyling: false
+        });
+      }
     });
   }
 
@@ -50,10 +62,9 @@ export class ManageTeachersComponent implements OnInit {
   }
 
   getRoleLabel(role: number): string {
-    if (role === 2) {
-      return 'Administrador de centre';
-    }
-    return 'Professor';
+    return role === 2
+      ? 'Administrador de centre'
+      : 'Professor';
   }
 
   submitNewTeacher() {
@@ -65,15 +76,42 @@ export class ManageTeachersComponent implements OnInit {
         this.loadTeachers();
         this.toggleForm();
       },
-      error: err => console.error('Error afegint professor:', err)
+      error: err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error afegint professor',
+          text: err.error?.message || 'S’ha produït un error inesperat.',
+          confirmButtonText: 'D’acord',
+          customClass: { confirmButton: 'btn-swal-confirm' },
+          buttonsStyling: false
+        });
+      }
     });
   }
 
   saveRole(u: UserModel) {
     if (u.role === this.originalRoles[u.email]) return;
     this.relService.updateRole(u.email, u.role).subscribe({
-      next: () => this.originalRoles[u.email] = u.role,
-      error: err => console.error('Error actualitzant rol:', err)
+      next: () => {
+        this.originalRoles[u.email] = u.role;
+        Swal.fire({
+          icon: 'success',
+          title: 'Rol actualitzat',
+          timer: 1200,
+          showConfirmButton: false
+        });
+      },
+      error: err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error canviant el rol',
+          text: err.error?.message || 'No s’ha pogut actualitzar el rol.',
+          confirmButtonText: 'D’acord',
+          customClass: { confirmButton: 'btn-swal-confirm' },
+          buttonsStyling: false
+        });
+        u.role = this.originalRoles[u.email];
+      }
     });
   }
 
@@ -85,13 +123,7 @@ export class ManageTeachersComponent implements OnInit {
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'No, cancel·lar',
       focusCancel: true,
-
-      confirmButtonColor: '#3498db',
-      cancelButtonColor: '#e0e0e0',
-
       customClass: {
-        popup: 'swal2-border-radius-lg',
-        title: 'swal2-title-custom',
         confirmButton: 'btn-swal-confirm',
         cancelButton: 'btn-swal-cancel'
       },
@@ -99,8 +131,25 @@ export class ManageTeachersComponent implements OnInit {
     }).then(result => {
       if (result.isConfirmed) {
         this.relService.deleteRelation(u.email).subscribe({
-          next: () => this.loadTeachers(),
-          error: err => console.error('Error eliminant relació:', err)
+          next: () => {
+            this.loadTeachers();
+            Swal.fire({
+              icon: 'success',
+              title: 'Eliminat',
+              timer: 1000,
+              showConfirmButton: false
+            });
+          },
+          error: err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'No s’ha pogut eliminar',
+              text: err.error?.message || 'S’ha produït un error inesperat.',
+              confirmButtonText: 'D’acord',
+              customClass: { confirmButton: 'btn-swal-confirm' },
+              buttonsStyling: false
+            });
+          }
         });
       }
     });
