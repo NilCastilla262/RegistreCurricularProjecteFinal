@@ -1,5 +1,5 @@
 // controllers/groupsController.js
-import { getGroupsByUserUUID, getResumeForGroups, getByCenterAndYear, createGroup } from "../models/groupsModel.js";
+import { getGroupsByUserUUID, getResumeForGroups, getByCenterAndYear, createGroup, updateGroupName } from "../models/groupsModel.js";
 import { getCurrentAcademicYear } from "../utils/date.utils.js";
 
 async function getGroupsByUser(req, res, next) {
@@ -82,9 +82,45 @@ async function createGroupController(req, res, next) {
   }
 }
 
+async function updateGroupController(req, res, next) {
+  try {
+    const { uuid } = req.params;
+    const { Name } = req.body;
+    const centerName = req.user.centerName;
+
+    if (!Name) {
+      const err = new Error("Cal indicar el camp Name");
+      err.status = 400;
+      throw err;
+    }
+    if (typeof Name !== "string" || Name.trim().length === 0) {
+      const err = new Error("Name ha de ser una cadena no buida");
+      err.status = 400;
+      throw err;
+    }
+    if (Name.length > 30) {
+      const err = new Error("Name no pot superar 30 caràcters");
+      err.status = 400;
+      throw err;
+    }
+
+    const updated = await updateGroupName(uuid, centerName, Name.trim());
+    if (!updated) {
+      const err = new Error("Grup no trobat o no pertany al teu centre");
+      err.status = 404;
+      throw err;
+    }
+
+    return res.status(200).json(updated);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export { 
   getGroupsByUser,
   getResumeController,
   getByCenterAndYearController,
-  createGroupController
+  createGroupController,
+  updateGroupController
 };

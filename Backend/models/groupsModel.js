@@ -1,5 +1,6 @@
 // models/groupsModel.js
 import { getConnection } from "../config/db.js";
+import sql from "mssql";
 
 async function getGroupsByUserUUID(userUUID) {
   const pool = await getConnection();
@@ -72,9 +73,27 @@ async function createGroup(centerName, name, courseName, year) {
   return result.recordset[0];
 }
 
+async function updateGroupName(uuidGroup, centerName, newName) {
+  const pool = await getConnection();
+  const result = await pool.request()
+    .input("UUIDGroup", uuidGroup)
+    .input("CenterName", centerName)
+    .input("NewName", newName)
+    .query(`
+      UPDATE Groups
+      SET Name = @NewName
+      OUTPUT inserted.UUID, inserted.Name, inserted.CenterName, inserted.CourseName, inserted.Year
+      WHERE UUID = @UUIDGroup
+        AND CenterName = @CenterName
+    `);
+
+  return result.recordset[0];
+}
+
 export {
   getGroupsByUserUUID,
   getResumeForGroups,
   getByCenterAndYear,
-  createGroup
+  createGroup,
+  updateGroupName
 };
