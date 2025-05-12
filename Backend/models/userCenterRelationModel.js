@@ -4,7 +4,7 @@ import { getConnection } from "../config/db.js";
 async function getCentersByUser(userUUID) {
   const pool = await getConnection();
   const result = await pool.request()
-    .input('UserUUID', userUUID)
+    .input("UserUUID", userUUID)
     .query(`
       SELECT CenterName, Role
       FROM UserCenterRelation
@@ -14,25 +14,38 @@ async function getCentersByUser(userUUID) {
 }
 
 async function getSpecificCenterByUser(userUUID, centerName) {
-    const pool = await getConnection();
-    const result = await pool.request()
-      .input('UserUUID', userUUID)
-      .input('CenterName', centerName)
-      .query(`
-        SELECT CenterName, Role
-        FROM UserCenterRelation
-        WHERE UUIDUser = @UserUUID
-          AND CenterName = @CenterName
-      `);
-    return result.recordset;
+  const pool = await getConnection();
+  const result = await pool.request()
+    .input("UserUUID", userUUID)
+    .input("CenterName", centerName)
+    .query(`
+      SELECT CenterName, Role
+      FROM UserCenterRelation
+      WHERE UUIDUser   = @UserUUID
+        AND CenterName = @CenterName
+    `);
+  return result.recordset;
+}
+
+async function countAdminsByCenter(centerName) {
+  const pool = await getConnection();
+  const result = await pool.request()
+    .input("CenterName", centerName)
+    .query(`
+      SELECT COUNT(*) AS count
+      FROM UserCenterRelation
+      WHERE CenterName = @CenterName
+        AND Role       = 2
+    `);
+  return result.recordset[0].count;
 }
 
 async function createUserCenterRelation(UUIDUser, centerName, role) {
   const pool = await getConnection();
   await pool.request()
-    .input("UUIDUser", UUIDUser)
+    .input("UUIDUser",   UUIDUser)
     .input("CenterName", centerName)
-    .input("Role", role)
+    .input("Role",       role)
     .query(`
       INSERT INTO UserCenterRelation (UUIDUser, CenterName, Role)
       VALUES (@UUIDUser, @CenterName, @Role)
@@ -69,7 +82,8 @@ async function deleteUserCenterRelation(UUIDUser, centerName) {
 export {
   getCentersByUser,
   getSpecificCenterByUser,
+  countAdminsByCenter,
   createUserCenterRelation,
   updateUserCenterRelation,
   deleteUserCenterRelation
- };
+};
