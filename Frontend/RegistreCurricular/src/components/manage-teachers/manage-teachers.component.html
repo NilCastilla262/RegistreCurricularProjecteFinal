@@ -5,20 +5,43 @@
     <table>
       <thead>
         <tr>
-          <th>Nom</th><th>Email</th><th>Rol</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Guardar</th>
+          <th>Eliminar</th>
         </tr>
       </thead>
       <tbody>
-        @for (t of teachers; track t.email) {
+        @if (teachers.length > 0) {
+          @for (t of teachers; track t.email) {
+            <tr>
+              <td>{{ t.name || '-' }}</td>
+              <td>{{ t.email }}</td>
+              <td>
+                <select [(ngModel)]="t.role" name="role-{{t.email}}">
+                  <option [ngValue]="1">Professor</option>
+                  <option [ngValue]="2">Administrador de centre</option>
+                </select>
+              </td>
+              <td>
+                <button
+                  (click)="saveRole(t)"
+                  [disabled]="t.role === originalRoles[t.email]"
+                >
+                  💾
+                </button>
+              </td>
+              <td>
+                <button (click)="confirmDelete(t)">🗑️</button>
+              </td>
+            </tr>
+          }
+        } @else {
           <tr>
-            <td>{{ t.name || '-' }}</td>
-            <td>{{ t.email }}</td>
-            <td>{{ getRoleLabel(t.role) }}</td>
-          </tr>
-        }
-        @empty {
-          <tr>
-            <td colspan="3" class="empty-state">No hi ha professors assignats a aquest centre</td>
+            <td colspan="5" class="empty-state">
+              No hi ha professors assignats a aquest centre
+            </td>
           </tr>
         }
       </tbody>
@@ -44,7 +67,7 @@
         name="role"
         required
       >
-        <option [ngValue]="null" disabled selected>-- Selecciona un rol --</option>
+        <option [ngValue]="null" disabled>-- Selecciona un rol --</option>
         <option [ngValue]="1">Professor</option>
         <option [ngValue]="2">Administrador de centre</option>
       </select>
