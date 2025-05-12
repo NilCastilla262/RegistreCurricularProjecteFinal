@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+/* styles.css (global) */
+/* Botons de SweetAlert2 */
+.btn-swal-confirm {
+  background-color: #3498db !important;
+  color: #fff !important;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 6px;
+  font-weight: 500;
+}
+.btn-swal-cancel {
+  background-color: #e0e0e0 !important;
+  color: #333 !important;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* Popup border-radius més suau */
+.swal2-border-radius-lg.swal2-popup {
+  border-radius: 1rem !important;
+}

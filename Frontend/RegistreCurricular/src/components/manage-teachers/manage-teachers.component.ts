@@ -4,6 +4,7 @@ import { FormsModule }    from '@angular/forms';
 import { UsersService }   from '../../services/users.service';
 import { UserCenterRelationService } from '../../services/user-center-relation.service';
 import { UserModel }      from '../../models/users/user.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-manage-teachers',
@@ -77,13 +78,31 @@ export class ManageTeachersComponent implements OnInit {
   }
 
   confirmDelete(u: UserModel) {
-    const name = u.name || u.email;
-    if (!window.confirm(`Estàs segur que vols treure el professor “${name}” del centre?`)) {
-      return;
-    }
-    this.relService.deleteRelation(u.email).subscribe({
-      next: () => this.loadTeachers(),
-      error: err => console.error('Error eliminant relació:', err)
+    Swal.fire({
+      title: `Treure “${u.name || u.email}” del centre?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'No, cancel·lar',
+      focusCancel: true,
+
+      confirmButtonColor: '#3498db',
+      cancelButtonColor: '#e0e0e0',
+
+      customClass: {
+        popup: 'swal2-border-radius-lg',
+        title: 'swal2-title-custom',
+        confirmButton: 'btn-swal-confirm',
+        cancelButton: 'btn-swal-cancel'
+      },
+      buttonsStyling: false
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.relService.deleteRelation(u.email).subscribe({
+          next: () => this.loadTeachers(),
+          error: err => console.error('Error eliminant relació:', err)
+        });
+      }
     });
   }
 }
