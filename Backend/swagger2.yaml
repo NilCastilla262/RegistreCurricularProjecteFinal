@@ -258,18 +258,6 @@
             "name": "Authorization",
             "in": "header",
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "Name": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {
