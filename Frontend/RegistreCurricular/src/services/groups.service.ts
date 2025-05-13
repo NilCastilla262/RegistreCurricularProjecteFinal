@@ -54,7 +54,7 @@ export class GroupsService {
   updateGroupName(uuid: string, newName: string): Observable<GroupModel> {
     const payload = { Name: newName };
     return this.http
-      .put<any>(`${this.baseUrl}${encodeURIComponent(uuid)}`, payload)
+      .put<any>(`${this.baseUrl}/${encodeURIComponent(uuid)}`, payload)
       .pipe(map(apiData => GroupDTO.fromApi(apiData)));
   }
 

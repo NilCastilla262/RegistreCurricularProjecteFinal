@@ -47,4 +47,33 @@
       </tbody>
     </table>
   </div>
+
+  <button (click)="toggleForm()" class="add-button">
+    <span class="button-icon">+</span> Afegir grup
+  </button>
+
+  @if (showForm) {
+    <form (ngSubmit)="submitNewGroup()" class="add-form">
+      <input
+        type="text"
+        [(ngModel)]="newName"
+        name="newName"
+        maxlength="30"
+        placeholder="Nom del grup"
+        required
+      />
+      <input
+        type="text"
+        [(ngModel)]="newCourseName"
+        name="newCourse"
+        maxlength="20"
+        placeholder="Curs (p.ex. 1r ESO)"
+        required
+      />
+      <div class="form-buttons">
+        <button type="submit">Desar</button>
+        <button type="button" (click)="toggleForm()">Cancel·lar</button>
+      </div>
+    </form>
+  }
 </div>

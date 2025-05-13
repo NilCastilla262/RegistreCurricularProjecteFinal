@@ -20,6 +20,10 @@ export class ManageGroupsComponent implements OnInit {
   originalNames: Record<string,string> = {};
   currentYear = '';
 
+  showForm = false;
+  newName = '';
+  newCourseName = '';
+
   constructor(private groupsService: GroupsService) {}
 
   ngOnInit(): void {
@@ -34,7 +38,59 @@ export class ManageGroupsComponent implements OnInit {
         this.originalNames = {};
         arr.forEach(g => this.originalNames[g.uuid] = g.name);
       },
-      error: err => console.error('Error carregant grups:', err)
+      error: err => {
+        console.error('Error carregant grups:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No s’han pogut carregar els grups.',
+          confirmButtonText: 'D’acord',
+          customClass: { confirmButton: 'btn-swal-confirm' },
+          buttonsStyling: false
+        });
+      }
+    });
+  }
+
+  toggleForm() {
+    this.showForm = !this.showForm;
+    if (!this.showForm) {
+      this.newName = '';
+      this.newCourseName = '';
+    }
+  }
+
+  submitNewGroup() {
+    const name = this.newName.trim();
+    const course = this.newCourseName.trim();
+    if (!name || name.length > 30 || !course || course.length > 20) {
+      return;
+    }
+
+    this.groupsService.createGroup(name, course).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Grup creat',
+          toast: true,
+          position: 'top-end',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        this.loadGroups();
+        this.toggleForm();
+      },
+      error: err => {
+        console.error('Error creant grup:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error creant grup',
+          text: err.error?.message || 'S’ha produït un error inesperat.',
+          confirmButtonText: 'D’acord',
+          customClass: { confirmButton: 'btn-swal-confirm' },
+          buttonsStyling: false
+        });
+      }
     });
   }
 
@@ -48,11 +104,22 @@ export class ManageGroupsComponent implements OnInit {
           title: 'Nom actualitzat',
           toast: true,
           position: 'top-end',
-          timer: 1500,
+          timer: 1200,
           showConfirmButton: false
         });
       },
-      error: err => console.error('Error actualitzant nom:', err)
+      error: err => {
+        console.error('Error actualitzant nom:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error canviant nom',
+          text: err.error?.message || 'No s’ha pogut actualitzar.',
+          confirmButtonText: 'D’acord',
+          customClass: { confirmButton: 'btn-swal-confirm' },
+          buttonsStyling: false
+        });
+        g.name = this.originalNames[g.uuid];
+      }
     });
   }
 
@@ -65,7 +132,6 @@ export class ManageGroupsComponent implements OnInit {
       cancelButtonText: 'No, cancel·lar',
       focusCancel: true,
       customClass: {
-        popup: 'swal2-border-radius-lg',
         confirmButton: 'btn-swal-confirm',
         cancelButton:  'btn-swal-cancel'
       },
@@ -73,8 +139,28 @@ export class ManageGroupsComponent implements OnInit {
     }).then(res => {
       if (res.isConfirmed) {
         this.groupsService.deleteGroup(g.uuid).subscribe({
-          next: () => this.loadGroups(),
-          error: err => console.error('Error eliminant grup:', err)
+          next: () => {
+            this.loadGroups();
+            Swal.fire({
+              icon: 'success',
+              title: 'Eliminat',
+              toast: true,
+              position: 'top-end',
+              timer: 1200,
+              showConfirmButton: false
+            });
+          },
+          error: err => {
+            console.error('Error eliminant grup:', err);
+            Swal.fire({
+              icon: 'error',
+              title: 'No s’ha pogut eliminar',
+              text: err.error?.message || 'S’ha produït un error inesperat.',
+              confirmButtonText: 'D’acord',
+              customClass: { confirmButton: 'btn-swal-confirm' },
+              buttonsStyling: false
+            });
+          }
         });
       }
     });
