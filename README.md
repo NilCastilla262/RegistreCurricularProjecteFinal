@@ -19,7 +19,9 @@ Errors:
 
 404 – No trobat
 
-500 – Error intern del servidor (el que estàs fent ara)
+409 – COnflict (ja existeix una relacio entre usuari-group...)
+
+500 – Error intern del servidor
 
 503 – Servei no disponible (ex. base de dades caiguda)
 

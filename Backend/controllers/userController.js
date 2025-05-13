@@ -1,7 +1,7 @@
 // controllers/userController.js
 import { getUsersByCenter } from "../models/userModel.js";
 
-export async function getUsersByCenterController(req, res, next) {
+async function getUsersByCenterController(req, res, next) {
   try {
     const centerName = req.user.centerName;
     if (!centerName) {
@@ -15,4 +15,8 @@ export async function getUsersByCenterController(req, res, next) {
   } catch (err) {
     next(err);
   }
+}
+
+export {
+  getUsersByCenterController
 }
