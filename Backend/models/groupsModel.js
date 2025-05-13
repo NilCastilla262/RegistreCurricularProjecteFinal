@@ -90,10 +90,25 @@ async function updateGroupName(uuidGroup, centerName, newName) {
   return result.recordset[0];
 }
 
+async function deleteGroup(uuidGroup, centerName) {
+  const pool = await getConnection();
+  const result = await pool.request()
+    .input("UUIDGroup", uuidGroup)
+    .input("CenterName", centerName)
+    .query(`
+      DELETE
+      FROM Groups
+      WHERE UUID       = @UUIDGroup
+        AND CenterName = @CenterName;
+    `);
+  return result.rowsAffected[0] > 0;
+}
+
 export {
   getGroupsByUserUUID,
   getResumeForGroups,
   getByCenterAndYear,
   createGroup,
-  updateGroupName
+  updateGroupName,
+  deleteGroup
 };

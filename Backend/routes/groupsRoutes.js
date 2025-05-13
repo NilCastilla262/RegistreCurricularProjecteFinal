@@ -11,5 +11,6 @@ router.get("/resume", verifyToken, getResumeController);
 router.get("/center", verifyToken, extractCenterName, getByCenterAndYearController);
 router.post("/", verifyToken, requireCenterAdmin, createGroupController);
 router.put("/:uuid", verifyToken, requireCenterAdmin, extractCenterName, updateGroupController);
+router.delete("/:uuid", verifyToken, requireCenterAdmin, extractCenterName, updateGroupController);
 
 export default router;

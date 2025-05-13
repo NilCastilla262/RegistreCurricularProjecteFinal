@@ -1,5 +1,5 @@
 // controllers/groupsController.js
-import { getGroupsByUserUUID, getResumeForGroups, getByCenterAndYear, createGroup, updateGroupName } from "../models/groupsModel.js";
+import { getGroupsByUserUUID, getResumeForGroups, getByCenterAndYear, createGroup, updateGroupName, deleteGroup } from "../models/groupsModel.js";
 import { getCurrentAcademicYear } from "../utils/date.utils.js";
 
 async function getGroupsByUser(req, res, next) {
@@ -117,10 +117,29 @@ async function updateGroupController(req, res, next) {
   }
 }
 
+async function deleteGroupController(req, res, next) {
+  try {
+    const { uuid } = req.params;
+    const centerName = req.user.centerName;
+
+    const ok = await deleteGroup(uuid, centerName);
+    if (!ok) {
+      const err = new Error("Grup no trobat o no pertany al teu centre");
+      err.status = 404;
+      throw err;
+    }
+
+    return res.json({ message: "Grup eliminat correctament" });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export { 
   getGroupsByUser,
   getResumeController,
   getByCenterAndYearController,
   createGroupController,
-  updateGroupController
+  updateGroupController,
+  deleteGroupController
 };
