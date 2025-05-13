@@ -12,7 +12,7 @@ import { getCurrentAcademicYear } from '../../utils/date-utils';
   standalone: true,
   imports: [ CommonModule, FormsModule ],
   templateUrl: './manage-groups.component.html',
-  styleUrl: './manage-groups.component.css'
+  styleUrl: '../../styles/shared-table.css'
 })
 
 export class ManageGroupsComponent implements OnInit {

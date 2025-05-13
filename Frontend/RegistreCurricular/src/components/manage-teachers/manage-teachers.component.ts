@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './manage-teachers.component.html',
-  styleUrl: './manage-teachers.component.css'
+  styleUrl: '../../styles/shared-table.css'
 })
 export class ManageTeachersComponent implements OnInit {
   teachers: UserModel[] = [];

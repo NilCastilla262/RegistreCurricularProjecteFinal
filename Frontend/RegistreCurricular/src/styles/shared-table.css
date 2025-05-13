@@ -1,0 +1,172 @@
+/* ===== Contenidors principals ===== */
+.manage-teachers,
+.manage-groups {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+               Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #333;
+}
+
+.manage-teachers h2,
+.manage-groups h2 {
+  font-size: 1.75rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ===== Taules ===== */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 2rem;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+thead {
+  background: #3498db;
+  color: #fff;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+  background: #f5f7fa;
+}
+
+tbody tr:hover {
+  background: #ecf0f1;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 1rem;
+  color: #7f8c8d;
+}
+
+/* ===== Inputs inline ===== */
+input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccd1d9;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+select {
+  padding: 0.5rem;
+  border: 1px solid #ccd1d9;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  background: #fff;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 0.5rem) center;
+  padding-right: 2rem;
+}
+
+/* ===== Botons ===== */
+button {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.1s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+button:hover:not(:disabled) {
+  background: #2980b9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+button:disabled {
+  opacity: 0.6;
+  background: #bdc3c7;
+  color: #7f8c8d;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ===== Formularis add-teacher / add-group ===== */
+form {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: #f5f7fa;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  border-left: 4px solid #3498db;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+form input,
+form select {
+  flex: 1;
+  min-width: 200px;
+}
+
+form button {
+  padding: 0.5rem 1rem;
+}
+
+/* Botó “afegir” a sota la taula */
+.add-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* ===== Responsiu ===== */
+@media (max-width: 768px) {
+  th, td { padding: 0.6rem 0.75rem; }
+  .manage-teachers, .manage-groups { padding: 1rem; }
+  button { width: 100%; }
+  table { display: block; overflow-x: auto; white-space: nowrap; }
+  form { flex-direction: column; }
+  form button { width: 100%; }
+}
+
+/* ===== Focus accessible ===== */
+*:focus-visible {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
