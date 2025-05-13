@@ -62,14 +62,15 @@
         placeholder="Nom del grup"
         required
       />
-      <input
-        type="text"
+      <select
         [(ngModel)]="newCourseName"
         name="newCourse"
-        maxlength="20"
-        placeholder="Curs (p.ex. 1r ESO)"
         required
-      />
+      >
+        @for (opt of courseOptions; track opt) {
+          <option [value]="opt">{{ opt }}</option>
+        }
+      </select>
       <div class="form-buttons">
         <button type="submit">Desar</button>
         <button type="button" (click)="toggleForm()">Cancel·lar</button>

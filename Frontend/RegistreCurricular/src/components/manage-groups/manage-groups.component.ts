@@ -16,6 +16,7 @@ import { getCurrentAcademicYear } from '../../utils/date-utils';
 })
 
 export class ManageGroupsComponent implements OnInit {
+  courseOptions = ['1r', '2n', '3r', '4t', '5è', '6è'];
   groups: GroupModel[] = [];
   originalNames: Record<string,string> = {};
   currentYear = '';
