@@ -10,7 +10,7 @@ router.get( "/user/:uuid", verifyToken, requireCenterAdmin, getGroupsByUserContr
 
 router.get( "/group/:uuid", verifyToken, requireCenterAdmin, getUsersByGroupController);
 
-router.put( "/", verifyToken, requireCenterAdmin, createUserGroupRelationController);
+router.post( "/", verifyToken, requireCenterAdmin, createUserGroupRelationController);
 
 router.delete( "/:userUUID/:groupUUID",  verifyToken, requireCenterAdmin, deleteUserGroupRelationController);
 
