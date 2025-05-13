@@ -1,4 +1,4 @@
-function getCurrentAcademicYear() {
+export function getCurrentAcademicYear() {
   const date = new Date();
   const Y = date.getFullYear();
   const M = date.getMonth() + 1;

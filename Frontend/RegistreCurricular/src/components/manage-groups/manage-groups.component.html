@@ -1,0 +1,50 @@
+<div class="manage-groups">
+  <h2>Gestió de Grups (Curs {{ currentYear }})</h2>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Curs</th>
+          <th>Any</th>
+          <th>Desar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (groups.length > 0) {
+          @for (g of groups; track g.uuid) {
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="g.name"
+                  name="name-{{g.uuid}}"
+                  maxlength="30"
+                />
+              </td>
+              <td>{{ g.courseName }}</td>
+              <td>{{ g.year }}</td>
+              <td>
+                <button
+                  (click)="saveName(g)"
+                  [disabled]="g.name === originalNames[g.uuid]"
+                >💾</button>
+              </td>
+              <td>
+                <button (click)="confirmDelete(g)">🗑️</button>
+              </td>
+            </tr>
+          }
+        } @else {
+          <tr>
+            <td colspan="5" class="empty-state">
+              No hi ha grups per aquest curs
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
