@@ -4,24 +4,14 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import swaggerUi from "swagger-ui-express";
 import { getConnection } from "./config/db.js";
-import csvRoutes from "./routes/csvRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
-import groupsRoutes from "./routes/groupsRoutes.js";
-import subjectsRoutes from "./routes/subjectsRoutes.js";
-import sdaRoutes from "./routes/sdaRoutes.js";
-import coursesRoutes from "./routes/coursesRoutes.js";
-import sdaSubjectsRelationRoutes from "./routes/sdaSubjectsRelationRoutes.js";
-import competenciesSDARoutes from "./routes/competenciesSDARoutes.js";
-import fullSdaRoutes from "./routes/fullSdaRoutes.js";
 import fs from "fs";
 import yaml from "js-yaml";
 import swaggerAutogen from 'swagger-autogen';
 import errorHandler from "./middlewares/errorHandler.js";
-import userCenterRelationRoutes from "./routes/userCenterRelationRoutes.js";
-import usersRoutes from "./routes/usersRoutes.js";
-import userGroupRelationRoutes from "./routes/userGroupRelationRoutes.js";
 import requestLogger from "./middlewares/requestLogger.js";
 import { verifyToken } from "./middlewares/authMiddleware.js";
+import apiRoutes from "./routes/index.js";
 
 const app = express();
 const outputFile = './swagger2.yaml';
@@ -112,17 +102,7 @@ app.use(async (req, res, next) => {
   }
 });
 
-app.use('/apirc/v1', csvRoutes);
-app.use("/apirc/v1/groups", groupsRoutes);
-app.use("/apirc/v1/subjects", subjectsRoutes);
-app.use("/apirc/v1/sda", sdaRoutes);
-app.use('/apirc/v1/courses', coursesRoutes);
-app.use("/apirc/v1/sda/subject-relation", sdaSubjectsRelationRoutes);
-app.use('/apirc/v1/sda/fillSDA', competenciesSDARoutes);
-app.use("/apirc/v1/sda/full", fullSdaRoutes);
-app.use("/apirc/v1/user-center-relations", userCenterRelationRoutes);
-app.use("/apirc/v1/users", usersRoutes);
-app.use("/apirc/v1/user-group-relations", userGroupRelationRoutes);
+app.use("/apirc/v1", apiRoutes);
 
 app.use((req, res) => res.status(404).json({ error: "Ruta no trobada" }));
 
