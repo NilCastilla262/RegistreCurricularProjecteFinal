@@ -1,6 +1,5 @@
 //app.js
 import express from "express";
-import bodyParser from "body-parser";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import swaggerUi from "swagger-ui-express";
@@ -89,8 +88,8 @@ app.use(
   })
 );
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(async (req, res, next) => {
   try {
@@ -101,15 +100,6 @@ app.use(async (req, res, next) => {
       throw error;
     }
     next();
-  } catch (error) {
-    next(error);
-  }
-});
-
-app.get("/", async (_, res, next) => {
-  try {
-    const pool = await getConnection();
-    res.status(200).json({ message: "Successfully connected with database" });
   } catch (error) {
     next(error);
   }
