@@ -20,6 +20,8 @@ import errorHandler from "./middlewares/errorHandler.js";
 import userCenterRelationRoutes from "./routes/userCenterRelationRoutes.js";
 import usersRoutes from "./routes/usersRoutes.js";
 import userGroupRelationRoutes from "./routes/userGroupRelationRoutes.js";
+import requestLogger from "./middlewares/requestLogger.js";
+import { verifyToken } from "./middlewares/authMiddleware.js";
 
 const app = express();
 const outputFile = './swagger2.yaml';
@@ -91,6 +93,11 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/apirc/v1/auth", authRoutes);
+
+app.use(verifyToken);
+app.use(requestLogger);
+
 app.use(async (req, res, next) => {
   try {
     const pool = await getConnection();
@@ -105,7 +112,6 @@ app.use(async (req, res, next) => {
   }
 });
 
-app.use("/apirc/v1/auth", authRoutes);
 app.use('/apirc/v1', csvRoutes);
 app.use("/apirc/v1/groups", groupsRoutes);
 app.use("/apirc/v1/subjects", subjectsRoutes);
@@ -118,9 +124,7 @@ app.use("/apirc/v1/user-center-relations", userCenterRelationRoutes);
 app.use("/apirc/v1/users", usersRoutes);
 app.use("/apirc/v1/user-group-relations", userGroupRelationRoutes);
 
-app.use((req, res) => {
-  res.status(404).json({ error: "Ruta no trobada" });
-});
+app.use((req, res) => res.status(404).json({ error: "Ruta no trobada" }));
 
 app.use(errorHandler);
 

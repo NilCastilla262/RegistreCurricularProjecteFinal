@@ -12,16 +12,6 @@
     }
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/apirc/v1/auth/google-login": {
       "post": {
         "description": "",
