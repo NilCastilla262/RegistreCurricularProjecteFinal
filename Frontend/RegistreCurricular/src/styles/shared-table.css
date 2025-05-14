@@ -170,3 +170,13 @@ form button {
   outline: 2px solid #3498db;
   outline-offset: 2px;
 }
+
+/* ===== Inputs inline ===== */
+input:not([type=checkbox]):not([type=radio]) {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccd1d9;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
