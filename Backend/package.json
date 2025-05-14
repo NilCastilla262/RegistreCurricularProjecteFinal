@@ -1,8 +1,8 @@
 {
-  "name": "backend",
+  "name": "registre-curricular-backend",
   "version": "1.0.0",
   "type": "module",
-  "description": "",
+  "description": "API backend per al Registre Curricular: gestió d’usuaris, grups, SDA i informes de competències amb Node.js, Express i SQL Server",
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node server.js",
@@ -10,8 +10,16 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "registre-curricular",
     "express",
-    "sqlServer"
+    "nodejs",
+    "mssql",
+    "sql-server",
+    "api",
+    "jwt",
+    "swagger",
+    "cors",
+    "rate-limit"
   ],
   "author": "NilCastilla",
   "license": "ISC",
