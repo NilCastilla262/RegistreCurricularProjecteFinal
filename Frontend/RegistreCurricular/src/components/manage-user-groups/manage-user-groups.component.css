@@ -1,0 +1,153 @@
+/* ===== Contenidors principals ===== */
+.manage-groups {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+               Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #333;
+}
+
+.manage-groups h2 {
+  font-size: 1.75rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== Taules ===== */
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+thead {
+  background: #3498db;
+  color: #fff;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+/* Definir amplades de columnes consistents */
+th:first-child, td:first-child {
+  width: 60%;
+}
+
+th:nth-child(2), td:nth-child(2) {
+  width: 25%;
+}
+
+th:last-child, td:last-child {
+  width: 15%;
+  text-align: center;
+}
+
+tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+  background: #f5f7fa;
+}
+
+tbody tr:hover {
+  background: #ecf0f1;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 1.5rem;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+/* ===== Botons ===== */
+button {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.1s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+button:hover:not(:disabled) {
+  background: #2980b9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Botó acció a les files */
+td button {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 1.2rem;
+  border-radius: 50%;
+}
+
+/* Estil específic per als botons d'acció */
+
+
+
+/* ===== Responsiu ===== */
+@media (max-width: 768px) {
+  .manage-groups {
+    padding: 1rem;
+  }
+
+  th, td {
+    padding: 0.6rem 0.75rem;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .table-container {
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ===== Focus accessible ===== */
+*:focus-visible {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}

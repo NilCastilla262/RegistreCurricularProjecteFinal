@@ -5,7 +5,8 @@
     <table>
       <thead>
         <tr>
-          <th>Assignats</th>
+          <th>Nom</th>
+          <th>Curs</th>
           <th>Acció</th>
         </tr>
       </thead>
@@ -13,15 +14,16 @@
         @if (assigned.length > 0) {
           @for (g of assigned; track g.uuid) {
             <tr>
-              <td>{{ g.name }} — {{ g.courseName }}</td>
+              <td>{{ g.name }}</td>
+              <td>{{ g.courseName }}</td>
               <td>
-                <button (click)="remove(g)" title="Elimina">🗑️</button>
+                <button (click)="confirmRemove(g)" title="Elimina">🗑️</button>
               </td>
             </tr>
           }
         } @else {
           <tr>
-            <td colspan="2" class="empty-state">
+            <td colspan="3" class="empty-state">
               No té cap grup assignat
             </td>
           </tr>
@@ -34,7 +36,8 @@
     <table>
       <thead>
         <tr>
-          <th>No assignats</th>
+          <th>Nom</th>
+          <th>Curs</th>
           <th>Acció</th>
         </tr>
       </thead>
@@ -42,7 +45,8 @@
         @if (available.length > 0) {
           @for (g of available; track g.uuid) {
             <tr>
-              <td>{{ g.name }} — {{ g.courseName }}</td>
+              <td>{{ g.name }}</td>
+              <td>{{ g.courseName }}</td>
               <td>
                 <button (click)="add(g)" title="Assigna">➕</button>
               </td>
@@ -50,7 +54,7 @@
           }
         } @else {
           <tr>
-            <td colspan="2" class="empty-state">
+            <td colspan="3" class="empty-state">
               Cap grup disponible per a aquest curs
             </td>
           </tr>

@@ -5,6 +5,7 @@ import { UsersService } from '../../services/users.service';
 import { UserCenterRelationService } from '../../services/user-center-relation.service';
 import { UserModel } from '../../models/users/user.model';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-teachers',
@@ -22,6 +23,7 @@ export class ManageTeachersComponent implements OnInit {
   newRole: number | null = null;
 
   constructor(
+    private router: Router,
     private usersService: UsersService,
     private relService: UserCenterRelationService
   ) {}
@@ -153,5 +155,9 @@ export class ManageTeachersComponent implements OnInit {
         });
       }
     });
+  }
+
+  manageGroups(u: UserModel) {
+    this.router.navigate(['/manage-user-groups', u.uuid]);
   }
 }

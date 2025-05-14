@@ -67,7 +67,7 @@ export const routes: Routes = [
         canActivate: [AdminCenterGuard],
     },
     {
-        path: 'manage-user-groups',
+        path: 'manage-user-groups/:uuid',
         component: ManageUserGroupsComponent,
         canActivate: [AdminCenterGuard],
     },

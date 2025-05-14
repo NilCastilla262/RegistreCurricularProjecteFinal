@@ -1,7 +1,7 @@
 <div class="manage-teachers">
   <h2>Gestió de Professors</h2>
 
-  <div class="table-container">
+<div class="table-container">
     <table>
       <thead>
         <tr>
@@ -10,11 +10,12 @@
           <th>Rol</th>
           <th>Guardar</th>
           <th>Eliminar</th>
+          <th>Grups</th>
         </tr>
       </thead>
       <tbody>
         @if (teachers.length > 0) {
-          @for (t of teachers; track t.email) {
+          @for (t of teachers; track t.uuid) {
             <tr>
               <td>{{ t.name || '-' }}</td>
               <td>{{ t.email }}</td>
@@ -28,18 +29,19 @@
                 <button
                   (click)="saveRole(t)"
                   [disabled]="t.role === originalRoles[t.email]"
-                >
-                  💾
-                </button>
+                >💾</button>
               </td>
               <td>
                 <button (click)="confirmDelete(t)">🗑️</button>
+              </td>
+              <td>
+                <button (click)="manageGroups(t)" title="Gestiona grups">👥</button>
               </td>
             </tr>
           }
         } @else {
           <tr>
-            <td colspan="5" class="empty-state">
+            <td colspan="6" class="empty-state">
               No hi ha professors assignats a aquest centre
             </td>
           </tr>
