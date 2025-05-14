@@ -1,0 +1,61 @@
+<div class="manage-groups">
+  <h2>Grups d'Usuari (Curs {{ year }})</h2>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Assignats</th>
+          <th>Acció</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (assigned.length > 0) {
+          @for (g of assigned; track g.uuid) {
+            <tr>
+              <td>{{ g.name }} — {{ g.courseName }}</td>
+              <td>
+                <button (click)="remove(g)" title="Elimina">🗑️</button>
+              </td>
+            </tr>
+          }
+        } @else {
+          <tr>
+            <td colspan="2" class="empty-state">
+              No té cap grup assignat
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>No assignats</th>
+          <th>Acció</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (available.length > 0) {
+          @for (g of available; track g.uuid) {
+            <tr>
+              <td>{{ g.name }} — {{ g.courseName }}</td>
+              <td>
+                <button (click)="add(g)" title="Assigna">➕</button>
+              </td>
+            </tr>
+          }
+        } @else {
+          <tr>
+            <td colspan="2" class="empty-state">
+              Cap grup disponible per a aquest curs
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

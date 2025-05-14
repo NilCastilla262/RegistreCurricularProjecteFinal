@@ -11,6 +11,7 @@ import { AdminCenterGuard } from './guards/admin-center.guard';
 import { TeacherGuard } from './guards/teacher.guard';
 import { ManageTeachersComponent } from './components/manage-teachers/manage-teachers.component';
 import { ManageGroupsComponent } from './components/manage-groups/manage-groups.component';
+import { ManageUserGroupsComponent } from './components/manage-user-groups/manage-user-groups.component';
 
 export const routes: Routes = [
     {
@@ -60,9 +61,14 @@ export const routes: Routes = [
         component: ManageTeachersComponent,
         canActivate: [AdminCenterGuard],
     },
-            {
+    {
         path: 'manage-groups',
         component: ManageGroupsComponent,
+        canActivate: [AdminCenterGuard],
+    },
+    {
+        path: 'manage-user-groups',
+        component: ManageUserGroupsComponent,
         canActivate: [AdminCenterGuard],
     },
 ];

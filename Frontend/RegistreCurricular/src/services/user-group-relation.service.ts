@@ -27,6 +27,8 @@ export class UserGroupRelationService {
   }
 
   addUserToGroup(userUUID: string, groupUUID: string): Observable<void> {
+    console.log(userUUID, groupUUID);
+    console.log(userUUID);
     const payload: RelationPayload = { UUIDUser: userUUID, UUIDGroup: groupUUID };
     return this.http.post<void>(`${this.baseUrl}`, payload);
   }
