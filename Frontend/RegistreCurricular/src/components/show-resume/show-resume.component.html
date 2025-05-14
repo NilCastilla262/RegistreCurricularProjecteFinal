@@ -1,28 +1,37 @@
+<div class="filter-container">
+  <label>
+    <input type="checkbox" [(ngModel)]="showUnworked" />
+    Mostrar només NO treballats
+  </label>
+</div>
+
 @if (groupedResume.length > 0) {
   @for (subj of groupedResume; track subj.name) {
-    <div>
-      <h2 (click)="subj.expanded = !subj.expanded" class="subject-header">
+    <div class="subject-group">
+      <h2 (click)="toggleSubject(subj)" class="subject-header">
         {{ subj.expanded ? '▾' : '▸' }} {{ subj.name }}
       </h2>
 
       @if (subj.expanded) {
         <div class="subject-body">
           @for (comp of subj.competencies; track comp.name) {
-            <h3 (click)="comp.expanded = !comp.expanded" class="competency-header">
+            <h3 (click)="toggleCompetency(comp)" class="competency-header">
               {{ comp.expanded ? '▾' : '▸' }} {{ comp.order }}. {{ comp.name }}
             </h3>
 
             @if (comp.expanded) {
               <ul class="criteria-list">
                 @for (crit of comp.criteria; track crit.name) {
-                  <li class="criteria-row">
-                    <span class="criteria-desc">
-                      {{ crit.mainOrder }}.{{ crit.order }}. {{ crit.name }}
-                    </span>
-                    <span class="criteria-total">
-                      Treballat:{{ crit.total }}
-                    </span>
-                  </li>
+                  @if (!showUnworked || crit.total === 0) {
+                    <li class="criteria-row">
+                      <span class="criteria-desc">
+                        {{ crit.mainOrder }}.{{ crit.order }}. {{ crit.name }}
+                      </span>
+                      <span class="criteria-total">
+                        Treballat: {{ crit.total }}
+                      </span>
+                    </li>
+                  }
                 }
               </ul>
             }
@@ -32,5 +41,5 @@
     </div>
   }
 } @else {
-  <p>No hi ha dades per mostrar.</p>
+  <p class="empty-state">No hi ha dades per mostrar.</p>
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GroupsService, ResumeRow } from '../../services/groups.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface Criteria {
   name: string;
@@ -26,7 +27,7 @@ interface SubjectGroup {
 @Component({
   selector: 'app-show-resume',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './show-resume.component.html',
   styleUrl: './show-resume.component.css'
 })
@@ -34,6 +35,8 @@ export class ShowResumeComponent implements OnInit {
   resume: ResumeRow[] = [];
   groupedResume: SubjectGroup[] = [];
   errorMessage = '';
+
+  showUnworked = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -55,8 +58,7 @@ export class ShowResumeComponent implements OnInit {
       },
       error: err => {
         this.errorMessage =
-          'Error obtenint el resum: ' +
-          (err.error?.message || err.message);
+          'Error obtenint el resum: ' + (err.error?.message || err.message);
       }
     });
   }
@@ -119,5 +121,13 @@ export class ShowResumeComponent implements OnInit {
           )
         }))
     }));
+  }
+
+  toggleSubject(s: SubjectGroup) {
+    s.expanded = !s.expanded;
+  }
+
+  toggleCompetency(c: Competency) {
+    c.expanded = !c.expanded;
   }
 }
