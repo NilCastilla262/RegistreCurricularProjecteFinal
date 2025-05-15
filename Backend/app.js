@@ -33,7 +33,11 @@ app.use(dbHealthCheck);
 
 app.use("/apirc/v1", apiRoutes);
 
-app.use((req, res) => res.status(404).json({ error: "Ruta no trobada" }));
+app.use((req, res, next) => {
+  const err = new Error("Ruta no trobada");
+  err.status = 404;
+  next(err);
+});
 
 app.use(errorHandler);
 
