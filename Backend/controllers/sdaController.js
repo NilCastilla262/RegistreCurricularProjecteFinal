@@ -23,14 +23,15 @@ async function createSDAController(req, res, next) {
 async function getAllSdasController(req, res, next) {
   try {
     const { page, limit, sortBy, sortOrder } = req.query;
+    const centerName = req.centerName;
 
-    const sdas = await getAllSdas({ page, limit, sortBy, sortOrder });
+    const data = await getAllSdas({ page, limit, sortBy, sortOrder, centerName });
     return res.status(200).json({
-      page:     parseInt(page, 10) || 1,
-      limit:    parseInt(limit, 10) || 10,
-      sortBy:   sortBy || 'title',
+      page:      parseInt(page, 10) || 1,
+      limit:     parseInt(limit, 10) || 10,
+      sortBy:    sortBy || 'title',
       sortOrder: sortOrder?.toUpperCase() === 'DESC' ? 'DESC' : 'ASC',
-      data:     sdas
+      data
     });
   } catch (error) {
     next(error);

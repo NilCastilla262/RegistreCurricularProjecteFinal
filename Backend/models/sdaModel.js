@@ -27,7 +27,7 @@ async function createSDA(uuidUser, uuidGroup, title, description) {
   return newUUID;
 }
 
-async function getAllSdas({ page = 1, limit = 10, sortBy = 'title', sortOrder = 'ASC' }) {
+async function getAllSdas({ page = 1, limit = 10, sortBy = 'title', sortOrder = 'ASC', centerName }) {
   const pool = await getConnection();
 
   const sortCol = SORT_COLUMNS[sortBy] || SORT_COLUMNS.title;
@@ -35,7 +35,8 @@ async function getAllSdas({ page = 1, limit = 10, sortBy = 'title', sortOrder = 
   const offset  = (Math.max(parseInt(page, 10), 1) - 1) * parseInt(limit, 10);
 
   const result = await pool.request()
-    .input('limit',  parseInt(limit, 10))
+    .input('centerName', centerName)
+    .input('limit', parseInt(limit, 10))
     .input('offset', offset)
     .query(`
       SELECT 
@@ -46,8 +47,9 @@ async function getAllSdas({ page = 1, limit = 10, sortBy = 'title', sortOrder = 
         sda.UUIDGroup,
         g.Name         AS groupName
       FROM SDA sda
-      LEFT JOIN Groups g 
+      INNER JOIN Groups g 
         ON sda.UUIDGroup = g.UUID
+      WHERE g.CenterName = @centerName
       ORDER BY ${sortCol} ${order}
       OFFSET @offset ROWS
       FETCH NEXT @limit ROWS ONLY
