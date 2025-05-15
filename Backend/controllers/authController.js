@@ -104,7 +104,23 @@ async function chooseCenterController(req, res, next) {
   }
 }
 
+async function getCentersForUserController(req, res, next) {
+  try {
+    const userUUID = req.user.uuid;
+    const centers = await getCentersByUser(userUUID);
+    return res.status(200).json(
+      centers.map(c => ({
+        centerName: c.CenterName,
+        role:       c.Role
+      }))
+    );
+  } catch (err) {
+    next(err);
+  }
+}
+
 export {
   googleLoginController,
   chooseCenterController,
+  getCentersForUserController
 };
