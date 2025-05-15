@@ -25,19 +25,31 @@ async function getAllSdasController(req, res, next) {
     const { page, limit, sortBy, sortOrder } = req.query;
     const centerName = req.centerName;
 
-    const data = await getAllSdas({ page, limit, sortBy, sortOrder, centerName });
+    const { rows, total } = await getAllSdas({
+      page,
+      limit,
+      sortBy,
+      sortOrder,
+      centerName
+    });
+
+    const pg  = parseInt(page, 10)  || 1;
+    const lim = parseInt(limit, 10) || 10;
+    const totalPages = Math.ceil(total / lim);
+
     return res.status(200).json({
-      page:      parseInt(page, 10) || 1,
-      limit:     parseInt(limit, 10) || 10,
-      sortBy:    sortBy || 'title',
-      sortOrder: sortOrder?.toUpperCase() === 'DESC' ? 'DESC' : 'ASC',
-      data
+      page:       pg,
+      limit:      lim,
+      sortBy:     sortBy || 'title',
+      sortOrder:  sortOrder?.toUpperCase() === 'DESC' ? 'DESC' : 'ASC',
+      total,
+      totalPages,
+      data: rows
     });
   } catch (error) {
     next(error);
   }
 }
-
 
 async function markCriteriaController(req, res, next) {
   try {

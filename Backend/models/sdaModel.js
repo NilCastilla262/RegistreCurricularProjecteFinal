@@ -30,11 +30,23 @@ async function createSDA(uuidUser, uuidGroup, title, description) {
 async function getAllSdas({ page = 1, limit = 10, sortBy = 'title', sortOrder = 'ASC', centerName }) {
   const pool = await getConnection();
 
+  const offset = (Math.max(parseInt(page, 10), 1) - 1) * parseInt(limit, 10);
+
+  const countResult = await pool.request()
+    .input('centerName', centerName)
+    .query(`
+      SELECT COUNT(*) AS total
+      FROM SDA sda
+      INNER JOIN Groups g
+        ON sda.UUIDGroup = g.UUID
+      WHERE g.CenterName = @centerName
+    `);
+  const total = countResult.recordset[0].total;
+
   const sortCol = SORT_COLUMNS[sortBy] || SORT_COLUMNS.title;
   const order   = sortOrder.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
-  const offset  = (Math.max(parseInt(page, 10), 1) - 1) * parseInt(limit, 10);
 
-  const result = await pool.request()
+  const pageResult = await pool.request()
     .input('centerName', centerName)
     .input('limit', parseInt(limit, 10))
     .input('offset', offset)
@@ -55,7 +67,10 @@ async function getAllSdas({ page = 1, limit = 10, sortBy = 'title', sortOrder = 
       FETCH NEXT @limit ROWS ONLY
     `);
 
-  return result.recordset;
+  return {
+    rows: pageResult.recordset,
+    total
+  };
 }
 
 

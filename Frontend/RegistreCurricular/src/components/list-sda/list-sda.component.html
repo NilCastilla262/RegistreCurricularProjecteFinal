@@ -9,8 +9,8 @@
     <label>
       Pàgina:
       <button (click)="prevPage()" [disabled]="page === 1">‹</button>
-      {{ page }}
-      <button (click)="nextPage()" [disabled]="sdas.length < limit">›</button>
+      {{ page }}/{{ totalPages }}
+      <button (click)="nextPage()" [disabled]="page === totalPages">›</button>
     </label>
 
     <label>
@@ -31,19 +31,18 @@
   <table>
     <thead>
       <tr>
-        <!-- Fem que cada <th> sigui clicable per ordenar -->
-        <th (click)="changeSort('title')" class="sortable">
-          Títol
-          {{ sortBy === 'title' ? (sortOrder === 'ASC' ? ' ▲' : ' ▼') : '' }}
+        <th (click)="changeSort('title')" class="sortable"
+            [class.active]="sortBy==='title'">
+          Títol {{ sortBy==='title'? (sortOrder==='ASC'?' ▲':' ▼') : '' }}
         </th>
         <th>Descripció</th>
-        <th (click)="changeSort('createdAt')" class="sortable">
-          Data de creació
-          {{ sortBy === 'createdAt' ? (sortOrder === 'ASC' ? ' ▲' : ' ▼') : '' }}
+        <th (click)="changeSort('createdAt')" class="sortable"
+            [class.active]="sortBy==='createdAt'">
+          Data de creació {{ sortBy==='createdAt'? (sortOrder==='ASC'?' ▲':' ▼') : '' }}
         </th>
-        <th (click)="changeSort('groupName')" class="sortable">
-          Grup
-          {{ sortBy === 'groupName' ? (sortOrder === 'ASC' ? ' ▲' : ' ▼') : '' }}
+        <th (click)="changeSort('groupName')" class="sortable"
+            [class.active]="sortBy==='groupName'">
+          Grup {{ sortBy==='groupName'? (sortOrder==='ASC'?' ▲':' ▼') : '' }}
         </th>
         <th>Accions</th>
       </tr>
@@ -54,7 +53,6 @@
           <tr>
             <td>{{ sda.title }}</td>
             <td>{{ sda.description }}</td>
-            <!-- Format DD-MM-YYYY 24h -->
             <td>{{ sda.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
             <td>{{ sda.groupName }}</td>
             <td>

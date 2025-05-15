@@ -13,6 +13,8 @@ export interface PaginatedResponse<T> {
   limit: number;
   sortBy: string;
   sortOrder: 'ASC' | 'DESC';
+  total: number;
+  totalPages: number;
   data: T[];
 }
 
@@ -30,29 +32,29 @@ export class SdaService {
     );
   }
 
-    getSdas(
+  getSdas(
     page: number = 1,
     limit: number = 10,
     sortBy: 'title' | 'createdAt' | 'groupName' = 'title',
     sortOrder: 'ASC' | 'DESC' = 'ASC'
   ): Observable<PaginatedResponse<SdaModel>> {
-    let params = new HttpParams()
-      .set('page', String(page))
-      .set('limit', String(limit))
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString())
       .set('sortBy', sortBy)
       .set('sortOrder', sortOrder);
 
     return this.http
-      .get<PaginatedResponse<any>>(`${this.baseUrl}/sda`, { params })
-      .pipe(
-        map(resp => ({
-          page: resp.page,
-          limit: resp.limit,
-          sortBy: resp.sortBy,
-          sortOrder: resp.sortOrder,
-          data: SdaDTO.fromApiArray(resp.data)
-        }))
-      );
+    .get<PaginatedResponse<any>>(`${this.baseUrl}/sda/`, { params })
+    .pipe(map(resp => ({
+        page: resp.page,
+        limit: resp.limit,
+        sortBy: resp.sortBy,
+        sortOrder: resp.sortOrder,
+        total: resp.total,
+        totalPages: resp.totalPages,
+        data: SdaDTO.fromApiArray(resp.data)
+    })));
   }
 
   getAllSdas(): Observable<SdaModel[]> {

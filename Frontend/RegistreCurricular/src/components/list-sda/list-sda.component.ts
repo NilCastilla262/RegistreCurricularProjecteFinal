@@ -21,6 +21,7 @@ export class ListSdaComponent implements OnInit {
   limit = 10;
   sortBy: 'title' | 'createdAt' | 'groupName' = 'title';
   sortOrder: 'ASC' | 'DESC' = 'ASC';
+  totalPages = 1;
 
   constructor(private sdaService: SdaService, private router: Router) {}
 
@@ -38,6 +39,7 @@ export class ListSdaComponent implements OnInit {
           this.limit = resp.limit;
           this.sortBy = resp.sortBy as any;
           this.sortOrder = resp.sortOrder;
+          this.totalPages = resp.totalPages;
         },
         error: err => {
           this.errorMessage = 'Error carregant SDA: '
@@ -58,7 +60,7 @@ export class ListSdaComponent implements OnInit {
   }
 
   nextPage(): void {
-    if (this.sdas.length === this.limit) {
+    if (this.page < this.totalPages) {
       this.page++;
       this.loadSdas();
     }
