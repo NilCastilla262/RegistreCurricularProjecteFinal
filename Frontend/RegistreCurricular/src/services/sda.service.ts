@@ -1,12 +1,20 @@
 // sda.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map, switchMap, tap } from 'rxjs';
 import { CreateSdaModel } from '../models/create-sda/createSda.model';
 import { CreateSdaDTO } from '../models/create-sda/createSda.dto';
 import { environment } from '../environments/environment';
 import { SdaModel } from '../models/sda/sda.model';
 import { SdaDTO } from '../models/sda/sda.dto';
+
+export interface PaginatedResponse<T> {
+  page: number;
+  limit: number;
+  sortBy: string;
+  sortOrder: 'ASC' | 'DESC';
+  data: T[];
+}
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +28,31 @@ export class SdaService {
     return this.http.get<any>(`${this.baseUrl}/sda/full/${uuid}`).pipe(
       map(apiResponse => SdaDTO.fromApi(apiResponse))
     );
+  }
+
+    getSdas(
+    page: number = 1,
+    limit: number = 10,
+    sortBy: 'title' | 'createdAt' | 'groupName' = 'title',
+    sortOrder: 'ASC' | 'DESC' = 'ASC'
+  ): Observable<PaginatedResponse<SdaModel>> {
+    let params = new HttpParams()
+      .set('page', String(page))
+      .set('limit', String(limit))
+      .set('sortBy', sortBy)
+      .set('sortOrder', sortOrder);
+
+    return this.http
+      .get<PaginatedResponse<any>>(`${this.baseUrl}/sda`, { params })
+      .pipe(
+        map(resp => ({
+          page: resp.page,
+          limit: resp.limit,
+          sortBy: resp.sortBy,
+          sortOrder: resp.sortOrder,
+          data: SdaDTO.fromApiArray(resp.data)
+        }))
+      );
   }
 
   getAllSdas(): Observable<SdaModel[]> {

@@ -175,3 +175,21 @@ td {
   outline: 2px solid #3498db;
   outline-offset: 2px;
 }
+
+
+/* Resalta totes les columnes “sortable” */
+th.sortable {
+  cursor: pointer;
+  background-color: #0871cd;    /* lleu fons blau clar */
+  transition: background-color 0.2s;
+}
+
+th.sortable:hover {
+  background-color: #1872d1;    /* hover una mica més intens */
+}
+
+/* I marca la columna actual amb una classe “active” */
+th.sortable.active {
+  background-color: #053e64;    /* blau més fosc */
+  color: #fff;                  /* text blanc */
+}

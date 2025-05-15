@@ -5,25 +5,67 @@
     <div class="error">{{ errorMessage }}</div>
   }
 
+  <div class="controls">
+    <label>
+      Pàgina:
+      <button (click)="prevPage()" [disabled]="page === 1">‹</button>
+      {{ page }}
+      <button (click)="nextPage()" [disabled]="sdas.length < limit">›</button>
+    </label>
+
+    <label>
+      Mostra
+      <select
+        [(ngModel)]="limit"
+        (change)="changeLimit(limit)"
+        name="limit"
+      >
+        <option [value]="5">5</option>
+        <option [value]="10">10</option>
+        <option [value]="20">20</option>
+      </select>
+      per pàgina
+    </label>
+  </div>
+
   <table>
     <thead>
       <tr>
-        <th>Títol</th>
+        <!-- Fem que cada <th> sigui clicable per ordenar -->
+        <th (click)="changeSort('title')" class="sortable">
+          Títol
+          {{ sortBy === 'title' ? (sortOrder === 'ASC' ? ' ▲' : ' ▼') : '' }}
+        </th>
         <th>Descripció</th>
-        <th>Creada</th>
-        <th>Grup</th>
+        <th (click)="changeSort('createdAt')" class="sortable">
+          Data de creació
+          {{ sortBy === 'createdAt' ? (sortOrder === 'ASC' ? ' ▲' : ' ▼') : '' }}
+        </th>
+        <th (click)="changeSort('groupName')" class="sortable">
+          Grup
+          {{ sortBy === 'groupName' ? (sortOrder === 'ASC' ? ' ▲' : ' ▼') : '' }}
+        </th>
         <th>Accions</th>
       </tr>
     </thead>
     <tbody>
-      @for (sda of sdas; track sda.sdaUUID) {
+      @if (sdas.length > 0) {
+        @for (sda of sdas; track sda.sdaUUID) {
+          <tr>
+            <td>{{ sda.title }}</td>
+            <td>{{ sda.description }}</td>
+            <!-- Format DD-MM-YYYY 24h -->
+            <td>{{ sda.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+            <td>{{ sda.groupName }}</td>
+            <td>
+              <button (click)="showSda(sda.sdaUUID)">Mostrar</button>
+            </td>
+          </tr>
+        }
+      } @else {
         <tr>
-          <td>{{ sda.title }}</td>
-          <td>{{ sda.description }}</td>
-          <td>{{ sda.createdAt | date:'short' }}</td>
-          <td>{{ sda.groupName }}</td>
-          <td>
-            <button (click)="showSda(sda.sdaUUID)">Mostrar</button>
+          <td colspan="5" class="empty-state">
+            No s'han trobat SDA per aquests paràmetres
           </td>
         </tr>
       }
