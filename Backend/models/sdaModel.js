@@ -3,6 +3,12 @@ import { getConnection } from "../config/db.js";
 import { v4 as uuidv4 } from "uuid";
 import sql from "mssql";
 
+const SORT_COLUMNS = {
+  title:       'sda.Title',
+  createdAt:   'sda.CreatedAt',
+  groupName:   'g.Name',
+};
+
 async function createSDA(uuidUser, uuidGroup, title, description) {
   const pool = await getConnection();
   const newUUID = uuidv4();
@@ -21,24 +27,35 @@ async function createSDA(uuidUser, uuidGroup, title, description) {
   return newUUID;
 }
 
-async function getAllSdas() {
+async function getAllSdas({ page = 1, limit = 10, sortBy = 'title', sortOrder = 'ASC' }) {
   const pool = await getConnection();
+
+  const sortCol = SORT_COLUMNS[sortBy] || SORT_COLUMNS.title;
+  const order   = sortOrder.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+  const offset  = (Math.max(parseInt(page, 10), 1) - 1) * parseInt(limit, 10);
+
   const result = await pool.request()
+    .input('limit',  parseInt(limit, 10))
+    .input('offset', offset)
     .query(`
       SELECT 
-        sda.UUID AS sdaUUID,
+        sda.UUID       AS sdaUUID,
         sda.Title,
         sda.Description,
         sda.CreatedAt,
         sda.UUIDGroup,
-        g.Name AS groupName
+        g.Name         AS groupName
       FROM SDA sda
       LEFT JOIN Groups g 
         ON sda.UUIDGroup = g.UUID
-      ORDER BY sda.Title ASC
+      ORDER BY ${sortCol} ${order}
+      OFFSET @offset ROWS
+      FETCH NEXT @limit ROWS ONLY
     `);
+
   return result.recordset;
 }
+
 
 async function markCriteria(uuidSDA, uuidCriteria, worked) {
   const pool = await getConnection();

@@ -22,12 +22,21 @@ async function createSDAController(req, res, next) {
 
 async function getAllSdasController(req, res, next) {
   try {
-    const sdas = await getAllSdas();
-    return res.status(200).json(sdas);
+    const { page, limit, sortBy, sortOrder } = req.query;
+
+    const sdas = await getAllSdas({ page, limit, sortBy, sortOrder });
+    return res.status(200).json({
+      page:     parseInt(page, 10) || 1,
+      limit:    parseInt(limit, 10) || 10,
+      sortBy:   sortBy || 'title',
+      sortOrder: sortOrder?.toUpperCase() === 'DESC' ? 'DESC' : 'ASC',
+      data:     sdas
+    });
   } catch (error) {
     next(error);
   }
 }
+
 
 async function markCriteriaController(req, res, next) {
   try {
