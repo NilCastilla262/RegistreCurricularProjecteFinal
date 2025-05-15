@@ -1,0 +1,73 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #3498db;
+  color: #fff;
+  padding: 0.5rem 1rem;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-actions button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 1rem;
+  font-size: 1rem;
+}
+
+/* Perfil */
+.profile-container {
+  position: relative;
+}
+
+.profile-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.profile-menu {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  right: 0;
+  background: #fff;
+  color: #333;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  min-width: 150px;
+  z-index: 10;
+}
+
+.profile-menu li + li {
+  border-top: 1px solid #e0e0e0;
+}
+
+.profile-menu button {
+  background: transparent;
+  border: none;
+  color: #333;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.profile-menu button:hover:not(:disabled) {
+  background: #f5f5f5;
+}

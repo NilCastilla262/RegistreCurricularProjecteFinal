@@ -1,0 +1,17 @@
+<nav class="navbar">
+  <div class="navbar-title">RegistreCurricular</div>
+
+  <div class="navbar-actions">
+    <button (click)="goDashboard()">Dashboard</button>
+
+    <div class="profile-container">
+      <button class="profile-btn" (click)="toggleProfileMenu()">👤</button>
+      @if(showProfileMenu){
+        <ul class="profile-menu">
+          <li><button disabled>Canviar centre</button></li>
+          <li><button (click)="logout()">Tancar sessió</button></li>
+        </ul>
+      }
+    </div>
+  </div>
+</nav>
