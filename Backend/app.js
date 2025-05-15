@@ -1,67 +1,20 @@
-//app.js
+// src/app.js
 import express from "express";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
-import swaggerUi from "swagger-ui-express";
 import { getConnection } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
-import fs from "fs";
-import yaml from "js-yaml";
-import swaggerAutogen from 'swagger-autogen';
-import errorHandler from "./middlewares/errorHandler.js";
-import requestLogger from "./middlewares/requestLogger.js";
-import { verifyToken } from "./middlewares/authMiddleware.js";
 import apiRoutes from "./routes/index.js";
+import { verifyToken } from "./middlewares/authMiddleware.js";
+import requestLogger from "./middlewares/requestLogger.js";
+import errorHandler from "./middlewares/errorHandler.js";
+import { generateSwaggerDocs, mountSwagger } from "./config/swagger.js";
 
 const app = express();
-const outputFile = './swagger2.yaml';
 
-const swaggerDocument = yaml.load(
-  fs.readFileSync(new URL("./swagger2.yaml", import.meta.url), "utf8")
-);
-const endpointsFiles = ['./app.js'];
-const doc = {
-  openapi: '3.0.0',
-  info: {
-    title: 'Registre Curricular API',
-    version: '1.0.0',
-    description: 'Documentació generada automàticament',
-  },
-  servers: [{ url: 'http://localhost:5000' }],
-  components: {
-    securitySchemes: {
-      bearerAuth: {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-      }
-    }
-  },
-  security: [{ bearerAuth: [] }]
-};
+generateSwaggerDocs();
 
-swaggerAutogen()(outputFile, endpointsFiles, doc)
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument, {
-    swaggerOptions: {
-      authAction: {
-        bearerAuth: {
-          name: "bearerAuth",
-          schema: {
-            type: "http",
-            in: "header",
-            scheme: "bearer",
-            bearerFormat: "JWT"
-          },
-         value:
-           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo"
-        }
-      }
-    }
-  })
-);
+mountSwagger(app);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -92,13 +45,13 @@ app.use(async (req, res, next) => {
   try {
     const pool = await getConnection();
     if (!pool.connected) {
-      const error = new Error("Database not connected");
-      error.status = 503;
-      throw error;
+      const err = new Error("Database not connected");
+      err.status = 503;
+      throw err;
     }
     next();
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 });
 
