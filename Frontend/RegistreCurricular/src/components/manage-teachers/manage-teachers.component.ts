@@ -99,7 +99,7 @@ export class ManageTeachersComponent implements OnInit {
         Swal.fire({
           icon: 'success',
           title: 'Rol actualitzat',
-          timer: 1200,
+          timer: 2500,
           showConfirmButton: false
         });
       },
@@ -138,7 +138,7 @@ export class ManageTeachersComponent implements OnInit {
             Swal.fire({
               icon: 'success',
               title: 'Eliminat',
-              timer: 1000,
+              timer: 2500,
               showConfirmButton: false
             });
           },

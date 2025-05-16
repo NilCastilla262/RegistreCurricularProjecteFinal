@@ -72,7 +72,7 @@ export class ManageUserGroupsComponent implements OnInit {
         Swal.fire({
           icon: 'success',
           title: `Grup "${group.name}" assignat`,
-          timer: 1000,
+          timer: 2500,
           showConfirmButton: false
         });
         this.reloadAll();
@@ -99,7 +99,7 @@ export class ManageUserGroupsComponent implements OnInit {
             Swal.fire({
               icon: 'success',
               title: `Grup "${group.name}" eliminat`,
-              timer: 1000,
+              timer: 2500,
               showConfirmButton: false
             });
             this.reloadAll();

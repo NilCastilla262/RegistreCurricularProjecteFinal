@@ -75,7 +75,7 @@ export class ManageGroupsComponent implements OnInit {
           title: 'Grup creat',
           toast: true,
           position: 'top-end',
-          timer: 1500,
+          timer: 2500,
           showConfirmButton: false
         });
         this.loadGroups();
@@ -105,7 +105,7 @@ export class ManageGroupsComponent implements OnInit {
           title: 'Nom actualitzat',
           toast: true,
           position: 'top-end',
-          timer: 1200,
+          timer: 2500,
           showConfirmButton: false
         });
       },
@@ -147,7 +147,7 @@ export class ManageGroupsComponent implements OnInit {
               title: 'Eliminat',
               toast: true,
               position: 'top-end',
-              timer: 1200,
+              timer: 2500,
               showConfirmButton: false
             });
           },
