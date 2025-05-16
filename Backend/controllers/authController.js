@@ -116,8 +116,40 @@ async function listMyCentersController(req, res, next) {
   }
 }
 
+async function chooseCenterControllerProtected(req, res, next) {
+  try {
+    const userUUID = req.user.uuid;
+    const { centerName } = req.body;
+    if (!centerName) {
+      const err = new Error("Falta el camp centerName");
+      err.status = 400;
+      throw err;
+    }
+
+    const user = await getUserByUUID(userUUID);
+    if (!user) {
+      const err = new Error("Usuari no trobat");
+      err.status = 404;
+      throw err;
+    }
+
+    const [center] = await getSpecificCenterByUser(userUUID, centerName);
+    if (!center) {
+      const err = new Error("No tens aquest centre assignat");
+      err.status = 403;
+      throw err;
+    }
+
+    const token = generateToken(user, center);
+    return res.status(200).json({ token });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export {
   googleLoginController,
   chooseCenterController,
-  listMyCentersController
+  listMyCentersController,
+  chooseCenterControllerProtected
 };

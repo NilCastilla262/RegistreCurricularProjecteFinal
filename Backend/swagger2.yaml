@@ -81,6 +81,30 @@
         }
       }
     },
+    "/apirc/v1/auth/choose-center-protected": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "centerName": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/apirc/v1/upload-csv": {
       "post": {
         "description": "",
