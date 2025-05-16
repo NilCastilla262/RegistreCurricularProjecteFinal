@@ -117,10 +117,8 @@ async function listMyCentersController(req, res, next) {
 }
 
 async function chooseCenterControllerProtected(req, res, next) {
-  console.log("UUID ",req.UUID, req.user.UUID)
   try {
     const userUUID = req.user.uuid;
-    console.log("UserUUID: ", userUUID, "req.uuid", req.UUID);
     const { centerName } = req.body;
     if (!centerName) {
       const err = new Error("Falta el camp centerName");

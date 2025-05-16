@@ -14,7 +14,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     req.url.endsWith('/choose-center') ||
     req.url.includes('/auth/google-login') ||
     req.url.endsWith('/auth/choose-center')) {
-      console.log(req.url);
     return next(req);
   }
 
