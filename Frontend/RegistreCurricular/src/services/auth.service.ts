@@ -30,4 +30,17 @@ export class AuthService {
   chooseCenter(uuid: string, centerName: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/auth/choose-center`, { uuid, centerName });
   }
+
+  listMyCenters(): Observable<{ centerName: string; role: number }[]> {
+    return this.http.get<{ centerName: string; role: number }[]>(
+      `${this.baseUrl}/auth/my-centers`
+    );
+  }
+
+    chooseCenterProtected(centerName: string): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>(
+      `${this.baseUrl}/auth/choose-center-protected`,
+      { centerName }
+    );
+  }
 }

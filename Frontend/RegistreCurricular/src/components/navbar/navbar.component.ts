@@ -28,6 +28,11 @@ export class NavbarComponent {
     this.router.navigate(['/login']);
   }
 
+  goChangeCenter() {
+    this.router.navigate(['/change-center']);
+    this.showProfileMenu = false;
+  }
+
   @HostListener('document:click', ['$event.target'])
   onClickOutside(target: HTMLElement) {
     const inside = target.closest('.profile-container');

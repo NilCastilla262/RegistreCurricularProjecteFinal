@@ -1,0 +1,16 @@
+<div class="change-center">
+  <h2>Canvia de centre</h2>
+
+  <ul>
+    @for (c of centers; track c.centerName){
+      <li>
+        {{ c.centerName }}
+        <button (click)="onSelectCenter(c)">Seleccionar</button>
+      </li>
+    }
+  </ul>
+
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
+  }
+</div>

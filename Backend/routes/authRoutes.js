@@ -8,6 +8,6 @@ const router = express.Router();
 router.post("/google-login", googleLoginController);
 router.post("/choose-center", chooseCenterController);
 router.get("/my-centers", verifyToken, listMyCentersController);
-router.post("/choose-center-protected", chooseCenterControllerProtected);
+router.post("/choose-center-protected", verifyToken, chooseCenterControllerProtected);
 
 export default router;

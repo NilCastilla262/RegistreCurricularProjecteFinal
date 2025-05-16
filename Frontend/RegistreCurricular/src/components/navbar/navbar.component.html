@@ -8,7 +8,7 @@
       <button class="profile-btn" (click)="toggleProfileMenu()">👤</button>
       @if(showProfileMenu){
         <ul class="profile-menu">
-          <li><button disabled>Canviar centre</button></li>
+          <li><button (click)="goChangeCenter()">Canviar centre</button></li>
           <li><button (click)="logout()">Tancar sessió</button></li>
         </ul>
       }

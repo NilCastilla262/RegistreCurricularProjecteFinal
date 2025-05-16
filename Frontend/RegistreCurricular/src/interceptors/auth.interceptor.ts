@@ -10,10 +10,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (req.url.includes('/login') || 
-    req.url.includes('/choose-center') || 
+  if (req.url.includes('/login') ||
+    req.url.endsWith('/choose-center') ||
     req.url.includes('/auth/google-login') ||
-    req.url.includes('/auth/choose-center')) {
+    req.url.endsWith('/auth/choose-center')) {
+      console.log(req.url);
     return next(req);
   }
 

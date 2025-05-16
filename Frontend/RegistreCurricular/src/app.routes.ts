@@ -12,6 +12,7 @@ import { TeacherGuard } from './guards/teacher.guard';
 import { ManageTeachersComponent } from './components/manage-teachers/manage-teachers.component';
 import { ManageGroupsComponent } from './components/manage-groups/manage-groups.component';
 import { ManageUserGroupsComponent } from './components/manage-user-groups/manage-user-groups.component';
+import { ChangeCenterComponent } from './components/change-center/change-center.component';
 
 export const routes: Routes = [
     {
@@ -70,5 +71,10 @@ export const routes: Routes = [
         path: 'manage-user-groups/:uuid',
         component: ManageUserGroupsComponent,
         canActivate: [AdminCenterGuard],
+    },
+    {
+        path: 'change-center',
+        component: ChangeCenterComponent,
+        canActivate: [TeacherGuard],
     },
 ];
