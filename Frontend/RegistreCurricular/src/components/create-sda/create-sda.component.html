@@ -75,5 +75,7 @@
     </div>
   }
 
-  <button (click)="onCreateSDA()">Crear SDA</button>
+  <button (click)="onCreateSDA()" [disabled]="creating">
+    {{ creating ? 'Creant...' : 'Crear SDA' }}
+  </button>
 </div>

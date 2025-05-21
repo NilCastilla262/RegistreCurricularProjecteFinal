@@ -28,6 +28,7 @@ export class CreateSdaComponent implements OnInit {
   subjects: SubjectModel[] = [];
   selectedSubjectUUIDs: string[] = [];
   errorMessage: string = '';
+  creating = false;
 
   constructor(
     private groupsService: GroupsService,
@@ -92,19 +93,21 @@ export class CreateSdaComponent implements OnInit {
       this.errorMessage = 'Falten camps obligatoris (títol, descripció o grup).';
       return;
     }
-  
+
+    this.creating = true;
     const sda = new CreateSdaModel(this.title, this.description, this.selectedGroupUUID);
-  
+
     this.sdaService.createSDA(sda).subscribe({
       next: (res) => {
         const sdaUUID = res.uuid;
-        if (this.selectedSubjectUUIDs && this.selectedSubjectUUIDs.length > 0) {
+        if (this.selectedSubjectUUIDs.length > 0) {
           this.sdaService.createCompleteSDA(sdaUUID, this.selectedSubjectUUIDs).subscribe({
             next: () => {
               this.router.navigate(['/dashboard']);
             },
             error: (err) => {
               this.errorMessage = 'Error creant la SDA completa: ' + (err.error?.message || err.message);
+              this.creating = false;
             }
           });
         } else {
@@ -113,6 +116,7 @@ export class CreateSdaComponent implements OnInit {
       },
       error: (err) => {
         this.errorMessage = 'Error creant la SDA: ' + (err.error?.message || err.message);
+        this.creating = false;
       }
     });
   }
