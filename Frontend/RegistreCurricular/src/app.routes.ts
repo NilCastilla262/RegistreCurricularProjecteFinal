@@ -13,12 +13,17 @@ import { ManageTeachersComponent } from './components/manage-teachers/manage-tea
 import { ManageGroupsComponent } from './components/manage-groups/manage-groups.component';
 import { ManageUserGroupsComponent } from './components/manage-user-groups/manage-user-groups.component';
 import { ChangeCenterComponent } from './components/change-center/change-center.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
     {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
+    },
+        {
+        path: 'page-not-found',
+        component: PageNotFoundComponent,
     },
     {
         path: 'login',
@@ -76,5 +81,10 @@ export const routes: Routes = [
         path: 'change-center',
         component: ChangeCenterComponent,
         canActivate: [TeacherGuard],
+    },
+        {
+        path: '**',
+        redirectTo: 'page-not-found',
+        pathMatch: 'full',
     },
 ];

@@ -1,0 +1,39 @@
+.page-not-found {
+  text-align: center;
+  padding: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+               Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #333;
+}
+
+.page-not-found h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #e74c3c;
+}
+
+.page-not-found p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.page-not-found button {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: background 0.2s, transform 0.1s;
+}
+
+.page-not-found button:hover {
+  background: #2980b9;
+  transform: translateY(-1px);
+}
+
+.page-not-found button:active {
+  transform: translateY(0);
+}
