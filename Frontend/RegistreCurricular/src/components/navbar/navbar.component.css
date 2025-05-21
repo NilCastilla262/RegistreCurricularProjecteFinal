@@ -83,3 +83,15 @@
 .navbar-actions .dashboard-btn:hover {
   background: #1f5d8a;       /* més fosc al hover */
 }
+
+.navbar-actions .profile-btn {
+  background: #2980b9;        /* mateix blau fosc que el dashboard */
+  color: #fff;
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  transition: background 0.2s;
+}
+
+.navbar-actions .profile-btn:hover {
+  background: #1f5d8a;        /* més fosc al hover */
+}
