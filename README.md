@@ -254,5 +254,6 @@ en funció del curs, descarrega l'arxiu de fulls de càlcul des de:
 
 ## Model Entitat-Relació (E-R)
 
+Separadt en 2 imatges on els relaciona SDA
 ![Model Entitat-Relació](docs/DB1.png)
 ![Model Entitat-Relació](docs/DB2.png)
