@@ -1,0 +1,948 @@
+{
+	"info": {
+		"_postman_id": "616b71c3-7daf-4762-acdc-c8803434fc01",
+		"name": "RegistreCurricular",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39551467"
+	},
+	"item": [
+		{
+			"name": "CSV",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "csvFile",
+									"type": "file",
+									"src": "/C:/Users/Nil Castilla/Downloads/csv/5e6e/CompTrans.csv"
+								},
+								{
+									"key": "Type",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "Competencie",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "templateName",
+									"value": "5e6e",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/upload-csv",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"upload-csv"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subjects",
+			"item": [
+				{
+					"name": "GetSubjectsFromTemplate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/subjects?templateName=1r2n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"subjects"
+							],
+							"query": [
+								{
+									"key": "templateName",
+									"value": "1r2n"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SDA",
+			"item": [
+				{
+					"name": "CreateSDA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"uuidGroup\": \"b07b61d6-c14b-4303-b329-12d12ef6956a\",\r\n  \"title\": \"SDA Prova POSTMAN 2\",\r\n  \"description\": \"Una situació d’aprenentatge d’exemple\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/sda",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"sda"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetFullSDA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/sda/full/12325E63-F233-4F55-A6D9-4F49D05EE3E0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"sda",
+								"full",
+								"12325E63-F233-4F55-A6D9-4F49D05EE3E0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllSdas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/sda?page=2&limit=3&sortBy=createdAt&sortOrder=DESC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"sda"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortOrder",
+									"value": "DESC"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Groups",
+			"item": [
+				{
+					"name": "GetGroupsFromUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateResume",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/groups/resume?groups=B07B61D6-C14B-4303-B329-12D12EF6956A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"groups",
+								"resume"
+							],
+							"query": [
+								{
+									"key": "groups",
+									"value": "B07B61D6-C14B-4303-B329-12D12EF6956A"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateGroupName",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiUGV0aXQgUGxhbsOnw7MiLCJjZW50ZXJSb2xlIjoyLCJpYXQiOjE3NDcwNjQwNzUsImV4cCI6MTc0NzA2NzY3NX0.4K4m7pCCCvuFuLdg4AVj12hGVOJW1mU6yyRyp7smz2E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"Name\": \"5è B Postman\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/groups/445EC89A-5F11-48A8-A219-57D164454294",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"groups",
+								"445EC89A-5F11-48A8-A219-57D164454294"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiUGV0aXQgUGxhbsOnw7MiLCJjZW50ZXJSb2xlIjoyLCJpYXQiOjE3NDcwNjQwNzUsImV4cCI6MTc0NzA2NzY3NX0.4K4m7pCCCvuFuLdg4AVj12hGVOJW1mU6yyRyp7smz2E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"Name\": \"5è B Postman\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/groups/445EC89A-5F11-48A8-A219-57D164454294",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"groups",
+								"445EC89A-5F11-48A8-A219-57D164454294"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Name\": \"4t A Postman\",\r\n  \"CourseName\": \"5è\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/groups/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"groups",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetGroupsByCenter&Year",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/groups/center?year=2024-2025",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"groups",
+								"center"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2024-2025"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "GetTemplateByCourse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/courses/1r/template",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"courses",
+								"1r",
+								"template"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SDASubjectsRelation",
+			"item": [
+				{
+					"name": "CreateSDASubjectRelation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"uuidSDA\": \"85bf45ff-785e-4772-bd82-4e3abe2c5b59\",\r\n  \"uuidSubject\": \"303bf3be-1237-48db-b7f8-171fa2457ec1\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/sda/subject-relation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"sda",
+								"subject-relation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Competencies",
+			"item": [
+				{
+					"name": "createCompetencesBySubjectArrray",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"uuidSDA\": \"85bf45ff-785e-4772-bd82-4e3abe2c5b59\",\r\n  \"subjectUUIDs\": [\r\n    \"303bf3be-1237-48db-b7f8-171fa2457ec1\",\r\n    \"6f588524-97a2-4db1-a32e-2d9b0c9f5324\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/sda/competencies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"sda",
+								"competencies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserCenterRelation",
+			"item": [
+				{
+					"name": "CreateUserCenterRelation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiUGV0aXQgUGxhbsOnw7MiLCJjZW50ZXJSb2xlIjoyLCJpYXQiOjE3NDY4MDA5MjgsImV4cCI6MTc0NjgwNDUyOH0.kE5cz1DeIxS7evk4qp7eOIi2gM8r7hqUez1_JtN2YtI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"UserEmail\": \"patata3@gmail.com\",\r\n  \"Role\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/user-center-relations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"user-center-relations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUserCenterRelation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiUGV0aXQgUGxhbsOnw7MiLCJjZW50ZXJSb2xlIjoyLCJpYXQiOjE3NDY4MDg4OTIsImV4cCI6MTc0NjgxMjQ5Mn0.Qvb7najCSrlmC7x8GZ_W5d05C9uN9ILwyCaIpV-1nmA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/user-center-relations/patata@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"user-center-relations",
+								"patata@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCenterRole",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiUGV0aXQgUGxhbsOnw7MiLCJjZW50ZXJSb2xlIjoyLCJpYXQiOjE3NDY4MDg4OTIsImV4cCI6MTc0NjgxMjQ5Mn0.Qvb7najCSrlmC7x8GZ_W5d05C9uN9ILwyCaIpV-1nmA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"UserEmail\": \"patata@gmail.com\",\r\n  \"Role\": 2\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/user-center-relations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"user-center-relations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "getUsersByCenter",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiUGV0aXQgUGxhbsOnw7MiLCJjZW50ZXJSb2xlIjoyLCJpYXQiOjE3NDY4MDA5MjgsImV4cCI6MTc0NjgwNDUyOH0.kE5cz1DeIxS7evk4qp7eOIi2gM8r7hqUez1_JtN2YtI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/users/center",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"users",
+								"center"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserGroupRelation",
+			"item": [
+				{
+					"name": "GetGroupsByUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiUGV0aXQgUGxhbsOnw7MiLCJjZW50ZXJSb2xlIjoyLCJpYXQiOjE3NDcxNjE3MzMsImV4cCI6MTc0NzE2NTMzM30.CaUVHABTz2fjoSyfnRx-CvXS-FenNHYqJUC_WEqJSsM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/user-group-relations/user/77AC4633-F523-456E-B697-BAAA161F173C",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"user-group-relations",
+								"user",
+								"77AC4633-F523-456E-B697-BAAA161F173C"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsersByGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiUGV0aXQgUGxhbsOnw7MiLCJjZW50ZXJSb2xlIjoyLCJpYXQiOjE3NDcxNjE3MzMsImV4cCI6MTc0NzE2NTMzM30.CaUVHABTz2fjoSyfnRx-CvXS-FenNHYqJUC_WEqJSsM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/user-group-relations/group/B07B61D6-C14B-4303-B329-12D12EF6956A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"user-group-relations",
+								"group",
+								"B07B61D6-C14B-4303-B329-12D12EF6956A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateUserGroupRelation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiUGV0aXQgUGxhbsOnw7MiLCJjZW50ZXJSb2xlIjoyLCJpYXQiOjE3NDcyMzQwOTYsImV4cCI6MTc0NzIzNzY5Nn0.8MDDvrAa3SujIVrWzBvadPHNAo6BZF-HnLETjrvWLM0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"UUIDUser\": \"822F7950-3059-40E3-8312-8BB46289CCD9\",\r\n  \"UUIDGroup\": \"C1CD9EEE-2257-4EA1-B8EE-28635C26178E\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/user-group-relations/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"user-group-relations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUserGroupRelation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiUGV0aXQgUGxhbsOnw7MiLCJjZW50ZXJSb2xlIjoyLCJpYXQiOjE3NDcyMzQwOTYsImV4cCI6MTc0NzIzNzY5Nn0.8MDDvrAa3SujIVrWzBvadPHNAo6BZF-HnLETjrvWLM0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/user-group-relations/822F7950-3059-40E3-8312-8BB46289CCD9/C1CD9EEE-2257-4EA1-B8EE-28635C26178E",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"user-group-relations",
+								"822F7950-3059-40E3-8312-8BB46289CCD9",
+								"C1CD9EEE-2257-4EA1-B8EE-28635C26178E"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "GetMyCenters",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNzdBQzQ2MzMtRjUyMy00NTZFLUI2OTctQkFBQTE2MUYxNzNDIiwiZW1haWwiOiJuY2FzdGlsbGEyNjJAYm9zY2RlbGFjb21hLmNhdCIsIm5hbWUiOiJOaWwgQ2FzdGlsbGEgR2FsaW1hbnkiLCJjZW50ZXJOYW1lIjoiQm9zYyBEZSBMYSBDb21hIiwiY2VudGVyUm9sZSI6MSwiaWF0IjoxNzQzMDA3Njk1LCJleHAiOjE4OTg1Mjc2OTV9.LNoLcBtgPb_w_UmxWZISUFWvOOB-GtopdWAHfT75DEo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/apirc/v1/auth/my-centers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"apirc",
+								"v1",
+								"auth",
+								"my-centers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,13 +1,3 @@
-# RegistreCurricularProjecteFinal
-//Nomenclatures al importar els CSV per la plantilla:
-//Type: Fa referencia a el tipus de competencia de les MATERIES, pot ser Especifiques (1) o Transversals (0)
-//Competencie: Fa referencia al tipus de les COMPETENCIES, pot ser Competencia (1) o Saber (0) 
-
-//Nomenclatures dels rols de usuari:
-//UserRole: User (1) Administratrçor (2)
-//Role "UserCenterRelation" Professor (1) AdminCenter(2)
-
-
 # Registre Curricular Projecte Final
 
 ## Passos d'inicialització
@@ -171,6 +161,42 @@ npm start
 * `GET    /user-group-relations/group/:uuid` : Usuaris d'un grup
 * `POST   /user-group-relations`              : Crear relació usuari-grup
 * `DELETE /user-group-relations/:userUUID/:groupUUID` : Eliminar relació
+
+## Informació per importar la plantilla del currículum
+
+Per importar el currículum escolar s'ha de cridar l'endpoint del backend que gestiona l'upload i processament del CSV amb la macro corresponent. Aquesta funcionalitat encara no està implementada al frontend, per tant cal fer la petició manualment des de Postman o una eina similar:
+
+```http
+POST /apirc/v1/upload-csv
+Content-Type: form-data
+
+FormData:
+  - file: Fitxer CSV exportat (per pestanya) amb una de les macros aplicades
+  - Type: Tipus de competència de les MATÈRIES (1 = Específiques, 0 = Transversals)
+  - Competencie: Tipus de COMPÈNCIES (1 = Competència, 0 = Saber)
+```
+
+### Procés d'exportació del CSV
+
+en funció del curs, descarrega l'arxiu de fulls de càlcul des de:
+[https://serveiseducatius.xtec.cat/garrotxa/diaris-curriculars-crpga/](https://serveiseducatius.xtec.cat/garrotxa/diaris-curriculars-crpga/)
+
+1. Descarrega el full corresponent a:
+
+   * 1r-2n
+   * 3r-4t
+   * 5è-6è
+2. Crea tres còpies de la pestanya 1 per tenir tres pestanyes idèntiques.
+3. Aplica una de les tres macros a cada pestanya.
+4. Exporta a CSV la pestanya on has aplicat la macro.
+5. Crida l'endpoint `/import-curriculum` enviant el fitxer i els camps addicionals indicats anteriorment.
+
+*Nota:* La plantilla del curs 2024-2025 ja ve importada al sistema.                                                                     |
+
+## Nomenclatures rols
+
+1. UserRole: User (1) Administratrçor (2)
+2. Role "UserCenterRelation" Professor (1) AdminCenter(2)
 
 ## Errors
 
