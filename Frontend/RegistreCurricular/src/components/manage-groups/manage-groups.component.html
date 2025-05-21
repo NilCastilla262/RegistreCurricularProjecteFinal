@@ -67,6 +67,7 @@
         name="newCourse"
         required
       >
+        <option value="" disabled selected>-- Selecciona un curs --</option>
         @for (opt of courseOptions; track opt) {
           <option [value]="opt">{{ opt }}</option>
         }

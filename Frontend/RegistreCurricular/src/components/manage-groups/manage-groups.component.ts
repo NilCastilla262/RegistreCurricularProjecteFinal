@@ -64,7 +64,17 @@ export class ManageGroupsComponent implements OnInit {
   submitNewGroup() {
     const name = this.newName.trim();
     const course = this.newCourseName.trim();
-    if (!name || name.length > 30 || !course || course.length > 20) {
+
+    if (!name) {
+      Swal.fire('Camp obligatori', 'El nom del grup és obligatori.', 'warning');
+      return;
+    }
+    if (name.length > 30) {
+      Swal.fire('Màxim 30 caràcters', 'El nom del grup no pot excedir 30 caràcters.', 'warning');
+      return;
+    }
+    if (!course) {
+      Swal.fire('Camp obligatori', 'El curs és obligatori.', 'warning');
       return;
     }
 
