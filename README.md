@@ -8,26 +8,6 @@
 //Role "UserCenterRelation" Professor (1) AdminCenter(2)
 
 
-
-Errors:
-
-400 – Error del client (petició malformada)
-
-401 – No autoritzat
-
-403 – Prohibit
-
-404 – No trobat
-
-409 – COnflict (ja existeix una relacio entre usuari-group...)
-
-500 – Error intern del servidor
-
-503 – Servei no disponible (ex. base de dades caiguda)
-
-422 – Dades invalides
-
-
 # Registre Curricular Projecte Final
 
 ## Passos d'inicialització
@@ -81,8 +61,8 @@ DB_TRUST_SERVER_CERTIFICATE=true   # Confiar en certificat (true/false)
 JWT_SECRET=laTevaClauSecreta       # Clau secreta per a JWT
 JWT_EXPIRATION=1h                  # Temps d'expiració del JWT
 
-GOOGLE_CLIENT_ID=169472757700-ges24db9ar14vnk9duovj9m71eiblrdd.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=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
+GOOGLE_CLIENT_ID=SEU_CLIENT_ID
+GOOGLE_CLIENT_SECRET=SEU_CLIENT_SECRET
 ```
 
 ## Instal·lació de dependències
@@ -131,68 +111,81 @@ npm start
 
 ### Auth
 
-* `POST  /auth/google-login` : Login amb Google
-* `POST  /auth/choose-center` : Escollir centre
-* `GET   /auth/my-centers` : Obtenir centres de l'usuari
-* `POST  /auth/choose-center-protected` : Canviar centre amb token
+* `POST  /auth/google-login`                : Login amb Google
+* `POST  /auth/choose-center`               : Escollir centre inicial
+* `GET   /auth/my-centers`                   : Obtenir centres de l'usuari
+* `POST  /auth/choose-center-protected`     : Canviar centre amb token
 
 ### CSV
 
-* `POST  /upload-csv` : Pujar un CSV amb part de la plantilla
+* `POST  /upload-csv`                        : Pujar un CSV amb part de la plantilla
 
 ### Groups
 
-* `GET    /groups/` : Obtenir groups d'un usuari
-* `GET    /groups/resume` : Generar resum a través de groups
-* `GET    /groups/center` : Obtenir groups d'un centre
-* `POST   /groups/` : Crear un group
-* `PUT    /groups/:uuid` : Actualitzar nom d'un group
-* `DELETE /groups/:uuid` : Eliminar un group
+* `GET    /groups/`                          : Obtenir groups d'un usuari
+* `GET    /groups/resume`                    : Generar resum a través de groups
+* `GET    /groups/center`                    : Obtenir groups d'un centre
+* `POST   /groups/`                          : Crear un group
+* `PUT    /groups/:uuid`                     : Actualitzar nom d'un group
+* `DELETE /groups/:uuid`                     : Eliminar un group
 
 ### Subjects
 
-* `GET /subjects` : Obtenir matèries
+* `GET /subjects`                            : Obtenir matèries
 
 ### SDA
 
-* `POST /sda/` : Crear una SDA
-* `GET  /sda/` : Obtenir totes les SDA
-* `POST /sda/markCriteria` : Marcar/desmarcar criteris
+* `POST /sda/`                               : Crear una SDA
+* `GET  /sda/`                               : Obtenir SDA paginades i ordenades
+* `POST /sda/markCriteria`                   : Marcar/desmarcar criteris
 
 ### Courses
 
-* `GET /courses/:courseName/template` : Obtenir plantilla d'un curs
+* `GET /courses/:courseName/template`        : Obtenir plantilla d'un curs
 
 ### SDA-Subject Relation
 
-* `POST /sda/subject-relation` : Crear relació entre matèria i SDA
+* `POST /sda/subject-relation`               : Crear relació entre matèria i SDA
 
 ### Fill SDA
 
-* `POST /sda/fillSDA` : Emplenament de la SDA utilitzant la plantilla
+* `POST /sda/fillSDA`                       : Emplenament de la SDA utilitzant la plantilla
 
 ### Full SDA
 
-* `GET /sda/full/:uuid` : Obtenir tota la SDA
+* `GET /sda/full/:uuid`                     : Obtenir tota la SDA
 
 ### User-Center Relations
 
-* `POST   /user-center-relations` : Crear relació usuari-centre
-* `PUT    /user-center-relations` : Actualitzar rol d'un usuari al centre
-* `DELETE /user-center-relations` : Eliminar un usuari del centre
+* `POST   /user-center-relations`            : Crear relació usuari-centre
+* `PUT    /user-center-relations`             : Actualitzar rol d'un usuari al centre
+* `DELETE /user-center-relations/:UserEmail`  : Eliminar un usuari del centre
 
 ### Users
 
-* `GET /users/center` : Obtenir usuaris d'un centre
+* `GET /users/center`                        : Obtenir usuaris d'un centre
 
 ### User-Group Relations
 
-* `GET    /user-group-relations/user/:uuid` : Grups d'un usuari
+* `GET    /user-group-relations/user/:uuid`  : Grups d'un usuari
 * `GET    /user-group-relations/group/:uuid` : Usuaris d'un grup
-* `POST   /user-group-relations` : Crear relació usuari-grup
+* `POST   /user-group-relations`              : Crear relació usuari-grup
 * `DELETE /user-group-relations/:userUUID/:groupUUID` : Eliminar relació
 
-## Llibreries utilitzades al backend
+## Errors
+
+| Codi | Descripció                                       |
+| ---- | ------------------------------------------------ |
+| 400  | Error del client (petició malformada)            |
+| 401  | No autoritzat                                    |
+| 403  | Prohibit                                         |
+| 404  | No trobat                                        |
+| 409  | Conflict (ja existeix la relació)                |
+| 422  | Dades invalides                                  |
+| 500  | Error intern del servidor                        |
+| 503  | Servei no disponible (ex. base de dades caiguda) |
+
+## Llibreries utilitzades al Backend
 
 ### Dependencies
 
@@ -217,33 +210,23 @@ npm start
 ### DevDependencies
 
 * **cross-env**: Variables d'entorn multiplataforma
-* **nodemon**: Reinici automàtic al detecta canvis
+* **nodemon**: Reinici automàtic al detectar canvis
 * **swagger-autogen**: Autogeneració de docs Swagger
 
-## Utilització de la App (rutes frontend)
+## Rutes Frontend
 
-1. Accediu a `/login` i entreu amb Google.
-2. Un cop autenticat, trobareu el dashboard i les opcions següents:
-
-### Professors i Administradors de centre
-
-* `/dashboard` : Accés al dashboard
-* `/create-sda` : Crear una nova SDA
-* `/list-sda` : Llistar SDA
-* `/show-sda/:uuid` : Mostrar una SDA concreta
-* `/create-resume` : Generar resum a partir d'un grup
-* `/change-center` : Canviar de centre
-
-### Administradors de centre
-
-* `/manage-teachers` : Gestionar professors del centre
-* `/manage-groups` : Gestionar grups del centre
-* `/manage-user-groups/:uuid` : Gestionar grups d'un usuari
+1. `/login`         : Login amb Google
+2. `/dashboard`     : Dashboard principal
+3. `/create-sda`    : Crear una nova SDA
+4. `/list-sda`      : Llistar SDA
+5. `/show-sda/:uuid`: Mostrar detall d'una SDA
+6. `/create-resume` : Generar resum a partir d'un grup
+7. `/change-center` : Canviar de centre
+8. `/manage-teachers`         : Gestionar professors del centre (Admin)
+9. `/manage-groups`           : Gestionar grups del centre (Admin)
+   10.`/manage-user-groups/:uuid`: Gestionar grups d'un usuari (Admin)
 
 ## Model Entitat-Relació (E-R)
 
-Aquí anirà una imatge (per exemple `docs/er-model.png`):
-
-```markdown
-![Model Entitat-Relació](docs/er-model.png)
-```
+![Model Entitat-Relació](docs/DB1.png)
+![Model Entitat-Relació](docs/DB2.png)
