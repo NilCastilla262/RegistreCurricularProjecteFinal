@@ -162,6 +162,11 @@ npm start
 * `POST   /user-group-relations`              : Crear relació usuari-grup
 * `DELETE /user-group-relations/:userUUID/:groupUUID` : Eliminar relació
 
+## Utilitzar Endpoints
+
+Per un ús mes fàcil he ficat un json amb la majoria d'endpoints ja importats amb exemples i també hi ha disponible el swagger que es pot accedir des de: 
+http://localhost:5000/api-docs/
+
 ## Informació per importar la plantilla del currículum
 
 Per importar el currículum escolar s'ha de cridar l'endpoint del backend que gestiona l'upload i processament del CSV amb la macro corresponent. Aquesta funcionalitat encara no està implementada al frontend, per tant cal fer la petició manualment des de Postman o una eina similar:
