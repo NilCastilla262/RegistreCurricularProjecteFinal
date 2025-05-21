@@ -7,21 +7,44 @@
 
   <form>
     <div>
-      <label>Títol:</label>
-      <input [(ngModel)]="title" name="title" required maxlength="30" />
+      <label for="title">Títol:</label>
+      <input
+        id="title"
+        type="text"
+        [(ngModel)]="title"
+        name="title"
+        required
+        maxlength="30"
+        placeholder="Introdueix el títol de la SDA (màx. 30 caràcters)"
+      />
       <small>{{ title.length }}/30</small>
     </div>
 
     <div>
-      <label>Descripció:</label>
-      <textarea [(ngModel)]="description" name="description" required rows="4" maxlength="1000"></textarea>
+      <label for="description">Descripció:</label>
+      <textarea
+        id="description"
+        [(ngModel)]="description"
+        name="description"
+        required
+        rows="4"
+        maxlength="1000"
+        placeholder="Explica breument què tracta aquesta situació d’aprenentatge (màx. 1000 caràcters)"
+      ></textarea>
       <small>{{ description.length }}/1000</small>
     </div>
-    
+
     <div>
-      <label>Grup:</label>
-      <select [(ngModel)]="selectedGroupUUID" name="selectedGroup" (change)="onGroupChange()">
-        <option [value]="''" disabled selected>-- Selecciona un grup --</option>
+      <label for="group">Grup:</label>
+      <select
+        id="group"
+        [(ngModel)]="selectedGroupUUID"
+        name="selectedGroup"
+        (change)="onGroupChange()"
+      >
+        <option [value]="''" disabled selected>
+          -- Selecciona un grup --
+        </option>
         @for (g of groups; track g.uuid) {
           <option [value]="g.uuid">
             {{ g.name }} ({{ g.courseName }})

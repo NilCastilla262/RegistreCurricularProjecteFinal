@@ -70,26 +70,35 @@ export class ManageTeachersComponent implements OnInit {
   }
 
   submitNewTeacher() {
-    if (!this.newEmail || this.newEmail.length > 50 || this.newRole == null) {
-      return;
-    }
-    this.relService.addUserToCenter(this.newEmail, this.newRole).subscribe({
-      next: () => {
-        this.loadTeachers();
-        this.toggleForm();
-      },
-      error: err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error afegint professor',
-          text: err.error?.message || 'S’ha produït un error inesperat.',
-          confirmButtonText: 'D’acord',
-          customClass: { confirmButton: 'btn-swal-confirm' },
-          buttonsStyling: false
-        });
-      }
+  if (!this.newEmail || this.newEmail.length > 50 || this.newRole == null) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Camp obligatori',
+      text: 'Cal indicar un email vàlid i seleccionar un rol.',
+      confirmButtonText: 'D’acord',
+      customClass: { confirmButton: 'btn-swal-confirm' },
+      buttonsStyling: false
     });
+    return;
   }
+
+  this.relService.addUserToCenter(this.newEmail, this.newRole).subscribe({
+    next: () => {
+      this.loadTeachers();
+      this.toggleForm();
+    },
+    error: err => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error afegint professor',
+        text: err.error?.message || 'S’ha produït un error inesperat.',
+        confirmButtonText: 'D’acord',
+        customClass: { confirmButton: 'btn-swal-confirm' },
+        buttonsStyling: false
+      });
+    }
+  });
+}
 
   saveRole(u: UserModel) {
     if (u.role === this.originalRoles[u.email]) return;
